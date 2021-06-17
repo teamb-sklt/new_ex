@@ -6,13 +6,15 @@ router.get('/',function(req,res,next){
     let opt = {
         title: '経費新規登録ページ',
         message: '各項目を入力してください',
-        price: 'placeholder="自動計算（ICカード利用時料金）"',
+        amount: '',
         moveDate:'',
         moveDate2: "移動した日付・時刻が自動で追加されます",
-        date:'',
-        sStart: '',
-        sWaypoint: '',
-        sGoal: '',
+        year:'',
+        month:'',
+        day:'',
+        code_name: '',
+        summary: '',
+        payee: '',
         id:'',
         flg:''
     };
