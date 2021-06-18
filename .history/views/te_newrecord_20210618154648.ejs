@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' 
+    href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+    <style>
+        #routeWaypoint {
+            width: 735px;
+        }
+        #search {
+            width: 500px;
+            margin-left: 100px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        #price {
+            width: 682px;
+            margin: 5px;
+        }
+        #way {
+            width: 294px;
+            margin: 5px;
+        }
+        #moveDate {
+            width: 633px;
+            margin: 5px;
+        }
+        #memo {
+            width: 682px;
+            margin: 5px;
+        }
+        #times {
+            width: 316px;
+            margin: 5px;
+        }
+        #regularly {
+            transform: scale(1.4);
+        }
+    </style>
+  </head>
+  <body class= 'container p-3'>
+    <h1 class = "display-4"><%= title %></h1>
+    <p class='h4'><%- message %></p><br>
+    <form method="POST" action="/te_newrecord">
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-2">
+                    <label for='year'>年 ※yyyy</label> 
+                    <input type="text" class='form-control' name='year' id='year' value="<%- year %>" required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='month'>月 ※mm</label> 
+                    <input type="text" class='form-control' name='month' id='month' value="<%- month %>" required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='day'>日 ※dd</label>
+                    <input type="text" class='form-control' name='day' id='day' value="<%- day %>" required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='time'>時刻 ※hhmm</label> 
+                    <input type="text" class='form-control' name='time'  id='time' required>
+                    <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
+                </div>
+            </div>
+        </div>
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-4">
+                    <label for='route'>出発地</label> 
+                    <input type="text" class='form-control' name='routeStart' id='routeStart' value="<%- sStart %>" required placeholder="必須">
+                </div>
+                <div class="form-group col-4">
+                    <label for='route'>目的地</label> 
+                    <input type="text" class='form-control' name='routeGoal' id='routeGoal' value='<%- sGoal %>' required placeholder="必須">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for='route'>経由地</label>
+                <input type="text" class='form-control' name='routeWaypoint' id='routeWaypoint' value='<%- sWaypoint %>' placeholder="省略可">
+            </div>
+            <input type="submit" id='search' value="検索" class="btn btn-danger" name='search'>
+            <!--<button onclick="searchPrice()" class="btn btn-primary">調べよう</button>-->
+        </div>
+        <div class='form-group form-inline'>
+            <label for='price'>運賃</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" id='price' name='price' class="form-control" <%- price%>>
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='times'>回数</label> 
+                <div class="col col-md-9 col-sm-8">
+                <input type="number" class='form-control' value='1' min='1' id='times' name='times'>
+                </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='way'>手段</label> <br>
+            <div class="col col-md-9 col-sm-8">
+            <select id='way' name='way' class='form-control'>
+                <option>電車</option>
+                <option>バス</option>
+                <option>タクシー</option>
+                <option>その他</option>
+            </select>
+            </div>
+        </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='memo'>メモ</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" class='form-control' id='memo' name='memo' placeholder="ジョブ情報などを入力してください">
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='moveDate'>EX用備考欄</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" class='form-control' id='moveDate' name='moveDate' <%- moveDate%>>
+            </div>
+        </div>
+        <div>
+            <input type="submit" id="btn-return" value="戻る" class="btn btn-primary" onclick="frameClick();">
+            <input type="submit" id="btn-save" value="保存" class="btn btn-primary" name='save'>
+            <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'>
+        </div>
+    </form>
+    <script type="text/javascript">
+
+        'use strict'
+
+        //戻るボタンでte_thismonth.jsに遷移
+        function frameClick() {
+            document.location.href = 'http://localhost:3000/te_thismonth';
+        };
+
+        //日付・時刻の初期値の設定
+        var date = new Date();
+        date.setDate(date.getDate());
+        var yyyy = date.getFullYear();
+        var mm = ("0"+(date.getMonth()+1)).slice(-2);
+        var dd = ("0"+date.getDate()).slice(-2);
+        var hours = ("0"+date.getHours()).slice(-2);
+        var minutes = ("0"+date.getMinutes()).slice(-2);
+        var date = yyyy+mm+dd;
+        console.log("date");
+        document.getElementById("time").value=hours+minutes;
+        document.getElementById("year").value=yyyy;
+        document.getElementById("month").value=mm;
+        document.getElementById("day").value=dd;
+    </script>
+  </body>
+</html>
