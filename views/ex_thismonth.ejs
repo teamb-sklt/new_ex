@@ -20,28 +20,51 @@
     <p><a href="/ex_newrecord">新規登録</a></p>  
     <div class="container">
       <!-- <button class="btn btn-primary" id="detail">新規登録</button> -->
-      <h5><br>よく使う経路</h5>
-      <table class="table table-primary">
+      <table class="table">
+        <thead class="thead-light">
         <tr>
-          <th class="visible-lg">申請</th>
-          <th>日付</th>
-          <th>経路</th>
-          <th class="visible-lg">手段</th>
-          <th>費用</th>
-          <th>回数</th>
-          <th class="visible-lg">メモ</th>
-          <th class="visible-lg">EX用備考</th>
+          <th class="visible-lg">ステータス</th>
+          <th>No</th>
+          <th>利用日</th>
+          <th class="visible-lg">支払先</th>
+          <th>摘要</th>
+          <th>税込金額</th>
+          <th class="visible-lg">勘定科目</th>
+          <th class="visible-lg">Jobコード</th>
           <th>詳細</th>
-          <th>回数＋１</th>
         </tr>
+      </thead>
+      <tbody>
+        <% for(let i in status){ %>
+          <tr id="records">   
+            <td id=status class=status><%= status[i] %> </td>
+            <td id=branch_no><%- branch_no[i] %></td>
+            <td id=month><%- month[i] %>/<%- day[0] %></td>
+            <td id=trans_from><%- trans_from[i] %></th>
+            <td id=trans_to><%- trans_to[i] %></td>
+            <td id=amount><%- amount[i] %></td>
+            <td id=count><%- count[i] %> </td>
+            <td id=><%- subtotal[i] %></td>
+            <td id=job_no><%- job_no[i] %> </td>
+            <td>詳細ボタン</td>
+            <td>回数追加ボタン</td>
+          </tr>
+          <% } %>
+      </tbody>
       </table>
     </div>
     <hr class="mt-5">
+    <div class="remind">
+      <p1 class="text-center h2">締め日<%= lastday  %>日前です。</p>
+      <p1 class="text-center h2">締め日前にJM承認に上げてください。</p>
+    </div>
     <div>
       <p class="text-center h6">copyright SKYLIGHT TEAM/B 2021.</p>
     </div>
+
     <script>
       'use strict';
+
       document.getElementById("detail").onclick=function(){
         document.location="/detail";//詳細設定ページへc
       }
@@ -58,6 +81,24 @@
   }
   
     </script>
-  
+<script src="/jquery/jquery.js"></script>
+<script>
+    $(".status:contains('88')").text("承認")
+    $(".status:contains('11')").text("JM申請中")
+    $(".status:contains('19')").text("JM却下")
+    $(".status:contains('21')").text("経理申請中")
+    $(".status:contains('29')").text("経理却下")
+    $(".status:contains('00')").text("未申請")
+
+  $("td:contains('未申請')").parent("tr").css("background-color", "#FFDBC9");　 //未申請の行を赤で表示
+
+  var today=new Date();　//本日が15~20であればリマインドを表示、他の場合はしない。
+    if(today.getDate()>20 || today.getDate()<15 ){
+    $('p1').remove();
+    }else{
+      $('p1').css("background-color", "red");
+    }
+</script>
+
   </body>
 </html>

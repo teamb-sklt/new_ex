@@ -134,6 +134,20 @@ router.post('/',function(req,response,next){
         };
         response.render('ex_detail', opt);
     }
+        amount: '',
+        moveDate:'',
+        moveDate2: "移動した日付・時刻が自動で追加されます",
+        year:'',
+        month:'',
+        day:'',
+        code_name: '',
+        summary: '',
+        payee: '',
+        id:'',
+        flg:''
+    };
+    res.render('ex_newrecord', opt);
+});
 
     //削除ボタンが押された時に実行
     else if(req.body.delete){

@@ -5,27 +5,105 @@ const fetch = require('node-fetch');
 var { Client, Client } = require('pg');
 const dbpassword = process.env.PASSWORD //DBを使うのに必要
 
+// // var status = [];
+// // var branch_no = [];
+// var year = [];
+// var month = [];
+// var day = [];
+// var trans_from = {};
+// var trans_to = [];
+// var trans_waypoint = [];
+// var trans_type = [];
+// var amount = [];
+// var count = [];
+// // var subtotal = [];
+// var job_no = [];
+// var job_manager = [];
+// var claim_flag = [];
+// var charge_flag = [];
+// var ref_no = [];
+// var remarks = [];
+
+
 //ページが読み込まれた際の初期画面
-router.get('/',function(req,res,next){
+router.post('/', async function(req, res, next) {
+let branch_no = req.body.branch_no;
+  let month = req.body.month; //本来なら、Monthやdayではなく、報告年月と社員番号が必要。
+  let day = req.body.day;
+  console.log(branch_no+month+day);
 
-    let opt = {
-        title: '（交通費）詳細変更ページ',
-        message: '各項目を入力してください',
-        price: 'placeholder="自動計算（ICカード利用時料金）"',
-        moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
-        date:'',
-        // year: '',
-        // month:'',
-        // day:'',
-        sStart: '',
-        sWaypoint: '',
-        sGoal: '',
-    };
-    res.render('te_detail', opt);
-});
+  const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
+    }
+  }) : new Client({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'itpjph3',
+    password: 'teama',
+    port: 5432
+  })
+  await client.connect()
+  client.query("SELECT * from TeDetail where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
+    if (err) {
+        console.log(err); //エラー時にコンソールに表示
+      } else {
+      console.log(result)
+    //   let rows = result.rows
+    let rows = result.rows
+    //   year[0]=result.rows[0].year;
+    //   month[0]=result.rows[0].month;
+    //   day[0]=result.rows[0].day;
+    //   trans_from=result.rows[0].trans_from;
+    //   trans_to[0]=result.rows[0].trans_to;
+    //   trans_waypoint[0]=result.rows[0].trans_waypoint;
+    //   trans_type[0]=result.rows[0].trans_type;
+    //   amount[0]=result.rows[0].amount;
+    //   count[0]=result.rows[0].count;
+    // //   subtotal[i]=result.rows[i].count * result.rows[i].amount;
+    //   job_no[0]=result.rows[0].job_no;
+    //   job_manager[0]=result.rows[0].job_manager;
+    //   claim_flag[0]=result.rows[0].claim_flag;
+    //   ref_no[0]=result.rows[0].ref_no;
+    //   remarks[0]=result.rows[0].remarks;
+    // //   status=result.rows.status;
+    // //   branch_no = result.rows.branch_no;
+    let opt={
+        title: '交通費詳細',
+      // //   status:status,
+      // //   branch_no:branch_no,
+      //   year:year,
+      //   month:month,
+      //   day:day,
+      //   trans_from:trans_from,
+      //   trans_to:trans_to,
+      //   trans_waypoint:trans_waypoint,
+      //   trans_type:trans_type,
+      //   amount:amount,
+      //   count:count,
+      //   job_manager:job_manager,
+      // // //   subtotal:subtotal,
+      //   job_no:job_no,
+      //   claim_flag:claim_flag,
+      //   ref_no:ref_no,
+      //   remarks:remarks,
+      rows:rows,
+      
+      }
+      res.render('te_detail', opt);
+}
+    // }
+    client.end()
+  });
+
+ 
+
+})
 
 
-router.post('/',function(req,response,next){
+router.post('/te_detail',function(req,response,next){
+
 
     //検索ボタンが押されたら実行
     if(req.body.search){
