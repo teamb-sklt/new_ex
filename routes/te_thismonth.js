@@ -117,7 +117,7 @@ router.post('/',async function(req,res,next){
     if (err) {
       console.log(err); //エラー時にコンソールに表示
     } else {
-    console.log(result)
+    // console.log(result)
     }
     client.end()
     res.redirect('/te_thismonth')
