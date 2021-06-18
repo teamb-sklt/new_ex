@@ -33,38 +33,46 @@
           <th class="visible-lg">Jobコード</th>
           <th>詳細</th>
         </tr>
-      </thead>
-      <tbody>
-        <% for(let i in status){ %>
+        </thead>
+        <tbody>
+          <% for(let i in status){ %>
+          <div class="content"
           <tr id="records">   
             <td id=status class=status><%= status[i] %> </td>
             <td id=branch_no><%- branch_no[i] %></td>
-            <td id=month><%- month[i] %>/<%- day[0] %></td>
-            <td id=trans_from><%- trans_from[i] %></th>
-            <td id=trans_to><%- trans_to[i] %></td>
+            <td id=month><%- month[i] %>/<%- day[i] %></td>
+            <td id=trans_from><%- payee[i] %></th>
+            <td id=trans_to><%- summary[i] %></td>
             <td id=amount><%- amount[i] %></td>
-            <td id=count><%- count[i] %> </td>
-            <td id=><%- subtotal[i] %></td>
+            <td id=count><%- code_name[i] %> </td>
             <td id=job_no><%- job_no[i] %> </td>
-            <td>詳細ボタン</td>
-            <td>回数追加ボタン</td>
+            </div>
+            <form method="POST" action="/ex_detail"> 
+              <!-- PKをDBに投げれるようにする。後工程でTe_DetailファイルでDBにSELECT文を送る -->
+              <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
+              <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
+              <input type="hidden" name=month value="<%= month[i] %>">
+              <input type="hidden" name=day value="<%= day[i] %>">
+              <td><input type="submit" class="btn btn-secondary" name="ex_detail" value="詳細"></td>
+            </form>
           </tr>
           <% } %>
-      </tbody>
+        </tbody>
       </table>
     </div>
     <hr class="mt-5">
     <div class="remind">
-      <p1 class="text-center h2">締め日<%= lastday  %>日前です。</p>
+      <p1 class="text-center h2">締め日<%= lastday  %> 日前です。</p>
       <p1 class="text-center h2">締め日前にJM承認に上げてください。</p>
     </div>
+    <hr class="mt-5">
     <div>
       <p class="text-center h6">copyright SKYLIGHT TEAM/B 2021.</p>
     </div>
 
-    <script>
-      'use strict';
 
+    <script>　//Ph2teambのもの
+      'use strict';
       document.getElementById("detail").onclick=function(){
         document.location="/detail";//詳細設定ページへc
       }
@@ -81,24 +89,27 @@
   }
   
     </script>
-<script src="/jquery/jquery.js"></script>
-<script>
+  <script src="/jquery/jquery.js"></script>
+  <script>
+    'use strict';
     $(".status:contains('88')").text("承認")
     $(".status:contains('11')").text("JM申請中")
     $(".status:contains('19')").text("JM却下")
     $(".status:contains('21')").text("経理申請中")
     $(".status:contains('29')").text("経理却下")
     $(".status:contains('00')").text("未申請")
+    
 
-  $("td:contains('未申請')").parent("tr").css("background-color", "#FFDBC9");　 //未申請の行を赤で表示
+    $("td:contains('未申請')").parent("tr").css("background-color", "#FFDBC9"); //未申請の行を赤で表示
 
-  var today=new Date();　//本日が15~20であればリマインドを表示、他の場合はしない。
-    if(today.getDate()>20 || today.getDate()<15 ){
+    var today=new Date();　//本日が15~20であればリマインドを表示、他の場合はしない。
+    if(today.getDate()>20　|| today.getDate()<15　){
     $('p1').remove();
     }else{
       $('p1').css("background-color", "red");
     }
-</script>
+
+  </script>
 
   </body>
 </html>

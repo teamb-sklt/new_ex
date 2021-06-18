@@ -1,26 +1,33 @@
 var express = require('express');
 var router = express.Router();
+const moment = require("moment");
 
 
 var{Client}=require('pg');  //データベースを使うための宣言
 const dbpassword = process.env.DBPW //DBを使うのに必要
 const apiKey = process.env.APIKEY //APIkeyを使うのに必要
 
-var today=new Date();
-var tomonth=today.getMonth()+1;
-var date =today.getDate();
+var today = moment();
+var year = moment().format("YYYY");
+var tomonth = moment().format("MM");
+// var nm = moment().add(1,'month').format("MM");　//翌月
+// var lm = moment().add(-1,'month',).format("MM");　//先月
+var date = moment().format("DD")
 var tmonth;
 var lmonth;
 var lastday;
-if(today.getDate()>20){
-  tmonth=today.getMonth()+2;
-  lmonth=today.getMonth()+1;
+
+console.log(date)
+
+if(date>20){
+  tmonth=moment().add(1,'month').format("MM");
+  lmonth=tomonth;
 }else{
-  tmonth=today.getMonth()+1;
-  lmonth=today.getMonth();
-  lastday = 20 - today.getDate();
+  tmonth=tomonth;
+  lmonth=moment().add(-1,'month',).format("MM");
+  lastday = 20 - date;
 }
-var day = [];
+console.log(tmonth)
 var status = [];
 var branch_no = [];
 var month = [];
@@ -54,7 +61,7 @@ router.get('/', async function(req, res, next) {
   //   }
   //   console.log(result)
   // })
-  client.query('SELECT * from TeDetail',function(err,result){
+  client.query("SELECT * from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     // console.log(result)
     for(var i in result.rows){
       status[i]=result.rows[i].status;

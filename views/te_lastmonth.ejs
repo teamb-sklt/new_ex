@@ -18,9 +18,8 @@
     <!-- 前月データへ移動 -->
     <p><a href="/te_thismonth">今月データへ</a></p>
     <div class="container">
-      <button class="btn btn-primary" id="detail">移動レコードを追加</button>
-      <h5><br>よく使う経路</h5>
-      <table class="table table-primary">
+      <table class="table">
+        <thead class="thead-light">
         <tr>
           <th class="visible-lg">ステータス</th>
           <th>No</th>
@@ -31,8 +30,34 @@
           <th class="visible-lg">回数</th>
           <th class="visible-lg">小計</th>
           <th class="visible-lg">Jobコード</th>
-          <th>今月へコピー/th>
+          <th>今月にコピー</th>
         </tr>
+        </thead>
+        <tbody>
+          <% for(let i in status){ %>
+          <div class="content"
+          <tr id="records">   
+            <td id=status class=status><%= status[i] %> </td>
+            <td id=branch_no><%- branch_no[i] %></td>
+            <td id=month><%- month[i] %>/<%- day[i] %></td>
+            <td id=trans_from><%- trans_from[i] %></th>
+            <td id=trans_to><%- trans_to[i] %></td>
+            <td id=amount><%- amount[i] %></td>
+            <td id=count><%- count[i] %> </td>
+            <td id=><%- subtotal[i] %></td>
+            <td id=job_no><%- job_no[i] %> </td>
+            </div>
+            <form method="POST" action="/te_lastmonth"> 
+              <!-- PKをDBに投げれるようにする。後工程でTe_DetailファイルでDBにSELECT文を送る -->
+              <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
+              <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
+              <input type="hidden" name=month value="<%= month[i] %>">
+              <input type="hidden" name=day value="<%= day[i] %>">
+              <td><input type="submit" class="btn btn-secondary" name="te_copy" value="コピー"></td>
+            </form>
+          </tr>
+          <% } %>
+        </tbody>
       </table>
     </div>
     <hr class="mt-5">
@@ -57,6 +82,16 @@
   }
   
     </script>
+    <script src="/jquery/jquery.js"></script>
+      <script>
+        'use strict';
+        $(".status:contains('88')").text("承認")
+        $(".status:contains('11')").text("JM申請中")
+        $(".status:contains('19')").text("JM却下")
+        $(".status:contains('21')").text("経理申請中")
+        $(".status:contains('29')").text("経理却下")
+        $(".status:contains('00')").text("未申請")
+      </script>
   
   </body>
 </html>
