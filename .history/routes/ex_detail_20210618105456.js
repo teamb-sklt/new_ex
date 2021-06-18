@@ -9,19 +9,16 @@ const dbpassword = process.env.PASSWORD //DBを使うのに必要
 router.get('/',function(req,res,next){
 
     let opt = {
-        title: '（交通費）詳細変更ページ',
+        title: '（経費）詳細変更ページ',
         message: '各項目を入力してください',
-        price: 'placeholder="自動計算（ICカード利用時料金）"',
+        price: '',
         moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
         date:'',
-        // year: '',
-        // month:'',
-        // day:'',
         sStart: '',
         sWaypoint: '',
         sGoal: '',
     };
-    res.render('te_detail', opt);
+    res.render('ex_detail', opt);
 });
 
 
@@ -106,7 +103,7 @@ router.post('/',function(req,response,next){
             
             console.log(searchPrice);
 
-            //APIの呼び出しをして、返り値をte_detail.ejsにrender
+            //APIの呼び出しをして、返り値をex_detail.ejsにrender
             fetch(searchPrice)
             .then(res =>res.text()) //データをテキストに変換
             .then(res => JSON.parse(res))   //json形式のテキストをオブジェクトに変換する
@@ -134,7 +131,7 @@ router.post('/',function(req,response,next){
                 };
 
                 //renderする
-                response.render('te_detail',opt);
+                response.render('ex_detail',opt);
             })
             .catch(err =>{
 
@@ -151,7 +148,7 @@ router.post('/',function(req,response,next){
                 };
 
                 //renderする
-                response.render('te_detail',opt);
+                response.render('ex_detail',opt);
             });
         }
         
@@ -165,7 +162,6 @@ router.post('/',function(req,response,next){
         chijiiwa();
     }
 
-    
     /*保存ボタンが押されたときに実行
     else if(req.body.save){
 
@@ -174,7 +170,7 @@ router.post('/',function(req,response,next){
             user: 'postgres',
             host: 'localhost',
             database: 'ex_support',
-            password: dbpassword,
+            password:'Psklt@363',
             port:5432
         });
 
@@ -217,7 +213,7 @@ router.post('/',function(req,response,next){
             sWaypoint: '',
             sGoal: '',
         };
-        response.render('te_detail', opt);
+        response.render('ex_detail', opt);
     }
 
     //削除ボタンが押された時に実行
@@ -228,7 +224,7 @@ router.post('/',function(req,response,next){
             user: 'postgres',
             host: 'localhost',
             database: 'ex_support',
-            password: dbpassword,
+            password:'Psklt@363',
             port:5432
         });
     
@@ -257,7 +253,7 @@ router.post('/',function(req,response,next){
             sGoal: ''
         };
 
-        response.render('te_detail', opt);
+        response.render('ex_detail', opt);
     }
     */
 });

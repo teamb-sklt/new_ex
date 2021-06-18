@@ -38,6 +38,16 @@
         #regularly {
             transform: scale(1.4);
         }
+        .cover {
+            background-image url("../background.png");
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 10;
+        }
     </style>
   </head>
   <body class= 'container p-3'>
@@ -46,11 +56,23 @@
     <form method="POST" action="/te_detail">
         <div class='form-group'>
             <div class='form-row'>
-                <div class="form-group col-4">
+                <div class="form-group col-4 cover">
                     <label for='date'>日付 ※yyyymmdd</label> 
-                    <input type="text" class='form-control' name='date' id='date' value="<%- date %>" required>
+                    <input type="text" class='cover' name='date' id='date' value="<%- date %>" required>
                 </div>
                 <div class="form-group col-4">
+                    <label for='year'>年 ※yyyy</label> 
+                    <input type="text" class='form-control' name='year' id='year' value="<%- year %>" required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='month'>月 ※mm</label> 
+                    <input type="text" class='form-control' name='month' id='month' value="<%- month %>" required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='day'>日 ※dd</label>
+                    <input type="text" class='form-control' name='day' id='day' value="<%- day %>" required>
+                </div>
+                <div class="form-group col-2">
                     <label for='time'>時刻 ※hhmm</label> 
                     <input type="text" class='form-control' name='time'  id='time' required>
                     <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
@@ -136,9 +158,9 @@
         var hours = ("0"+date.getHours()).slice(-2);
         var minutes = ("0"+date.getMinutes()).slice(-2);
         document.getElementById("date").value=yyyy+mm+dd;
-        // document.getElementById("year").value=yyyy;
-        // document.getElementById("month").value=mm;
-        // document.getElementById("day").value=dd;
+        document.getElementById("year").value=yyyy;
+        document.getElementById("month").value=mm;
+        document.getElementById("day").value=dd;
         document.getElementById("time").value=hours+minutes;
 
 
