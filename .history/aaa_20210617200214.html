@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select name="test" id="test" onchange="test()">
+        <option value="1">test1</option>
+        <option value="2">test2</option>
+        <option value="3">test3</option>
+    </select>    
+</body>
+<script type="text/javascript">
+    function test(){
+    var val = document.getElementById('test').value;
+    if(val == 3){
+    alert('これをえらぶなんてとんでもない');
+    }
+    }
+</script>
+</html>
