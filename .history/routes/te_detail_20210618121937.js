@@ -9,14 +9,13 @@ const dbpassword = process.env.PASSWORD //DBを使うのに必要
 router.get('/',function(req,res,next){
 
     let opt = {
-        title: '（交通費）詳細変更ページ',
+        title: '（交通費）詳細変更ページa',
         message: '各項目を入力してください',
         price: 'placeholder="自動計算（ICカード利用時料金）"',
         moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
-        date:'',
-        // year: '',
-        // month:'',
-        // day:'',
+        year:'',
+        month:'',
+        day:'',
         sStart: '',
         sWaypoint: '',
         sGoal: '',

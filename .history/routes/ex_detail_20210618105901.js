@@ -3,44 +3,12 @@ var express = require('express');
 var router = express.Router();
 const fetch = require('node-fetch');
 var { Client, Client } = require('pg');
-require('dotenv').config();
-const user=process.env.USER;
-const dbpassword=process.env.PASSWORD;
+const dbpassword = process.env.PASSWORD //DBを使うのに必要
 
-//各登録済み項目反映&DB接続
-router.get('/', async function(req, res, next) {
-    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-      connectionString: process.env.DATABASE_URL,
-      ssl: {
-          rejectUnauthorized: false
-      }
-    }) : new Client({
-      user: 'postgres',
-      host: 'localhost',
-      database: 'itpjph3',
-      password: dbpassword,
-      port: 5432
-    })
-    await client.connect()
-    // console.log(client)
-    // client.query('SELECT * from memo', function(err, result){
-    //   if (err){
-    //     console.log(err)
-    //   }
-    //   console.log(result)
-    // })
-    client.query('SELECT * from exdetail',function(err,result){
-      console.log(result)
-      for(var i of result.rows){
-        console.log(i)
-        // id[i]=result.rows[i].id;
-        // name[i]=result.rows[i].name;
-        // mail[i]=result.rows[i].mail;
-        // console.log(id[i]+name[i]+mail[i]);              
-      }
-      client.end()
-    });
-    let opt={
+//ページが読み込まれた際の初期画面
+router.get('/',function(req,res,next){
+
+    let opt = {
         title: '（経費）詳細変更ページ',
         message: '各項目を入力してください',
         price: '',
@@ -48,52 +16,25 @@ router.get('/', async function(req, res, next) {
         sStart: '',
         sWaypoint: '',
         sGoal: '',
-    }
-    res.render('ex_detail',opt);
-  });
+    };
+    res.render('ex_detail', opt);
+});
 
-/*
+
 router.post('/',function(req,response,next){
     //保存ボタンが押されたときに実行
     if(req.body.save){
-        
-    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-        rejectUnauthorized: false
-        }
-    }) : new Client({
+
+        //PostgreSQLに接続
+        var client = new Client({
             user: 'postgres',
             host: 'localhost',
-            database: 'itpjph3',
-            password: dbpassword,
-            port: 5432
-        })
-    await client.connect()
-        // console.log(client)
-        // client.query('SELECT * from memo', function(err, result){
-        //   if (err){
-        //     console.log(err)
-        //   }
-        //   console.log(result)
-        // })
-    client.query('SELECT * from exdetail',function(err,result){
-        console.log(result)
-        for(var i of result.rows){
-            console.log(i)
-      // id[i]=result.rows[i].id;
-      // name[i]=result.rows[i].name;
-      // mail[i]=result.rows[i].mail;
-      // console.log(id[i]+name[i]+mail[i]);              
-    }
-    client.end()
-    });
-        let opt={
-        title:'example',
-        id:id,
-        name:name,
-        mail:mail,
-    }
+            database: 'ex_support',
+            password:'dbpassword',
+            port:5432
+        });
+
+        client.connect();   //これは必ず必要
         
         //フォームに入力された値を定義
         let dDate = req.body.date;
@@ -143,7 +84,7 @@ router.post('/',function(req,response,next){
             user: 'postgres',
             host: 'localhost',
             database: 'ex_support',
-            password:'dbpassword',
+            password:'Psklt@363',
             port:5432
         });
     
@@ -175,6 +116,6 @@ router.post('/',function(req,response,next){
         response.render('ex_detail', opt);
     }
 });
-*/
+
 
 module.exports = router;

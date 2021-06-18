@@ -7,7 +7,20 @@ require('dotenv').config();
 const user=process.env.USER;
 const dbpassword=process.env.PASSWORD;
 
-//各登録済み項目反映&DB接続
+//ページが読み込まれた際の初期画面
+router.get('/',function(req,res,next){
+    let opt = {
+        title: '（経費）詳細変更ページ',
+        message: '各項目を入力してください',
+        price: '',
+        date:'',
+        sStart: '',
+        sWaypoint: '',
+        sGoal: '',
+    };
+    res.render('ex_detail', opt);
+});
+
 router.get('/', async function(req, res, next) {
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
@@ -41,18 +54,14 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
     let opt={
-        title: '（経費）詳細変更ページ',
-        message: '各項目を入力してください',
-        price: '',
-        date:'',
-        sStart: '',
-        sWaypoint: '',
-        sGoal: '',
+      title:'example',
+      id:id,
+      name:name,
+      mail:mail,
     }
-    res.render('ex_detail',opt);
+    res.render('index',opt);
   });
 
-/*
 router.post('/',function(req,response,next){
     //保存ボタンが押されたときに実行
     if(req.body.save){
@@ -175,6 +184,6 @@ router.post('/',function(req,response,next){
         response.render('ex_detail', opt);
     }
 });
-*/
+
 
 module.exports = router;

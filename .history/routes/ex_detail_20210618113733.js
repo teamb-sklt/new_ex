@@ -7,7 +7,7 @@ require('dotenv').config();
 const user=process.env.USER;
 const dbpassword=process.env.PASSWORD;
 
-//各登録済み項目反映&DB接続
+//ページが読み込まれた際の初期画面
 router.get('/', async function(req, res, next) {
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
