@@ -62,7 +62,7 @@ router.get('/', async function(req, res, next) {
   //   }
   //   console.log(result)
   // })
-  client.query("SELECT * from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+  client.query("SELECT * from ExDetail WHERE sheet_month="+"'"+tmonth+"'" +"ORDER BY branch_no ASC",function(err,result){
     // console.log(result)
     for(var i in result.rows){
       status[i]=result.rows[i].status;
