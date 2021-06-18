@@ -10,12 +10,14 @@ var tomonth=today.getMonth()+1;
 var todate=today.getDate();
 var tmonth;
 var lmonth;
+var lastday;
 if(today.getDate()>20){
   tmonth=today.getMonth()+2;
   lmonth=today.getMonth()+1;
 }else{
   tmonth=today.getMonth()+1;
   lmonth=today.getMonth();
+  lastday = 20 - today.getDate();
 }
 var id=[];
 var date0=[];
@@ -49,6 +51,7 @@ let opt={
   title: '経費',
   tmonth:tmonth,
   lmonth:lmonth,
+  lastday:lastday,
 }
   res.render('ex_thismonth', opt);
 })
