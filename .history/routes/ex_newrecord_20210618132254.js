@@ -41,7 +41,7 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
     let opt={
-        title: '（経費）新規登録ページ',
+        title: '（経費）詳細変更ページ',
         message: '各項目を入力してください',
         price: '',
         date:'',

@@ -41,9 +41,10 @@
     </style>
   </head>
   <body class= 'container p-3'>
+    <%- include('nav') %> 
     <h1 class = "display-4"><%= title %></h1>
     <p class='h4'><%- message %></p><br>
-    <form method="POST" action="/te_detail">
+    <form method="POST" action="/detail">
         <div class='form-group'>
             <div class='form-row'>
                 <div class="form-group col-4">
@@ -109,23 +110,30 @@
         <div class='form-group form-inline'>
             <label for='moveDate'>EX用備考欄</label> 
             <div class="col col-md-9 col-sm-8">
-            <input type="text" class='form-control' id='moveDate' name='moveDate' <%- moveDate%>>
+            <input type="text" class='form-control' id='moveDate' name='moveDate' value='<%- moveDate%>' placeholder='<%- moveDate2%>'>
             </div>
         </div>
+        <!-- <input type="hidden" name="regularly" value="0"> -->
         <div>
-            <input type="submit" id="btn-return" value="戻る" class="btn btn-primary" onclick="frameClick();">
+            <input type="button" id="btn-return" value="戻る" class="btn btn-primary" onclick="location.href='http://localhost:3000'">
+            <!-- <button class="btn btn-primary" id="btn-return" name='return' onclick="location.href='http:/localhost:3000'">戻る</button> -->
+            <input type="hidden" name="flg" value="<%- flg %> ">
             <input type="submit" id="btn-save" value="保存" class="btn btn-primary" name='save'>
-            <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'>
+            <!-- <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'> -->
         </div>
+        <input type="hidden" name="id" value="<%- id%>">
     </form>
     <script type="text/javascript">
 
         'use strict'
 
-        //戻るボタンでte_thismonth.jsに遷移
-        function frameClick() {
-            document.location.href = 'http://localhost:3000/te_thismonth';
-        };
+        //戻るボタンでindex.jsに遷移
+        // function move() {
+        //     location.href = 'http://localhost:3000';
+        // };
+    //     document.getElementById("btn-return").onclick=function(){
+    //     document.location="/";//詳細設定ページへ
+    //   }
 
         //日付・時刻の初期値の設定
         var date = new Date();
@@ -136,10 +144,16 @@
         var hours = ("0"+date.getHours()).slice(-2);
         var minutes = ("0"+date.getMinutes()).slice(-2);
         document.getElementById("date").value=yyyy+mm+dd;
-        // document.getElementById("year").value=yyyy;
-        // document.getElementById("month").value=mm;
-        // document.getElementById("day").value=dd;
         document.getElementById("time").value=hours+minutes;
+
+
+    //     if(regularly.prop('checked')){
+	// 	hiddenInput.attr('disabled', 'disabled');
+	// 	checkboxInput.val('true');
+	// }else{
+	// 	hiddenInput.removeAttr('disabled');//hiddenのタグを有効にする
+	// 	hiddenInput.val('false');
+	// }
 
 
     </script>
