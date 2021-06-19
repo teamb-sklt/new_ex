@@ -4,7 +4,7 @@ const moment = require("moment");
 
 
 var{Client}=require('pg');  //データベースを使うための宣言
-const dbpassword = process.env.PASSWORD //DBを使うのに必要
+const dbpassword = process.env.DBPW //DBを使うのに必要
 const apiKey = process.env.APIKEY //APIkeyを使うのに必要
 
 var today = moment();
@@ -50,7 +50,7 @@ router.get('/', async function(req, res, next) {
     user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
-    password: dbpassword,
+    password: 'teama',
     port: 5432
   })
   await client.connect()
@@ -115,7 +115,7 @@ router.post('/',async function(req,res,next){
     user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
-    password: dbpassword,
+    password: 'teama',
     port: 5432
   })
   await client.connect()

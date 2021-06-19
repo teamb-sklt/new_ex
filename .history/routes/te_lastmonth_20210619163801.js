@@ -17,14 +17,14 @@ var tmonth;
 var lmonth;
 var lastday;
 
-console.log(date)
+// console.log(date)
 
 if(date>20){
-  tmonth=moment().add(1,'month').format("MM");
-  lmonth=tomonth;
-}else{
   tmonth=tomonth;
   lmonth=moment().add(-1,'month',).format("MM");
+}else{
+  tmonth=moment().add(-1,'month',).format("MM");
+  lmonth=moment().add(-2,'month',).format("MM");
   lastday = 20 - date;
 }
 console.log(tmonth)
@@ -50,7 +50,7 @@ router.get('/', async function(req, res, next) {
     user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
-    password: dbpassword,
+    password: 'teama',
     port: 5432
   })
   await client.connect()
@@ -61,7 +61,7 @@ router.get('/', async function(req, res, next) {
   //   }
   //   console.log(result)
   // })
-  client.query("SELECT * from TeDetail WHERE sheet_month="+"'"+tmonth+"'" +"ORDER BY branch_no ASC",function(err,result){
+  client.query("SELECT * from TeDetail WHERE sheet_month="+"'"+tmonth+"'"+"ORDER BY branch_no ASC" ,function(err,result){
     // console.log(result)
     for(var i in result.rows){
       status[i]=result.rows[i].status;
@@ -96,10 +96,10 @@ let opt={
   subtotal:subtotal,
   job_no:job_no,
 }
-  res.render('te_thismonth', opt);
+  res.render('te_lastmonth', opt);
 })
 
-//+1を押すとき
+//コピーを押すとき
 router.post('/',async function(req,res,next){
   let branch_no = req.body.branch_no;
   let month = req.body.month; //本来なら、Monthやdayではなく、報告年月と社員番号が必要。
@@ -115,20 +115,27 @@ router.post('/',async function(req,res,next){
     user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
-    password: dbpassword,
+    password: 'teama',
     port: 5432
   })
   await client.connect()
 
-  client.query("UPDATE TeDetail SET count=count+1, remarks=concat(remarks,"+"'," +tomonth+"/"+date+"') where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
+  client.query("SELECT * FROM TeDetail where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
     if (err) {
       console.log(err); //エラー時にコンソールに表示
     } else {
-    // console.log(result)
+    console.log(result)
+  let rows = result.rows
+  let opt={
+    title: '交通費詳細',
+    rows:rows,
+    
     }
-    client.end()
-    res.redirect('/te_thismonth')
-  });
+    res.render('te_detail', opt);
+}
+  // }
+  client.end()
+});
 });
 
 module.exports = router;

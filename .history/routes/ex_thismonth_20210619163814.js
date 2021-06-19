@@ -35,8 +35,9 @@ var day = [];
 var trans_from = [];
 var trans_to = [];
 var amount = [];
-var count = [];
-var subtotal = [];
+var code_name = [];
+var payee = [];
+var summary = [];
 var job_no = [];
 
 /* GET users listing. */
@@ -50,7 +51,7 @@ router.get('/', async function(req, res, next) {
     user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
-    password: dbpassword,
+    password: 'teama',
     port: 5432
   })
   await client.connect()
@@ -61,7 +62,7 @@ router.get('/', async function(req, res, next) {
   //   }
   //   console.log(result)
   // })
-  client.query("SELECT * from TeDetail WHERE sheet_month="+"'"+tmonth+"'" +"ORDER BY branch_no ASC",function(err,result){
+  client.query("SELECT * from ExDetail WHERE sheet_month="+"'"+tmonth+"'"+"ORDER BY branch_no ASC" ,function(err,result){
     // console.log(result)
     for(var i in result.rows){
       status[i]=result.rows[i].status;
@@ -71,16 +72,17 @@ router.get('/', async function(req, res, next) {
       trans_from[i]=result.rows[i].trans_from;
       trans_to[i]=result.rows[i].trans_to;
       amount[i]=result.rows[i].amount;
-      count[i]=result.rows[i].count;
-      subtotal[i]=result.rows[i].count * result.rows[i].amount;
       job_no[i]=result.rows[i].job_no;
+      summary[i]=result.rows[i].summary;
+      payee[i]=result.rows[i].payee;
+      code_name[i]=result.rows[i].code_name;
 
       // console.log(i)                  
     }
     client.end()
   });
 let opt={
-  title: '交通費',
+  title: '経費',
   tmonth:tmonth,
   lmonth:lmonth,
   lastday:lastday,
@@ -89,14 +91,13 @@ let opt={
   branch_no:branch_no,
   month:month,
   day:day,
-  trans_from:trans_from,
-  trans_to:trans_to,
+  code_name:code_name,
+  payee:payee,
+  summary:summary,
   amount:amount,
-  count:count,
-  subtotal:subtotal,
   job_no:job_no,
 }
-  res.render('te_thismonth', opt);
+  res.render('ex_thismonth', opt);
 })
 
 //+1を押すとき
@@ -115,19 +116,19 @@ router.post('/',async function(req,res,next){
     user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
-    password: dbpassword,
+    password: 'teama',
     port: 5432
   })
   await client.connect()
 
-  client.query("UPDATE TeDetail SET count=count+1, remarks=concat(remarks,"+"'," +tomonth+"/"+date+"') where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
+  client.query("UPDATE ExDetail SET count=count+1, remarks=concat(remarks,"+"'," +tomonth+"/"+date+"') where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
     if (err) {
       console.log(err); //エラー時にコンソールに表示
     } else {
     // console.log(result)
     }
     client.end()
-    res.redirect('/te_thismonth')
+    res.redirect('/ex_thismonth')
   });
 });
 

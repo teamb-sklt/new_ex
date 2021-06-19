@@ -47,7 +47,7 @@ router.get('/', async function(req, res, next) {
       user: 'postgres',
       host: 'localhost',
       database: 'itpjph3',
-      password: dbpassword,
+      password: 'teama',
       port: 5432
     })
     await client.connect()
