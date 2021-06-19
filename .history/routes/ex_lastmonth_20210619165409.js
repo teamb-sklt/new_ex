@@ -1,12 +1,11 @@
 const { response } = require('express');
 var express = require('express');
 var router = express.Router();
-const moment = require("moment");
+const fetch = require('node-fetch');
+var { Client, Client } = require('pg');
 require('dotenv').config();
-
-var { Client, Client } = require('pg');  //データベースを使うための宣言
-const dbpassword = process.env.PASSWORD //DBを使うのに必要
-const apiKey = process.env.APIKEY //APIkeyを使うのに必要
+const user=process.env.USER;
+const dbpassword=process.env.PASSWORD;
 
 var today = moment();
 var year = moment().format("YYYY");

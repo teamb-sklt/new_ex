@@ -4,7 +4,7 @@ var router = express.Router();
 const moment = require("moment");
 require('dotenv').config();
 
-var { Client, Client } = require('pg');  //データベースを使うための宣言
+ //データベースを使うための宣言
 const dbpassword = process.env.PASSWORD //DBを使うのに必要
 const apiKey = process.env.APIKEY //APIkeyを使うのに必要
 

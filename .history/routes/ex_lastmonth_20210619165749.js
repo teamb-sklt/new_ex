@@ -1,7 +1,7 @@
 const { response } = require('express');
 var express = require('express');
 var router = express.Router();
-const moment = require("moment");
+
 require('dotenv').config();
 
 var { Client, Client } = require('pg');  //データベースを使うための宣言

@@ -1,32 +1,11 @@
 const { response } = require('express');
 var express = require('express');
 var router = express.Router();
-var moment = require("moment");
 const fetch = require('node-fetch');
+var { Client, Client } = require('pg');
 require('dotenv').config();
 const user=process.env.USER;
 const dbpassword=process.env.PASSWORD;
-const apiKey = process.env.APIKEY //APIkeyを使うのに必要
-var{Client}=require('pg');  //データベースを使うための宣言
-
-//ページが読み込まれた際の初期画面
-router.get('/',function(req,res,next){
-
-    let opt = {
-        title: '（交通費）詳細変更ページ',
-        message: '各項目を入力してください',
-        price: 'placeholder="自動計算（ICカード利用時料金）"',
-        moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
-        date:'',
-        // year: '',
-        // month:'',
-        // day:'',
-        sStart: '',
-        sWaypoint: '',
-        sGoal: '',
-    };
-    res.render('te_detail', opt);
-});
 
 // // var status = [];
 // // var branch_no = [];
@@ -68,7 +47,7 @@ let branch_no = req.body.branch_no;
     port: 5432
   })
   await client.connect()
-  client.query("SELECT * from TeDetail where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
+  client.query("SELECT * from ExDetail where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
     if (err) {
         console.log(err); //エラー時にコンソールに表示
       } else {
@@ -93,7 +72,7 @@ let branch_no = req.body.branch_no;
     // //   status=result.rows.status;
     // //   branch_no = result.rows.branch_no;
     let opt={
-        title: '交通費詳細',
+        title: '経費詳細',
       // //   status:status,
       // //   branch_no:branch_no,
       //   year:year,
@@ -114,7 +93,7 @@ let branch_no = req.body.branch_no;
       rows:rows,
       
       }
-      res.render('te_detail', opt);
+      res.render('ex_detail', opt);
 }
     // }
     client.end()

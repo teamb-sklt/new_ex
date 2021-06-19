@@ -9,25 +9,6 @@ const dbpassword=process.env.PASSWORD;
 const apiKey = process.env.APIKEY //APIkeyを使うのに必要
 var{Client}=require('pg');  //データベースを使うための宣言
 
-//ページが読み込まれた際の初期画面
-router.get('/',function(req,res,next){
-
-    let opt = {
-        title: '（交通費）詳細変更ページ',
-        message: '各項目を入力してください',
-        price: 'placeholder="自動計算（ICカード利用時料金）"',
-        moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
-        date:'',
-        // year: '',
-        // month:'',
-        // day:'',
-        sStart: '',
-        sWaypoint: '',
-        sGoal: '',
-    };
-    res.render('te_detail', opt);
-});
-
 // // var status = [];
 // // var branch_no = [];
 // var year = [];
