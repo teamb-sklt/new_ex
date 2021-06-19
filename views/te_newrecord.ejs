@@ -41,11 +41,14 @@
     </style>
   </head>
   <body class= 'container p-3'>
-    <%- include('nav') %> 
     <h1 class = "display-4"><%= title %></h1>
-    <form method="POST" action="/detail">
+    <p class='h4'><%- message %></p><br>
+    <form method="POST" action="/te_newrecord">
         <div class='form-group'>
             <div class='form-row'>
+                <div class="form-group col-2">
+                    <label for='year'>年 ※yyyy</label> 
+                    <input type="text" class='form-control' name='year' id='year' required>
                 <div class="form-group col-4">
                     <label for="text">年</label> 
                     <input type="text" class='form-control' name='year' id='year'  required>
@@ -58,7 +61,15 @@
                     <label for="text">日</label> 
                     <input type="text" class='form-control' name='day' id='day' required>
                 </div>
-                <div class="form-group col-4">
+                <div class="form-group col-2">
+                    <label for='month'>月 ※mm</label> 
+                    <input type="text" class='form-control' name='month' id='month' required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='day'>日 ※dd</label>
+                    <input type="text" class='form-control' name='day' id='day' required>
+                </div>
+                <div class="form-group col-2">
                     <label for='time'>時刻 ※hhmm</label> 
                     <input type="text" class='form-control' name='time'  id='time' required>
                     <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
@@ -113,6 +124,32 @@
             </div>
         </div>
         </div>
+    </div>
+    <div class='form-group form-inline'>
+    <div class='form-group form-inline'>
+        <label for='jobcode'>ジョブコード</label> 
+            <div class="col-6">
+            <input type="text" class='form-control' id='jobcode' name='jobcode'>
+            </div>
+    </div>
+    <div class='form-group form-inline'>
+        <label for='jobname'>ジョブ名</label> 
+            <div class="col-6">
+            <input type="text" class='form-control' id='jobname' name='jobname'>
+            </div>
+    </div>
+    <input type="submit" id="btn-return" value="ジョブ検索" class="btn btn-primary" onclick="frameClick();">
+    </div>
+    <div class='form-group col-25 form-inline'>
+        <label for="jm">ＪＭ　　</label>
+        <form action="#">
+            <select name='jm' id='jm' class='form-control'>
+                <option value=0>---------------</option>
+                <option value=1>Aさん</option>
+                <option value=2>Bさん</option>
+            </select>
+        </form>
+    </div>
         <div class='form-group form-inline'>
             <label for='job_no'>ジョブコード</label> 
             <div class="col col-md-9 col-sm-8">
@@ -125,13 +162,10 @@
             <input type="text" class='form-control' id='remarks' name='remarks''>
             </div>
         </div>
-        <!-- <input type="hidden" name="regularly" value="0"> -->
         <div>
-            <input type="button" id="btn-return" value="戻る" class="btn btn-primary" onclick="location.href='http://localhost:3000'">
-            <!-- <button class="btn btn-primary" id="btn-return" name='return' onclick="location.href='http:/localhost:3000'">戻る</button> -->
-            
+            <input type="submit" id="btn-return" value="戻る" class="btn btn-primary" onclick="frameClick();">
             <input type="submit" id="btn-save" value="保存" class="btn btn-primary" name='save'>
-            <!-- <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'> -->
+            <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'>
         </div>
         <input type="hidden" name="id" value="<%- branch_no2 %>">
     </form>
@@ -139,13 +173,10 @@
 
         'use strict'
 
-        //戻るボタンでindex.jsに遷移
-        // function move() {
-        //     location.href = 'http://localhost:3000';
-        // };
-    //     document.getElementById("btn-return").onclick=function(){
-    //     document.location="/";//詳細設定ページへ
-    //   }
+        //戻るボタンでte_thismonth.jsに遷移
+        function frameClick() {
+            document.location.href = 'http://localhost:3000/te_thismonth';
+        };
 
         //日付・時刻の初期値の設定
         var date = new Date();
@@ -155,20 +186,30 @@
         var day = ("0"+date.getDate()).slice(-2);
         var hours = ("0"+date.getHours()).slice(-2);
         var minutes = ("0"+date.getMinutes()).slice(-2);
+        console.log(date);
         document.getElementById("year").value=year;
         document.getElementById("month").value=month;
         document.getElementById("day").value=day;
         document.getElementById("time").value=hours+minutes;
-
-
-    //     if(regularly.prop('checked')){
+        document.getElementById("year").value=year;
+        document.getElementById("month").value=month;
+        document.getElementById("day").value=day;
+        
+  //     if(regularly.prop('checked')){
 	// 	hiddenInput.attr('disabled', 'disabled');
 	// 	checkboxInput.val('true');
 	// }else{
 	// 	hiddenInput.removeAttr('disabled');//hiddenのタグを有効にする
 	// 	hiddenInput.val('false');
 	// }
-
+  
+        val.onchange = function() {
+            var val = document.getElementById('jm');
+            if (val !== 0) {
+            alert('本来とは別のJMが選択されています。再確認の上、変更願います。');
+            }
+        }
+        
     </script>
   </body>
 </html>
