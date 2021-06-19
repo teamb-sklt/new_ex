@@ -115,29 +115,28 @@
   </head>
   <body class= 'container p-3'>
     <h1 class = "display-4"><%= title %></h1>
-    <p class='h4'><%- message %></p><br>
     <form method="POST" action="/ex_detail">
         <div class='form-group'>
             <div class='form-row'>
                 <div class="form-group col-2.5">
-                <label for='year'>年 ※yyyy</label> 
-                <input type="text" class='form-control' name='year' id='year' required>
+                <label for='year'>年 ※yyyy</label>
+                <input type="text" class='form-control' name='year' id='year' value="<%- rows[0].year %>" required>
                 </div>
                 <div class="form-group col-2.5">
                 <label for='month'>月 ※mm</label> 
-                <input type="text" class='form-control' name='month' id='month' required>
+                <input type="text" class='form-control' name='month' id='month' value="<%- rows[0].month %>" required>
                 </div>
                 <div class="form-group col-2.5">
                 <label for='day'>日 ※dd</label>
-                <input type="text" class='form-control' name='day' id='day' required>
+                <input type="text" class='form-control' name='day' id='day' value="<%- rows[0].day %>" required>
                 </div>
             </div>
         </div>
         <div class='form-group'>
             <div class='form-row'>
                 <div class="form-group col-2.5">
-                    <label for='kanjokamoku'>勘定科目</label> <br>
-                    <select id='kanjokamoku' name='kanjokamoku' class='form-control'　required>
+                    <label for='code_name'>勘定科目</label> <br>
+                    <select id='code_name' name='code_name' class='form-control' value="<%- rows[0].code_name%>"　required>
                         <option>▼選択してください</option>
                         <option>消耗品費</option>
                         <option>新聞図書費</option>
@@ -147,35 +146,35 @@
                     </select>
                 </div>
                 <div class="form-group col-2.5">
-                    <label for='shiharaisaki'>支払先</label>
+                    <label for='payee'>支払先</label>
                     <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
-                    <input type="text" class='form-control' name='shiharaisaki' id='shiharaisaki' value="<%- sStart %>" required placeholder="必須">
+                    <input type="text" class='form-control' name='payee' id='payee' value="<%- rows[0].payee %>" required placeholder="必須">
                 </div>
                 <div class="form-group col-2.5">
-                    <label for='tekiyou'>摘要</label>
+                    <label for='summary'>摘要</label>
                     <span class="c-tooltip form-inline" data-tooltip="書籍購入制度利用の場合は『書籍代』と入力ください。">❔</span>
-                    <input type="text" class='form-control form-inline' name='tekiyou' id='tekiyou' value='<%- sGoal %>' required placeholder="必須">
+                    <input type="text" class='form-control form-inline' name='summary' id='summary' value='<%- rows[0].summary %>' required placeholder="必須">
                 </div>
             </div>
         </div>
         <div class='form-group form-inline'>
-            <span><label for='price'>金額　</label></span>
+            <span><label for='amount'>金額　</label></span>
             <div class="col col-md-7 col-sm-7">
-            <input type="text" id='price' name='price' class="form-control" <%- price%>>
+            <input type="text" id='amount' name='amount' class="form-control" value='<%- rows[0].amount %>'>
             </div>
             <span class="col col-md-4 col-sm-4">円</span>
         </div>
         <div class='form-group form-inline'>
         <div class='form-group form-inline'>
-            <label for='jobcode'>ジョブコード</label> 
+            <label for='job_no'>ジョブコード</label> 
                 <div class="col-6">
-                <input type="text" class='form-control' id='jobcode' name='jobcode'>
+                <input type="text" class='form-control' id='job_no' name='job_no' value='<%- rows[0].job_no %>' >
                 </div>
         </div>
         <div class='form-group form-inline'>
             <label for='jobname'>ジョブ名</label> 
                 <div class="col-6">
-                <input type="text" class='form-control' id='jobname' name='jobname'>
+                <input type="text" class='form-control' id='jobname' name='jobname' >
                 </div>
         </div>
         <input type="submit" id="btn-return" value="ジョブ検索" class="btn btn-primary" onclick="frameClick();">
@@ -191,10 +190,10 @@
             </form>
         </div>
         <div class='form-group form-inline'>
-            <label for='memo'>備考</label>
+            <label for='remarks'>備考</label>
             <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
             <div class="col col-md-8 col-sm-7">
-            <input type="text" class='form-control' id='memo' name='memo'>
+            <input type="text" class='form-control' id='remarks' name='remarks' value='<%- rows[0].remarks %>' >
             </div>
         </div>
         <div>

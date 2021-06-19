@@ -18,21 +18,44 @@
     <!-- 前月データへ移動 -->
     <p><a href="/ex_thismonth">今月データへ</a></p>
     <div class="container">
-      <button class="btn btn-primary" id="detail">移動レコードを追加</button>
-      <h5><br>よく使う経路</h5>
-      <table class="table table-primary">
+      <table class="table">
+        <thead class="thead-light">
         <tr>
-          <th>ステータス</th>
+          <th class="visible-lg">ステータス</th>
           <th>No</th>
           <th>利用日</th>
-          <th>支払先</th>
+          <th class="visible-lg">支払先</th>
           <th>摘要</th>
           <th>税込金額</th>
-          <th>勘定科目</th>
-          <th>Jobコード</th>
+          <th class="visible-lg">勘定科目</th>
+          <th class="visible-lg">Jobコード</th>
           <th>詳細</th>
-          <th>今月へコピー</th>
         </tr>
+        </thead>
+        <tbody>
+          <% for(let i in status){ %>
+          <div class="content"
+          <tr id="records">   
+            <td id=status class=status><%= status[i] %> </td>
+            <td id=branch_no><%- branch_no[i] %></td>
+            <td id=month><%- month[i] %>/<%- day[i] %></td>
+            <td id=trans_from><%- payee[i] %></th>
+            <td id=trans_to><%- summary[i] %></td>
+            <td id=amount><%- amount[i] %></td>
+            <td id=count><%- code_name[i] %> </td>
+            <td id=job_no><%- job_no[i] %> </td>
+            </div>
+            <form method="POST" action="/ex_lastmonth"> 
+              <!-- PKをDBに投げれるようにする。後工程でTe_DetailファイルでDBにSELECT文を送る -->
+              <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
+              <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
+              <input type="hidden" name=month value="<%= month[i] %>">
+              <input type="hidden" name=day value="<%= day[i] %>">
+              <td><input type="submit" class="btn btn-secondary" name="ex_copy" value="コピー"></td>
+            </form>
+          </tr>
+          <% } %>
+        </tbody>
       </table>
     </div>
     <hr class="mt-5">
@@ -57,6 +80,16 @@
   }
   
     </script>
+        <script src="/jquery/jquery.js"></script>
+        <script>
+          'use strict';
+          $(".status:contains('88')").text("承認")
+          $(".status:contains('11')").text("JM申請中")
+          $(".status:contains('19')").text("JM却下")
+          $(".status:contains('21')").text("経理申請中")
+          $(".status:contains('29')").text("経理却下")
+          $(".status:contains('00')").text("未申請")
+        </script>
   
   </body>
 </html>
