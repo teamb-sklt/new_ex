@@ -6,8 +6,8 @@ const fetch = require('node-fetch');
 require('dotenv').config();
 const user=process.env.USER;
 const dbpassword=process.env.PASSWORD;
-var{Client}=require('pg');  //データベースを使うための宣言
 const apiKey = process.env.APIKEY //APIkeyを使うのに必要
+var{Client}=require('pg');  //データベースを使うための宣言
 
 var today = moment();
 var year = moment().format("YYYY");
@@ -286,6 +286,7 @@ router.post('/',async function(req,response,next){
     // })
     
     //フォームに入力された値を定義
+    let dEmpno = 001; //ログインID=社員IDに変更要
     let dYear = req.body.year;
     let dMonth = req.body.month;
     let dDay = req.body.day;
@@ -295,26 +296,25 @@ router.post('/',async function(req,response,next){
     let dWay = req.body.way;
     let dPrice =target.Oneway;
     let dTimes = req.body.times;
+    let dJobno = req.body.job_no;
+    let dJobmanager = 111; //仮で111
+    let dClaimflag = req.body.claim_flag;
+    let dChargeflag = req.body.charge_flag;
+    let dRefno = req.body.ref_no;
+    let dStasus = 11; //JM申請中ステータス
     let dMemo = req.body.memo;
-    let dShinsei =1;
-    let dMovedate = date;
-    let dUpdate = date;
+    let dNew = 001; //ログインID=社員IDに変更要
+    let dNewdate = req.body.year+req.body.month+req.body.day;
 
     //インサートコマンドを定義
     const sql = "INSERT INTO tedetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)";
-    const values = ['001',dYear,dMonth,dDay, ,dYear,dMonth,dDay,dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,'SKLOTH0306','111','0','1','1','11', '備考'];
-
-    client.query('SELECT * from tedetail',function(err,result){
-      console.log(result)
-      for(var i of result.rows){
-        console.log(i)
-        // id[i]=result.rows[i].id;
-        // name[i]=result.rows[i].name;
-        // mail[i]=result.rows[i].mail;
-        // console.log(id[i]+name[i]+mail[i]);              
-      }
-      client.end()
-    });
+    const values = [dEmpno,dYear,dMonth,dDay, ,dYear,dMonth,dDay,dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate, , ];
+    client.query(sql, values)
+    .then(res => {
+        console.log(res)
+        client.end()
+    })
+    .catch(e => console.error(e.stack));
     let opt={
         title: '保存できました！',
         message: '続けて検索する場合はそのまま各項目を入力してください',
@@ -325,7 +325,7 @@ router.post('/',async function(req,response,next){
         sWaypoint: '',
         sGoal: '',
     }
-    res.render('te_newrecord',opt);
+    response.render('te_newrecord',opt);
     }
     //削除ボタンが押された時に実行
     // else if(req.body.delete){
