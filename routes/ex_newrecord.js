@@ -49,7 +49,7 @@ router.get('/', async function(req, res, next) {
         sWaypoint: '',
         sGoal: '',
     }
-    res.render('ex_detail',opt);
+    res.render('ex_newrecord',opt);
   });
 
 /*
