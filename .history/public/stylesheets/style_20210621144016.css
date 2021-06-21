@@ -1,0 +1,57 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+/* 申請チーム用CSS */
+#routeWaypoint {
+  width: 735px;
+}
+#search {
+  width: 500px;
+  margin-left: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#price {
+  width: 682px;
+  margin: 5px;
+}
+#way {
+  width: 294px;
+  margin: 5px;
+}
+#moveDate {
+  width: 633px;
+  margin: 5px;
+}
+#jobcode {
+  width: 194px;
+  margin: 5px;
+}
+#jobname {
+  width: 194px;
+  margin: 5px;
+}
+#jm {
+  width: 666px;
+  margin: 5px;
+}
+#memo {
+  width: 682px;
+  margin: 5px;
+}
+#times {
+  width: 316px;
+  margin: 5px;
+}
+#regularly {
+  transform: scale(1.4);
+}
+input:checked+.content{
+  color: gray;
+}
