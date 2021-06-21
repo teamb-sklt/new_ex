@@ -81,13 +81,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for='route'>経由地</label>
-                <input type="text" class='form-control' name='routeWaypoint' id='routeWaypoint' placeholder="省略可">
+                <label for='trans_waypoint'>経由地</label>
+                <input type="text" class='form-control' name='trans_waypoint' id='trans_waypoint'  placeholder="省略可">
             </div>
             <input type="submit" id='search' value="検索" class="btn btn-danger" name='search'>
             <!--<button onclick="searchPrice()" class="btn btn-primary">調べよう</button>-->
         </div>
-        <div class='form-group form-inline'>
         <div class='form-group form-inline'>
             <label for='amount'>運賃</label> 
             <div class="col col-md-9 col-sm-8">
@@ -127,10 +126,9 @@
             <input type="text" class='form-control' id='jobname' name='jobname'>
             </div>
     </div>
-    <input type="submit" id="btn-return" value="ジョブ検索" class="btn btn-primary" onclick="job">
+    <input type="submit" id="btn-return" value="ジョブ検索" class="btn btn-primary" onclick="frameClick();">
     </div>
-    <div class='form-group form-inline'>
-    <div class='form-group form-inline'>
+    <div class='form-group col-25 form-inline'>
         <label for="jm">ＪＭ　　</label>
         <form action="#">
             <select name='jm' id='jm' class='form-control'>
@@ -140,15 +138,17 @@
             </select>
         </form>
     </div>
-        <div class='form-group form-inline'>
-        <div class='form-group form-inline'>
-            <label for='claim_flag'>　　顧客に請求する</label> 
+            <div class='form-group form-inline'>
+            <label for='claim_flag'>　顧客に請求する</label> 
+                <div class="col col-md-3">
                 <input type="checkbox" class='form-control' id='claim_flag' name='claim_flag' onchange="onChangeCheckBox1()">
+                </div>
         </div>
         <div class='form-group form-inline'>
-            <label for='charge_flag'>　　ジョブにチャージ</label> <br>
+            <label for='charge_flag'>ジョブにチャージ</label> <br>
+                <div class="col col-md-3">
                 <input type="checkbox" class='form-control' id='charge_flag' name='charge_flag' onchange="onChangeCheckBox2()">
-        </div>
+                </div>
         </div>
     </div>
         <div class='form-group form-inline'>
@@ -210,8 +210,8 @@
 	// 	hiddenInput.val('false');
 	// }
   
-        var val = document.getElementById('jm');
         val.onchange = function() {
+            var val = document.getElementById('jm');
             if (val !== 0) {
             alert('本来とは別のJMが選択されています。再確認の上、変更願います。');
             }
