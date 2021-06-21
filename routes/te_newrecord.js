@@ -105,6 +105,7 @@ router.post('/',async function(req,response,next){
         let stationStart = req.body.routeStart;
         let stationWaypoint = req.body.routeWaypoint;
         let stationGoal = req.body.routeGoal;
+        let branch_no2 = req.body.branch_no2;
 
         //ICカード条件生成のための完成URL（エンコード済み）
         let icUrl = encodeURI(`${baseUrl}${ic}${accessKey}`) 
@@ -193,6 +194,7 @@ router.post('/',async function(req,response,next){
                     price: 'value=' +'"' +target.Oneway +'円' +'"',
                     moveDate: 'value='+'"'+date.substring(4)+'"', //データベースの値+この式でいけそう
                     date: date,
+                    branch_no2:branch_no2,
                     sStart: req.body.routeStart,
                     sWaypoint: req.body.routeWaypoint,
                     sGoal: req.body.routeGoal
@@ -209,6 +211,7 @@ router.post('/',async function(req,response,next){
                     message: "運賃が計算できませんでした<br>日付・時刻は半角数字、駅名は正しい名前を入力してください",
                     price: 'placeholder="自動計算（ICカード利用時料金）"',
                     moveDate: 'placeholder="移動した日付・時刻が自動で追加されます"', 
+                    branch_no2:branch_no2,
                     date: '',
                     sStart: '',
                     sWaypoint: '',
@@ -288,6 +291,7 @@ router.post('/',async function(req,response,next){
         message: '続けて検索する場合はそのまま各項目を入力してください',
         price: 'placeholder="自動計算（ICカード利用時料金）"',
         moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
+        branch_no2:branch_no2,
         date:'',
         sStart: '',
         sWaypoint: '',
