@@ -3,8 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <title><%= title %></title>
+
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      input:checked+.content{
+        color: gray;
+      }
+    </style>
   </head>
   <body onload="rel()" class="container">
     <%- include('nav') %> 
