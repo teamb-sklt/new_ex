@@ -86,9 +86,13 @@ router.get('/', async function(req, res, next) {
      res.render('te_newrecord', opt);
     });
 
-
 //経路選択画面からPOSTで引っ張ってくる
-router.post('/',function(req,response,next){
+router.post('/', async function(req,response,next){
+    // let trans_from = req.body.trans_from;
+    // let trans_waypoint = req.body.trans_waypoint;
+    // let trans_to = req.body.trans_to;
+    // let branch_no2 = req.body.branch_no2;
+    // let amount = req.body.amount;
     let opt={
         title: '交通費',
         branch_no2:req.body.branch_no2,
@@ -100,10 +104,8 @@ router.post('/',function(req,response,next){
     response.render('te_newrecord', opt);
 })
 
-router.post('/',function(req,response,next){
-    let year = req.body.year
-    console.log(year)
 
+router.post('/', async function(req,response,next){
     //result.ejsの選択ボタンボタンが押されたら実行
     if(req.body.search){
         //経路選択画面からPOSTで引っ張ってくる
@@ -138,34 +140,34 @@ router.post('/',function(req,response,next){
       password: dbpassword,
       port: 5432
     })
-    // await client.connect()
-    client.connect()
-    
+    await client.connect()
+      
     //フォームに入力された値を定義
     let dEmpno = 001; //ログインID=社員IDに変更要
     let dYear = req.body.year;
     let dMonth = req.body.month;
     let dDay = req.body.day;
-    let dStart = req.body.routeStart;
-    let dGoal = req.body.routeGoal;
-    let dWaypoint = req.body.routeWaypoint;
-    let dWay = req.body.way;
-    let dPrice =target.Oneway;
-    let dTimes = req.body.times;
+    let dWay = req.body.trans_type;
+    let dStart = req.body.trans_from;
+    let dGoal = req.body.trans_to;
+    let dWaypoint = req.body.trans_waypoint;
+    let dPrice = req.body.amount; //target.Oneway;
+    let dTimes = req.body.count;
     let dJobno = req.body.job_no;
     let dJobmanager = 111; //仮で111
     let dClaimflag = req.body.claim_flag;
     let dChargeflag = req.body.charge_flag;
     let dRefno = req.body.ref_no;
     let dStasus = 11; //JM申請中ステータス
-    let dMemo = req.body.memo;
-    let dNew = 001; //ログインID=社員IDに変更要
+    let dMemo = req.body.remarks;
+    let dNew = '001'; //ログインID=社員IDに変更要
     let dNewdate = req.body.year+req.body.month+req.body.day;
-    console.log(year)
-
+      
     //インサートコマンドを定義
     const sql = "INSERT INTO tedetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)";
-    const values = [dEmpno,dYear,dMonth,dDay, ,dYear,dMonth,dDay,dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate, , ];
+    //const values = ["'"+dEmpno+"'","'"+year+"'","'"+tmonth+"'","'"+branch_no2+"'","'"+dYear+"'","'"+dMonth+"'","'"+dDay+"'","'"+dWay+"'","'"+dStart+"'","'"+dGoal+"'","'"+dWaypoint+"'","'"+dPrice+"'","'"+dTimes+"'","'"+dJobno+"'","'"+dJobmanager+"'","'"+dClaimflag+"'","'"+dChargeflag+"'","'"+dRefno+"'","'"+dStasus+"'","'"+dMemo+"'","'"+dNew+"'","'"+dNewdate+"'","'"+dNew+"'","'"+dNewdate+"'"];
+    const values = [dEmpno,year,tmonth,branch_no2,dYear,dMonth,dDay,dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate,dNew,dNewdate];
+    console.log(values)
     client.query(sql, values)
     .then(res => {
         console.log(res)

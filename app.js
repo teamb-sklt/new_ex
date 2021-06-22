@@ -16,6 +16,8 @@ var ex_shinseiRouter = require('./routes/ex_shinsei');
 var te_shinseiRouter = require('./routes/te_shinsei');
 var ex_detailRouter = require('./routes/ex_detail');
 var te_detailRouter = require('./routes/te_detail');
+var jobsearchRouter = require('./routes/jobsearch');
+var loginRouter = require('./routes/login');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -41,6 +43,8 @@ app.use('/ex_newrecord',ex_newrecordRouter);
 app.use('/ex_detail',ex_detailRouter);
 app.use('/te_detail',te_detailRouter);
 app.use('/result', resultRouter);
+app.use('/jobsearch',jobsearchRouter);
+app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 app.use('/ex_shinsei',ex_shinseiRouter);
 app.use('/te_shinsei',te_shinseiRouter);

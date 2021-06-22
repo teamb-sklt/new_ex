@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' 
+    href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body class= 'container p-3'>
+    <h1 class = "display-4"><%= title %></h1>
+    <p class='h4'><%- message %></p><br>
+    <form method="POST" action="/ex_detail">
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-2">
+                    <label for="text">年</label> 
+                    <input type="text" class='form-control' name='year' id='year'  required>
+                </div>
+                <div class="form-group col-2">
+                    <label for="text">月</label> 
+                    <input type="text" class='form-control' name='month' id='month'  required>
+                </div>
+                <div class="form-group col-2">
+                    <label for="text">日</label> 
+                    <input type="text" class='form-control' name='day' id='day'  required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='kanjokamoku'>勘定科目</label> <br>
+                    <select id='kanjokamoku' name='kanjokamoku' class='form-control'　required>
+                        <option>▼選択してください</option>
+                        <option>消耗品費</option>
+                        <option>新聞図書費</option>
+                        <option>会議費</option>
+                        <option>交際費</option>
+                        <option>その他</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-4">
+                    <label for='shiharaisaki'>支払先</label>
+                    <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
+                    <input type="text" class='form-control' name='shiharaisaki' id='shiharaisaki'  required placeholder="必須">
+                </div>
+                <div class="form-group col-4">
+                    <label for='tekiyou'>摘要</label>
+                    <span class="c-tooltip form-inline" data-tooltip="書籍購入制度利用の場合は『書籍代』と入力ください。">❔</span>
+                    <input type="text" class='form-control form-inline' name='tekiyou' id='tekiyou'  required placeholder="必須">
+                </div>
+            </div>
+        </div>
+        <div class='form-group form-inline'>            
+            <span><label for='price'>金額　</label></span>
+            <input type="text" id='price' name='price' class="form-control" <%- price%>>
+        </div>
+            <input type="submit" id='search' value="検索" class="btn btn-danger" name='search'>
+            <!--<button onclick="searchPrice()" class="btn btn-primary">調べよう</button>-->
+        </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='jobcode'>ジョブコード</label> 
+                <div class="col-6">
+                <input type="text" class='form-control' id='jobcode' name='jobcode'>
+                </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='jobname'>ジョブ名</label> 
+                <div class="col-6">
+                <input type="text" class='form-control' id='jobname' name='jobname'>
+                </div>
+        </div>
+        <input type="submit" id="btn-return" value="ジョブ検索" class="btn btn-primary" onclick="frameClick();">
+        </div>
+        <div class='form-group form-inline'>
+            <div class='form-group form-inline'>
+                <label for="jm">ＪＭ　　</label>
+                <form action="#">
+                    <select name='jm' id='jm' class='form-control'>
+                        <option value=0>---------------</option>
+                        <option value=1>Aさん</option>
+                        <option value=2>Bさん</option>
+                    </select>
+                </form>
+            </div>
+            <div class='form-group form-inline'>
+                <div class='form-group form-inline'>
+                    <label for='claim_flag'>　　顧客に請求する</label> 
+                        <input type="checkbox" class='form-control' id='claim_flag' name='claim_flag' onchange="onChangeCheckBox1()">
+                </div>
+                <div class='form-group form-inline'>
+                    <label for='charge_flag'>　　ジョブにチャージ</label> <br>
+                        <input type="checkbox" class='form-control' id='charge_flag' name='charge_flag' onchange="onChangeCheckBox2()">
+                </div>
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='remarks'>備考</label>
+            <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔　 </span>
+            <input type="text" class='form-control' id='remarks' name='remarks' >
+        </div>
+        <div>
+            <input type="submit" id="btn-return" value="戻る" class="btn btn-primary" onclick="jobClick();">
+            <input type="submit" id="btn-save" value="保存" class="btn btn-primary" name='save'>
+            <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'>
+        </div>
+    </form>
+    <script type="text/javascript">
+
+        'use strict'
+
+        //戻るボタンでex_thismonthに遷移
+        function frameClick() {
+            document.location.href = 'http://localhost:3000/ex_thismonth';
+        };
+
+        //日付・時刻の初期値の設定
+        var date = new Date();
+        date.setDate(date.getDate());
+        var year = date.getFullYear();
+        var month = ("0"+(date.getMonth()+1)).slice(-2);
+        var day = ("0"+date.getDate()).slice(-2);
+        var hours = ("0"+date.getHours()).slice(-2);
+        var minutes = ("0"+date.getMinutes()).slice(-2);
+        document.getElementById("date").value=yyyy+mm+dd;
+        // document.getElementById("time").value=hours+minutes;
+        document.getElementById("year").value=year;
+        document.getElementById("month").value=month;
+        document.getElementById("day").value=day;
+        document.getElementById("time").value=hours+minutes;
+
+
+    //     if(regularly.prop('checked')){
+	// 	hiddenInput.attr('disabled', 'disabled');
+	// 	checkboxInput.val('true');
+	// }else{
+	// 	hiddenInput.removeAttr('disabled');//hiddenのタグを有効にする
+	// 	hiddenInput.val('false');
+	// }
+
+        function jobClick() {
+            document.location.href = 'http://localhost:3000/ex_thismonth';
+        };
+        
+        var val = document.getElementById('jm');
+        val.onchange = function() {
+            if (val !== 0) {
+            alert('本来とは別のJMが選択されています。再確認の上、変更願います。');
+            }
+        }
+    </script>
+  </body>
+</html>
