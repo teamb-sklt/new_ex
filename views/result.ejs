@@ -10,7 +10,7 @@
       <label for='trans_to'>目的地</label> 
       <input type="text" class='form-control' name='trans_to' id='trans_to'  required placeholder="必須" value=<%= trans_to %>>
       <label for='trans_waypoint'>経由地</label>
-      <input type="text" class='form-control' name='trans_waypoint' id='trans_waypoint'  placeholder="省略可" value=<%= trans_waypoint %>>
+      <input type="text" class='form-control' name='trans_waypoint' id='trans_waypoint'  placeholder="省略可" value=<%= result2[1] %>>
       <label for='trans_waypoint'>ブランチ</label>
       <input type="text" class='form-control' name='trans_waypoint' id='trans_waypoint'  placeholder="省略可" value=<%=　branch_no2  %>>
     </form>
@@ -31,11 +31,11 @@
             </div>
             <form method="POST" action="/te_newrecord"> 
                 <input type="hidden" name='trans_from' id='trans_from' required placeholder="必須" value=<%= trans_from %>>
-                <input type="hidden" name='trans_waypoint' id='trans_waypoint'  placeholder="省略可" value=<%= trans_waypoint %>>
                 <input type="hidden" name='trans_to' id='trans_to'  required placeholder="必須" value=<%= trans_to %>>
                 <input type="hidden" name='branch_no2'  id='branch_no2' value="<%- branch_no2 %>">
-              <input type="hidden" name=Route value="<%= result[i] %>">
-              <input type="hidden" id='amount' name=amount value="<%= result1[i] %>">
+              <input type="hidden" name='Route' value="<%= result[i] %>">
+              <input type="hidden" id='amount' name='amount' value="<%= result1[i] %>">
+              <input type="hidden" id='trans_waypoint' name='trans_waypoint' value="<%= result2[i] %>">
               <td><input type="submit" class="btn btn-secondary" name="search" id="search" value="選択"></td>
             </form>
           </tr>

@@ -24,6 +24,7 @@ router.get('/',function(req,response,next){
         amount:'',
         result:'',
         result1:'',
+        result2:'',
         // branch_no2:req.body.branch_no2,
         // trans_from:req.body.trans_from,
         // trans_waypoint:req.body.trans_waypoint,
@@ -123,11 +124,14 @@ router.post('/',function(req,response,next){
         .then(res => JSON.parse(res))   //json形式のテキストをオブジェクトに変換する
         .then(res =>{
             let result = []　//これは簡略化されたルートをいれていく配列　例）result[1]とresult[1]がインデックスを連携させている。
-            let result1 = [] //これは正しい単価を入れていく配列　
+            let result1 = [] //これは正しい単価を入れていく配列
+            let result2 = [] //これは経由駅を自動でいれていく配列　乗り換えがない場合は到着駅が取られる。　
             for (n of res.ResultSet.Course){
                 try {
                     let displayRoute = n.Teiki.DisplayRoute 
-                    result.push(displayRoute)           
+                    result.push(displayRoute)
+                    let station1 = n.Route.Point[1].Station.Name
+                    result2.push(station1)        
                     for( i of n.Price){
                         if(i.kind == 'FareSummary'){
                             let onewayPrice = i.Oneway
@@ -139,7 +143,7 @@ router.post('/',function(req,response,next){
                     console.log(e)
                   }
                 }
-                // console.log(result)
+                // console.log(result2[2])
 
 
             //renderする際のオプションを定義
@@ -149,6 +153,7 @@ router.post('/',function(req,response,next){
                 // message: '続けて各項目を記入し、保存してください',
                 result:result,
                 result1:result1,
+                result2:result2,
                 trans_from:stationStart,
                 trans_waypoint:stationWaypoint,
                 trans_to:stationGoal,
