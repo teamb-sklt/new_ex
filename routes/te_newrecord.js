@@ -52,13 +52,7 @@ router.get('/', async function(req, res, next) {
       port: 5432
     })
     await client.connect()
-    // console.log(client)
-    // client.query('SELECT * from example', function(err, result){
-    //   if (err){
-    //     console.log(err) //show error infomation
-    //   }
-    //   console.log(result)
-    // })
+
     client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     //   console.log(result)
     //   console.log(result.rows[0].count)
@@ -92,23 +86,6 @@ router.get('/', async function(req, res, next) {
      res.render('te_newrecord', opt);
     });
 
-//経路選択画面からPOSTで引っ張ってくる
-router.post('/', async function(req,response,next){
-    // let trans_from = req.body.trans_from;
-    // let trans_waypoint = req.body.trans_waypoint;
-    // let trans_to = req.body.trans_to;
-    // let branch_no2 = req.body.branch_no2;
-    // let amount = req.body.amount;
-    let opt={
-        title: '交通費',
-        branch_no2:req.body.branch_no2,
-        trans_from:req.body.trans_from,
-        trans_waypoint:req.body.trans_waypoint,
-        trans_to:req.body.trans_to,
-        amount:req.body.amount,
-    }
-    response.render('te_newrecord', opt);
-})
 
 
 router.post('/', async function(req,response,next){
@@ -118,22 +95,23 @@ router.post('/', async function(req,response,next){
         let trans_from = req.body.trans_from;
         let trans_waypoint = req.body.trans_waypoint;
         let trans_to = req.body.trans_to;
-        let branch_no2 = req.body.branch_no2;
+        let branch_no2 = req.body.branch_no;
         let amount = req.body.amount;
 
             let opt={
                 title: '交通費',
-                branch_no2:req.body.branch_no2,
-                trans_from:req.body.trans_from,
-                trans_waypoint:req.body.trans_waypoint,
-                trans_to:req.body.trans_to,
-                amount:req.body.amount,
+                branch_no2:branch_no2,
+                trans_from:trans_from,
+                trans_waypoint:trans_waypoint,
+                trans_to:trans_to,
+                amount:amount,
             }
             response.render('te_newrecord', opt);
     }
     
     //保存ボタンが押されたときに実行
     else if(req.body.save){
+      console.log(req.body.save)
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
       ssl: {
@@ -149,7 +127,7 @@ router.post('/', async function(req,response,next){
     await client.connect()
       
     //フォームに入力された値を定義
-    let dEmpno = 001; //ログインID=社員IDに変更要
+    let dEmpno = '001'; //ログインID=社員IDに変更要
     let dYear = req.body.year;
     let dMonth = req.body.month;
     let dDay = req.body.day;
@@ -164,7 +142,7 @@ router.post('/', async function(req,response,next){
     let dClaimflag = req.body.claim_flag;
     let dChargeflag = req.body.charge_flag;
     let dRefno = req.body.ref_no;
-    let dStasus = 11; //JM申請中ステータス
+    let dStasus = '00'; //JM申請中ステータス
     let dMemo = req.body.remarks;
     let dNew = '001'; //ログインID=社員IDに変更要
     let dNewdate = req.body.year+req.body.month+req.body.day;
@@ -180,19 +158,8 @@ router.post('/', async function(req,response,next){
         client.end()
     })
     .catch(e => console.error(e.stack));
-    let opt={
-        title: '保存できました！',
-        message: '続けて検索する場合はそのまま各項目を入力してください',
-        price: 'placeholder="自動計算（ICカード利用時料金）"',
-        moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
-        branch_no2:branch_no2,
-        date:'',
-        sStart: '',
-        sWaypoint: '',
-        sGoal: '',
-    }
-    response.render('te_newrecord',opt);
-    }
+    response.redirect("/te_thismonth");
+  }
 });
 
 

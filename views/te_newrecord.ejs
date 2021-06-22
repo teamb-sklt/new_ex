@@ -11,7 +11,7 @@
   <body class= 'container p-3'>
     <h1 class = "display-4"><%= title %></h1>
     <!-- <form method="POST" action="/te_newrecord"> -->
-        <form method="post"> 
+        <form method="POST"> 
         <div class='form-group'>
             <div class='form-row'>
                 <div class="form-group col-2">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group col-4">
                     <label for='branch_no'>No</label> 
-                    <input type="text" class='form-control' name='branch_no'  id='branch_no' value="<%- branch_no2 %>" disabled>
+                    <input type="text" class='form-control' name='branch_no'  id='branch_no' value="<%- branch_no2 %>" >
                     <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
                 </div>
             </div>
@@ -74,10 +74,14 @@
             <label for='trans_type'>手段</label> <br>
             <div class="col col-md-9 col-sm-8">
             <select id='trans_type' name='trans_type' class='form-control' onchange="onChangeWay()">
-                <option>電車</option>
+                <!-- <option>電車</option>
                 <option>バス</option>
                 <option>タクシー</option>
-                <option>その他</option>
+                <option>その他</option> -->
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>0</option>
             </select>
             </div>
         </div>
