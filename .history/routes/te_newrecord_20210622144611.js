@@ -259,7 +259,7 @@ router.post('/', async function(req,response,next){
     let dWaypoint = req.body.trans_waypoint;
     let dPrice = req.body.amount; //target.Oneway;
     let dTimes = req.body.count;
-    let dJobno = req.body.job_no;
+    let dJobno = req.body.jobcode;
     let dJobmanager = 111; //仮で111
     let dClaimflag = req.body.claim_flag;
     let dChargeflag = req.body.charge_flag;
