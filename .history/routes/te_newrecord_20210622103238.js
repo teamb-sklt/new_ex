@@ -268,11 +268,10 @@ router.post('/', async function(req,response,next){
     let dMemo = req.body.memo;
     let dNew = 001; //ログインID=社員IDに変更要
     let dNewdate = req.body.year+req.body.month+req.body.day;
-    console.log(req.body.year)
+
     //インサートコマンドを定義
     const sql = "INSERT INTO tedetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)";
-    //const values = ["'"+dEmpno+"'","'"+year+"'","'"+tmonth+"'","'"+branch_no2+"'","'"+dYear+"'","'"+dMonth+"'","'"+dDay+"'","'"+dWay+"'","'"+dStart+"'","'"+dGoal+"'","'"+dWaypoint+"'","'"+dPrice+"'","'"+dTimes+"'","'"+dJobno+"'","'"+dJobmanager+"'","'"+dClaimflag+"'","'"+dChargeflag+"'","'"+dRefno+"'","'"+dStasus+"'","'"+dMemo+"'","'"+dNew+"'","'"+dNewdate+"'","'"+dNew+"'","'"+dNewdate+"'"];
-    const values = [dEmpno,year,tmonth,branch_no2,dYear,dMonth,dDay,dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate,dNew,dNewdate];
+    const values = ["'"+dEmpno+"'","'"+year+"'","'"+tmonth+"'","'"+branch_no2+"'","'"+dYear+"'","'"+dMonth+"'","'"+dDay+"'","'"+dWay+"'","'"+dStart+"'","'"+dGoal+"'","'"+dWaypoint+"'",dPrice,dTimes,"'"+dJobno+"'","'"+dJobmanager+"'","'"+dClaimflag+"'","'"+dChargeflag+"'","'"+dRefno+"'","'"+dStasus+"'","'"+dMemo+"'","'"+dNew+"'","'"+dNewdate+"'","'"+dNew+"'","'"+dNewdate+"'"];
     console.log(values)
     client.query(sql, values)
     .then(res => {

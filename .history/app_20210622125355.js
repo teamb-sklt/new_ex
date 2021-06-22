@@ -40,7 +40,6 @@ app.use('/ex_newrecord',ex_newrecordRouter);
 app.use('/ex_detail',ex_detailRouter);
 app.use('/te_detail',te_detailRouter);
 app.use('/jobsearch',jobsearchRouter);
-app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
