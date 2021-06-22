@@ -292,16 +292,68 @@ router.post('/', async function(req,response,next){
         response.render('te_newrecord',opt);
         }
         //戻るボタンが押されたときに実行
-        // else if(req.body.return){
-        //     response.render('te_thismonth');
-        // }
-        // //ジョブ検索ボタンが押されたときに実行
-        // else if(req.body.jobsearch){
-        // let opt={
-        //     title: 'ジョブ検索ページ',
-        //     }
-        //     response.render('jobsearch',opt);
-        //     }
+        else if(req.body.return){
+            response.render('te_thismonth');
+        }
+        //ジョブ検索ボタンが押されたときに実行
+        else if(req.body.jobsearch){
+        const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+          connectionString: process.env.DATABASE_URL,
+          ssl: {
+              rejectUnauthorized: false
+          }
+        }) : new Client({
+          user: 'postgres',
+          host: 'localhost',
+          database: 'itpjph3',
+          password: dbpassword,
+          port: 5432
+        })
+        await client.connect()
+    
+        //フォームに入力された値を定義
+        let dEmpno = 001; //ログインID=社員IDに変更要
+        let dYear = req.body.year;
+        let dMonth = req.body.month;
+        let dDay = req.body.day;
+        let dWay = req.body.trans_type;
+        let dStart = req.body.trans_from;
+        let dGoal = req.body.trans_to;
+        let dWaypoint = req.body.trans_waypoint;
+        let dPrice = req.body.amount; //target.Oneway;
+        let dTimes = req.body.count;
+        let dJobno = req.body.job_no;
+        let dJobmanager = 111; //仮で111
+        let dClaimflag = req.body.claim_flag;
+        let dChargeflag = req.body.charge_flag;
+        let dRefno = req.body.ref_no;
+        let dStasus = 11; //JM申請中ステータス
+        let dMemo = req.body.memo;
+        let dNew = 001; //ログインID=社員IDに変更要
+        let dNewdate = req.body.year+req.body.month+req.body.day;
+    
+        //インサートコマンドを定義
+        const sql = "INSERT INTO tedetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)";
+        const values = ['dEmpno','year','tmonth','branch_no2','dYear','dMonth','dDay',dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,dJobno,'dJobmanager','dClaimflag','dChargeflag','dRefno','dStasus',dMemo,'dNew','dNewdate','dNew','dNewdate'];
+        client.query(sql, values)
+        .then(res => {
+            console.log(res)
+            client.end()
+        })
+        .catch(e => console.error(e.stack));
+        let opt={
+            title: 'ジョブ探せました！',
+            message: '続けて検索する場合はそのまま各項目を入力してください',
+            price: 'placeholder="自動計算（ICカード利用時料金）"',
+            moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
+            branch_no2:branch_no2,
+            date:'',
+            sStart: '',
+            sWaypoint: '',
+            sGoal: '',
+            }
+            response.render('te_newrecord',opt);
+            }
 });
 
 module.exports = router;

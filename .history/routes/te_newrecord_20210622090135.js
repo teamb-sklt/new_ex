@@ -292,16 +292,26 @@ router.post('/', async function(req,response,next){
         response.render('te_newrecord',opt);
         }
         //戻るボタンが押されたときに実行
-        // else if(req.body.return){
-        //     response.render('te_thismonth');
-        // }
-        // //ジョブ検索ボタンが押されたときに実行
-        // else if(req.body.jobsearch){
-        // let opt={
-        //     title: 'ジョブ検索ページ',
-        //     }
-        //     response.render('jobsearch',opt);
-        //     }
+        else if(req.body.return){
+            let opt={
+                title: '交通費',
+                tmonth:tmonth,
+                lmonth:lmonth,
+                lastday:lastday,
+                date:date,
+                status:'',
+                branch_no:branch_no,
+                month:'',
+                day:'',
+                trans_from:trans_from,
+                trans_to:trans_to,
+                amount:amount,
+                count:count,
+                subtotal:subtotal,
+                job_no:job_no,
+            }
+            response.render('te_thismonth',opt);
+        }
 });
 
 module.exports = router;

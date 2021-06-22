@@ -13,7 +13,7 @@ var te_newrecordRouter = require('./routes/te_newrecord');
 var ex_newrecordRouter = require('./routes/ex_newrecord');
 var ex_detailRouter = require('./routes/ex_detail');
 var te_detailRouter = require('./routes/te_detail');
-var jobsearchRouter = require('./routes/jobsearch');
+var te_detailRouter = require('./routes/jobsearch');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -38,7 +38,6 @@ app.use('/te_newrecord',te_newrecordRouter);
 app.use('/ex_newrecord',ex_newrecordRouter);
 app.use('/ex_detail',ex_detailRouter);
 app.use('/te_detail',te_detailRouter);
-app.use('/jobsearch',jobsearchRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

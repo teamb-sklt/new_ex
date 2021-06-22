@@ -292,16 +292,24 @@ router.post('/', async function(req,response,next){
         response.render('te_newrecord',opt);
         }
         //戻るボタンが押されたときに実行
-        // else if(req.body.return){
-        //     response.render('te_thismonth');
-        // }
-        // //ジョブ検索ボタンが押されたときに実行
-        // else if(req.body.jobsearch){
-        // let opt={
-        //     title: 'ジョブ検索ページ',
-        //     }
-        //     response.render('jobsearch',opt);
-        //     }
+        else if(req.body.return){
+            response.render('te_thismonth');
+        }
+        //ジョブ検索ボタンが押されたときに実行
+        else if(req.body.jobsearch){
+        let opt={
+            title: 'ジョブ検索ページ',
+            message: '続けて検索する場合はそのまま各項目を入力してください',
+            price: 'placeholder="自動計算（ICカード利用時料金）"',
+            moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
+            branch_no2:branch_no2,
+            date:'',
+            sStart: '',
+            sWaypoint: '',
+            sGoal: '',
+            }
+            response.render('jobsearch',opt);
+            }
 });
 
 module.exports = router;

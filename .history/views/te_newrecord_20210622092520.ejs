@@ -95,7 +95,9 @@
             <input type="text" class='form-control' id='jobname' name='jobname'>
             </div>
     </div>
-    <a href="/jobsearch"><input type="submit" id="btn-jobsearch" value="ジョブ検索" class="btn btn-primary" name="jobsearch"></a>
+    <form method="POST" action="/jobsearch">
+    <a href="/te_newrecord"><input type="submit" id="btn-jobsearch" value="ジョブ検索" class="btn btn-primary" name="jobsearch">
+    </form>
     </div>
     <div class='form-group form-inline'>
     <div class='form-group form-inline'>
@@ -127,7 +129,7 @@
         </div>
         <div class='form-inline'>
         <form method="POST" action="/te_newrecord">
-            <input type="submit" id="btn-return" value="戻る" class="btn btn-primary" name='return'>
+            <a href="/te_thismonth"><input type="submit" id="btn-return" value="戻る" class="btn btn-primary" name='return'></a>
             <input type="submit" id='btn-save' value="保存" class="btn btn-primary" name='save'>
         </div>
         </form>

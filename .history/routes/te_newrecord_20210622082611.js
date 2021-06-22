@@ -247,7 +247,14 @@ router.post('/', async function(req,response,next){
       port: 5432
     })
     await client.connect()
-
+    // console.log(client)
+    // client.query('SELECT * from memo', function(err, result){
+    //   if (err){
+    //     console.log(err)
+    //   }
+    //   console.log(result)
+    // })
+    
     //フォームに入力された値を定義
     let dEmpno = 001; //ログインID=社員IDに変更要
     let dYear = req.body.year;
@@ -271,7 +278,7 @@ router.post('/', async function(req,response,next){
 
     //インサートコマンドを定義
     const sql = "INSERT INTO tedetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)";
-    const values = ['dEmpno','year','tmonth','branch_no2','dYear','dMonth','dDay',dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,dJobno,'dJobmanager','dClaimflag','dChargeflag','dRefno','dStasus',dMemo,'dNew','dNewdate','dNew','dNewdate'];
+    const values = ["dEmpno","year","tmonth","branch_no2","dYear","dMonth","dDay","dWay","dStart","dGoal","dWaypoint","dPrice","dTimes","dJobno","dJobmanager","dClaimflag","dChargeflag","dRefno","dStasus","dMemo","dNew","dNewdate","dNew","dNewdate"];
     client.query(sql, values)
     .then(res => {
         console.log(res)
@@ -291,17 +298,68 @@ router.post('/', async function(req,response,next){
         }
         response.render('te_newrecord',opt);
         }
-        //戻るボタンが押されたときに実行
-        // else if(req.body.return){
-        //     response.render('te_thismonth');
-        // }
-        // //ジョブ検索ボタンが押されたときに実行
-        // else if(req.body.jobsearch){
-        // let opt={
-        //     title: 'ジョブ検索ページ',
-        //     }
-        //     response.render('jobsearch',opt);
-        //     }
+    //削除ボタンが押された時に実行
+    // else if(req.body.delete){
+    //     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+    //       connectionString: process.env.DATABASE_URL,
+    //       ssl: {
+    //           rejectUnauthorized: false
+    //       }
+    //     }) : new Client({
+    //       user: 'postgres',
+    //       host: 'localhost',
+    //       database: 'itpjph3',
+    //       password: dbpassword,
+    //       port: 5432
+    //     })
+    //     await client.connect()
+    //     // console.log(client)
+    //     // client.query('SELECT * from memo', function(err, result){
+    //     //   if (err){
+    //     //     console.log(err)
+    //     //   }
+    //     //   console.log(result)
+    //     // })
+
+    //         //フォームに入力された値を定義
+    //         let dDate = req.body.date;
+    //         let dStart = req.body.routeStart;
+    //         let dGoal = req.body.routeGoal;
+    //         let dWaypoint = req.body.routeWaypoint;
+    //         let dWay = req.body.way;
+    //         let dPrice =target.Oneway;
+    //         let dTimes = req.body.times;
+    //         let dMemo = req.body.memo;
+    //         let dPattern = req.body.regularly;
+    //         let dShinsei =1;
+    //         let dMovedate = req.body.date;
+    //         let dUpdate =req.body.date;
+
+    // client.query('SELECT * from tedetail',function(err,result){
+    //   console.log(result)
+    //   for(var i of result.rows){
+    //     console.log(i)
+    //     // id[i]=result.rows[i].id;
+    //     // name[i]=result.rows[i].name;
+    //     // mail[i]=result.rows[i].mail;
+    //     // console.log(id[i]+name[i]+mail[i]);              
+    //   }
+    // client.end()
+    // });
+    //     //renderする際のオプションを定義
+    //     let opt = {
+    //         title: '削除できました！',
+    //         message: '続けて検索する場合はそのまま各項目を入力してください',
+    //         price: 'placeholder="自動計算（ICカード利用時料金）"',
+    //         moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
+    //         date:'',
+    //         sStart: '',
+    //         sWaypoint: '',
+    //         sGoal: ''
+    //     };
+    //     response.render('te_newrecord', opt);
+    // };
 });
+
 
 module.exports = router;
