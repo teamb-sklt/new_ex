@@ -266,7 +266,7 @@ router.post('/', async function(req,response,next){
     let dRefno = req.body.ref_no;
     let dStasus = 11; //JM申請中ステータス
     let dMemo = req.body.remarks;
-    let dNew = '001'; //ログインID=社員IDに変更要
+    let dNew = 001; //ログインID=社員IDに変更要
     let dNewdate = req.body.year+req.body.month+req.body.day;
     
     //インサートコマンドを定義
