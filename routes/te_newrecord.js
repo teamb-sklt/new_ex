@@ -127,7 +127,7 @@ router.post('/', async function(req,response,next){
     await client.connect()
       
     //フォームに入力された値を定義
-    let dEmpno = 001; //ログインID=社員IDに変更要
+    let dEmpno = '001'; //ログインID=社員IDに変更要
     let dYear = req.body.year;
     let dMonth = req.body.month;
     let dDay = req.body.day;
@@ -142,7 +142,7 @@ router.post('/', async function(req,response,next){
     let dClaimflag = req.body.claim_flag;
     let dChargeflag = req.body.charge_flag;
     let dRefno = req.body.ref_no;
-    let dStasus = 11; //JM申請中ステータス
+    let dStasus = '00'; //JM申請中ステータス
     let dMemo = req.body.remarks;
     let dNew = '001'; //ログインID=社員IDに変更要
     let dNewdate = req.body.year+req.body.month+req.body.day;
