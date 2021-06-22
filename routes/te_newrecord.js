@@ -52,13 +52,7 @@ router.get('/', async function(req, res, next) {
       port: 5432
     })
     await client.connect()
-    // console.log(client)
-    // client.query('SELECT * from example', function(err, result){
-    //   if (err){
-    //     console.log(err) //show error infomation
-    //   }
-    //   console.log(result)
-    // })
+
     client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     //   console.log(result)
     //   console.log(result.rows[0].count)
@@ -95,11 +89,6 @@ router.get('/', async function(req, res, next) {
 
 //経路選択画面からPOSTで引っ張ってくる
 router.post('/',function(req,response,next){
-    // let trans_from = req.body.trans_from;
-    // let trans_waypoint = req.body.trans_waypoint;
-    // let trans_to = req.body.trans_to;
-    // let branch_no2 = req.body.branch_no2;
-    // let amount = req.body.amount;
     let opt={
         title: '交通費',
         branch_no2:req.body.branch_no2,
@@ -196,67 +185,6 @@ router.post('/',function(req,response,next){
     }
     response.render('te_newrecord',opt);
     }
-    // 削除ボタンが押された時に実行
-    // else if(req.body.delete){
-    //     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-    //       connectionString: process.env.DATABASE_URL,
-    //       ssl: {
-    //           rejectUnauthorized: false
-    //       }
-    //     }) : new Client({
-    //       user: 'postgres',
-    //       host: 'localhost',
-    //       database: 'itpjph3',
-    //       password: dbpassword,
-    //       port: 5432
-    //     })
-    //     await client.connect()
-    //     // console.log(client)
-    //     // client.query('SELECT * from memo', function(err, result){
-    //     //   if (err){
-    //     //     console.log(err)
-    //     //   }
-    //     //   console.log(result)
-    //     // })
-
-    //         //フォームに入力された値を定義
-    //         let dDate = req.body.date;
-    //         let dStart = req.body.routeStart;
-    //         let dGoal = req.body.routeGoal;
-    //         let dWaypoint = req.body.routeWaypoint;
-    //         let dWay = req.body.way;
-    //         let dPrice =target.Oneway;
-    //         let dTimes = req.body.times;
-    //         let dMemo = req.body.memo;
-    //         let dPattern = req.body.regularly;
-    //         let dShinsei =1;
-    //         let dMovedate = req.body.date;
-    //         let dUpdate =req.body.date;
-
-    // client.query('SELECT * from tedetail',function(err,result){
-    //   console.log(result)
-    //   for(var i of result.rows){
-    //     console.log(i)
-    //     // id[i]=result.rows[i].id;
-    //     // name[i]=result.rows[i].name;
-    //     // mail[i]=result.rows[i].mail;
-    //     // console.log(id[i]+name[i]+mail[i]);              
-    //   }
-    // client.end()
-    // });
-    //     //renderする際のオプションを定義
-    //     let opt = {
-    //         title: '削除できました！',
-    //         message: '続けて検索する場合はそのまま各項目を入力してください',
-    //         price: 'placeholder="自動計算（ICカード利用時料金）"',
-    //         moveDate:'placeholder="移動した日付・時刻が自動で追加されます"',
-    //         date:'',
-    //         sStart: '',
-    //         sWaypoint: '',
-    //         sGoal: ''
-    //     };
-    //     response.render('te_newrecord', opt);
-    // };
 });
 
 
