@@ -49,6 +49,7 @@ router.post('/',function(req,response,next){
     let stationWaypoint = req.body.trans_waypoint;
     let stationGoal = req.body.trans_to;
     let branch_no2 = req.body.branch_no;
+    console.log(branch_no2)
     let codeStart;
     let codeWaypoint;
     let codeGoal;
