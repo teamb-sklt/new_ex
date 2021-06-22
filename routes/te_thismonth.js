@@ -39,6 +39,7 @@ var amount = [];
 var count = [];
 var subtotal = [];
 var job_no = [];
+var emp_no = "001"
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -82,6 +83,7 @@ router.get('/', async function(req, res, next) {
   });
 let opt={
   title: '交通費',
+  emp_no:emp_no,
   tmonth:tmonth,
   lmonth:lmonth,
   lastday:lastday,

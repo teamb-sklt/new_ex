@@ -18,7 +18,7 @@ var tmonth;
 var lmonth;
 var lastday;
 
-console.log(date)
+// console.log(date)
 
 if(date>20){
   tmonth=moment().add(1,'month').format("MM");
@@ -28,7 +28,7 @@ if(date>20){
   lmonth=moment().add(-1,'month',).format("MM");
   lastday = 20 - date;
 }
-console.log(tmonth)
+// console.log(tmonth)
 var status = [];
 var branch_no = [];
 var month = [];
@@ -40,6 +40,7 @@ var code_name = [];
 var payee = [];
 var summary = [];
 var job_no = [];
+var emp_no ="001";
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -84,6 +85,7 @@ router.get('/', async function(req, res, next) {
   });
 let opt={
   title: '経費',
+  emp_no:emp_no,
   tmonth:tmonth,
   lmonth:lmonth,
   lastday:lastday,
