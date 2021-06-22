@@ -3,13 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <title><%= title %></title>
-
     <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
-    <style>
-      input:checked+.content{
-        color: gray;
-      }
-    </style>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body onload="rel()" class="container">
     <%- include('nav') %> 
@@ -17,7 +12,8 @@
     <h2><%- lmonth %> 月21日～<%- tmonth %> 月20日データ</h2>
     <!-- 前月データへ移動 -->
     <p><a href="/ex_lastmonth">前月データへ</a></p>
-    <p><a href="/ex_newrecord">新規登録</a></p>  
+    <p><a href="/ex_newrecord">新規登録</a>   <a href="/ex_newrecord_book">書籍登録</a>   <a href="/ex_newrecord_kousai">交際費登録</a>　 <a href="/ex_newrecord_kaigi">会議費登録</a></p>
+
     <div class="container">
       <!-- <button class="btn btn-primary" id="detail">新規登録</button> -->
       <table class="table">
@@ -59,6 +55,10 @@
           <% } %>
         </tbody>
       </table>
+      <form method="POST" action="ex_shinsei">
+      <input type="hidden" name="emp_no"  value="001">
+      <input type="submit"  value="申請"  style="margin:0px; float:left;background:blue;color:white;">
+    </form>
     </div>
     <hr class="mt-5">
     <div class="remind">

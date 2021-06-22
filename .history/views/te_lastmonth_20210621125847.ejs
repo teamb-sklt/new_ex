@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+    <style>
+      input:checked+.content{
+        color: gray;
+      }
+    </style>
+  </head>
+  <body onload="rel()" class="container">
+    <%- include('nav') %> 
+    <h1 class="mt-3 mb-3"><%= title %> </h1>
+    <h2><%- lmonth %> 月21日～<%- tmonth %> 月20日データ</h2>
+    <!-- 前月データへ移動 -->
+    <p><a href="/te_thismonth">今月データへ</a></p>
+    <div class="container">
+      <table class="table">
+        <thead class="thead-light">
+        <tr>
+          <th class="visible-lg">ステータス</th>
+          <th>No</th>
+          <th>利用日</th>
+          <th class="visible-lg">From</th>
+          <th>To</th>
+          <th>単価</th>
+          <th class="visible-lg">回数</th>
+          <th class="visible-lg">小計</th>
+          <th class="visible-lg">Jobコード</th>
+          <th>今月にコピー</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% for(let i in status){ %>
+          <div class="content"
+          <tr id="records">   
+            <td id=status class=status><%= status[i] %> </td>
+            <td id=branch_no><%- branch_no[i] %></td>
+            <td id=month><%- month[i] %>/<%- day[i] %></td>
+            <td id=trans_from><%- trans_from[i] %></th>
+            <td id=trans_to><%- trans_to[i] %></td>
+            <td id=amount><%- amount[i] %></td>
+            <td id=count><%- count[i] %> </td>
+            <td id=><%- subtotal[i] %></td>
+            <td id=job_no><%- job_no[i] %> </td>
+            </div>
+            <form method="POST" action="/te_lastmonth"> 
+              <!-- PKをDBに投げれるようにする。後工程でTe_DetailファイルでDBにSELECT文を送る -->
+              <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
+              <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
+              <input type="hidden" name=month value="<%= month[i] %>">
+              <input type="hidden" name=day value="<%= day[i] %>">
+              <td><input type="submit" class="btn btn-secondary" name="te_copy" value="コピー"></td>
+            </form>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <hr class="mt-5">
+    <div>
+      <p class="text-center h6">copyright SKYLIGHT TEAM/B 2021.</p>
+    </div>
+    <script>
+      'use strict';
+      document.getElementById("detail").onclick=function(){
+        document.location="/detail";//詳細設定ページへ
+      }
+      function copy(id,shuppatsu,totyaku,shudan,money,times,job,memo){
+        let result= window.confirm("以下のメモをコピーしますか？\n"+"経路："+shuppatsu+"~"+totyaku+"\n手段："+shudan+"\n費用："+money+"\n回数："+times+"\nジョブ情報："+job+"\nメモ："+memo);
+      }
+      function rel() {
+    if (window.name != "any") {
+      location.reload();
+      window.name = "any";
+    } else {
+      window.name = "";
+    }
+  }
+  
+    </script>
+    <script src="/jquery/jquery.js"></script>
+      <script>
+        'use strict';
+        $(".status:contains('88')").text("承認")
+        $(".status:contains('11')").text("JM申請中")
+        $(".status:contains('19')").text("JM却下")
+        $(".status:contains('21')").text("経理申請中")
+        $(".status:contains('29')").text("経理却下")
+        $(".status:contains('00')").text("未申請")
+      </script>
+  
+  </body>
+</html>
