@@ -13,6 +13,7 @@ var te_newrecordRouter = require('./routes/te_newrecord');
 var ex_newrecordRouter = require('./routes/ex_newrecord');
 var resultRouter = require('./routes/result');
 var ex_shinseiRouter = require('./routes/ex_shinsei');
+var te_shinseiRouter = require('./routes/te_shinsei');
 var ex_detailRouter = require('./routes/ex_detail');
 var te_detailRouter = require('./routes/te_detail');
 var usersRouter = require('./routes/users');
@@ -41,7 +42,8 @@ app.use('/ex_detail',ex_detailRouter);
 app.use('/te_detail',te_detailRouter);
 app.use('/result', resultRouter);
 app.use('/users', usersRouter);
-app.use('/ex_shinsei',ex_shinseiRouter)
+app.use('/ex_shinsei',ex_shinseiRouter);
+app.use('/te_shinsei',te_shinseiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -40,7 +40,7 @@ var code_name = [];
 var payee = [];
 var summary = [];
 var job_no = [];
-var Emp_no ="001";
+var emp_no ="001";
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -85,7 +85,7 @@ router.get('/', async function(req, res, next) {
   });
 let opt={
   title: '経費',
-  Emp_no:Emp_no,
+  emp_no:emp_no,
   tmonth:tmonth,
   lmonth:lmonth,
   lastday:lastday,

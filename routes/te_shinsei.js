@@ -44,7 +44,7 @@ router.post('/', async function(req, res, next) {
 
     // let emp_no = req.body.emp_no
       //Postgraseへレコード追加
-  const query = "UPDATE ExDetail SET status='11' WHERE emp_no='001' AND status='00' AND sheet_month="+ "'" + tmonth +"'" ;
+  const query = "UPDATE TeDetail SET status='11' WHERE emp_no='001' AND status='00' AND sheet_month="+ "'" + tmonth +"'" ;
 
   // client.query(query)
   // .then(res => console.log(res.rows[0]))
@@ -54,7 +54,7 @@ router.post('/', async function(req, res, next) {
       console.log(query)
     
     client.end()
-    res.redirect("/ex_thismonth");
+    res.redirect("/te_thismonth");
   })
 })
 module.exports = router;

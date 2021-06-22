@@ -55,9 +55,9 @@
           <% } %>
         </tbody>
       </table>
-      <form>
-      <input type="hidden" name="Emp_no"  value="001">
-      <input type="button" action="/ex_shinsei" value="申請" onclick="location.href='http://localhost:3000/ex_thismonth'" style="margin:0px; float:left;background:blue;color:white;">
+      <form method="POST" action="ex_shinsei">
+      <input type="hidden" name="emp_no"  value="001">
+      <input type="submit"  value="申請"  style="margin:0px; float:left;background:blue;color:white;">
     </form>
     </div>
     <hr class="mt-5">
