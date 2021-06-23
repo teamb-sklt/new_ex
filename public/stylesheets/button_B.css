@@ -1,0 +1,108 @@
+.box {
+	position: relative;
+	height: 50px;
+  /* background: #eeeeee; */
+}
+
+.date_box {
+	position: relative;
+  margin: 5px auto 15px auto;
+  width: 360px;
+	height: 40px;
+  /* background: #eeeeee; */
+}
+
+.search_box{
+  /* background: #eeeeee; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+b {
+  margin: 15px;
+  color: #78aa00;
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+button {
+  margin: 0; /* 上 右 下 左 */
+  color: #002b49;
+  display: block;
+}
+button.last { /* 先月 */
+  background: #ffffff;
+  width: 40px;
+  height: 30px;
+  font-size: 15px;
+  border-radius: 10px; /* 角の丸み */
+	position:absolute;
+  left:10px;
+	top:9px;
+}
+button.next { /* 来月 */
+  background: #ffffff;
+  width: 40px;
+  height: 30px;
+  font-size: 15px;
+  border-radius: 10px; /* 角の丸み */
+	position:absolute;
+  right:10px;
+	top:9px;
+}
+button.last:hover,
+button.next:hover {
+  color: #ffffff;
+  background: #002b49;
+}
+
+.more { /* 詳細、コピーボタン */
+  margin: 5px 0 0 5px; /* 上 右 下 左 */
+  color: #002b49;
+  background: #ffffff;
+  width: 70px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+}
+.more:hover {
+  color: #ffffff;
+  background: #002b49;
+}
+.onemore { /* 詳細、コピーボタン */
+  margin: 5px 0 0 5px; /* 上 右 下 左 */
+  color: #78aa00;
+  background: #ffffff;
+  border-color: #78aa00;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+}
+.onemore:hover {
+  color: #ffffff;
+  background: #78aa00;
+}
+
+.OK { /* 申請ボタン */
+  color: #cb2c30;
+  background: #ffffff;
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+  border-color: #cb2c30;
+  position: absolute;
+  right: 50%;
+  left: 50%;
+  top: 15px;
+}
+.OK:hover {
+  color: #ffffff;
+  background: #cb2c30;
+}

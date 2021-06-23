@@ -112,6 +112,7 @@ router.post('/', async function(req,response,next){
       if(err){
         console.log('error')
       }else{
+
       // console.log(result[0])
       // console.log(result[1])
       branch_no2=result[0].rows[0].branch_no
@@ -133,8 +134,6 @@ router.post('/', async function(req,response,next){
       app_class=result[1].rows[0].app_class;
       app_flag=result[1].rows[0].app_flag;
       comment=result[1].rows[0].comment;
-
-      }
     
     client.end()
     let opt={

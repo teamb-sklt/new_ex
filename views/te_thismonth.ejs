@@ -1,122 +1,122 @@
-<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <title><%= title %></title>
-    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body onload="rel()" class="container">
-    <%- include('nav') %> 
-    <h1 class="mt-3 mb-3"><%= title %> </h1>
-    <h2><%- lmonth %> 月21日～<%- tmonth %> 月20日データ</h2>
-    <!-- 前月データへ移動 -->
-    <p><a href="/te_lastmonth">前月データへ</a></p>
-    <p><a href="/te_newrecord">新規登録</a></p>
-    <div class="container">
-      <table class="table">
-        <thead class="thead-light">
-        <tr>
-          <th class="visible-lg">ステータス</th>
-          <th>No</th>
-          <th>利用日</th>
-          <th class="visible-lg">From</th>
-          <th>To</th>
-          <th>単価</th>
-          <th class="visible-lg">回数</th>
-          <th class="visible-lg">小計</th>
-          <th class="visible-lg">Jobコード</th>
-          <th>詳細</th>
-          <th>回数追加</th>
-        </tr>
-        </thead>
-        <tbody>
-          <% for(let i in status){ %>
-          <div class="content"
-          <tr id="records">   
-            <td id=status class=status><%= status[i] %> </td>
-            <td id=branch_no><%- branch_no[i] %></td>
-            <td id=month><%- month[i] %>/<%- day[i] %></td>
-            <td id=trans_from><%- trans_from[i] %></th>
-            <td id=trans_to><%- trans_to[i] %></td>
-            <td id=amount><%- amount[i] %></td>
-            <td id=count><%- count[i] %> </td>
-            <td id=><%- subtotal[i] %></td>
-            <td id=job_no><%- job_no[i] %> </td>
-            </div>
-            <form method="POST" action="/te_detail"> 
-              <!-- PKをDBに投げれるようにする。後工程でTe_DetailファイルでDBにSELECT文を送る -->
-              <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
-              <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
-              <input type="hidden" name=month value="<%= month[i] %>">
-              <input type="hidden" name=day value="<%= day[i] %>">
-              <td><input type="submit" class="btn btn-secondary" name="te_detail" value="詳細"></td>
-            </form>
-            <form method="POST" action="/te_thismonth">
-              <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
-              <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
-              <input type="hidden" name=month value="<%= month[i] %>">
-              <input type="hidden" name=day value="<%= day[i] %>">
-              <td><input type="submit" class="btn btn-secondary" name="add_one" value="⁺1"></td>
-            </form>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
-      <form method="POST" action="te_shinsei">
-        <input type="hidden" name="emp_no"  value="001">
-        <input type="submit"  value="申請"  style="margin:0px; float:left;background:blue;color:white;">
-    </div>
-    <hr class="mt-5">
-    <div class="remind">
-      <p1 class="text-center h2">締め日<%= lastday  %> 日前です。</p>
-      <p1 class="text-center h2">締め日前にJM承認に上げてください。</p>
-    </div>
-    <hr class="mt-5">
-    <div>
-      <p class="text-center h6">copyright SKYLIGHT TEAM/B 2021.</p>
-    </div>
+<%- include('partials/header1')%><!-- ヘッダーを統一 -->
+
+<nav class="navbar"><!-- ナビを変更 -->
+  <ul class="top">
+    <li><a href="/ex_thismonth">経費</a></li>
+    <h3>交通費</h3>
+  </ul>
+</nav>
+
+<div class="date_box">
+  <button class="last" onclick="location.href='/te_lastmonth'">◀</button>
+  <b><%- lmonth %>/21 ~ <%- tmonth %>/20分</b><!-- 文字を微調整 -->
+</div>
 
 
-    <script>　//Ph2teambのもの
-      'use strict';
-      document.getElementById("te_detail").onclick=function(){
-        document.location="/te_detail";//詳細設定ページへc
-      }
-      function copy(id,shuppatsu,totyaku,shudan,money,times,job,memo){
-        let result= window.confirm("以下のメモをコピーしますか？\n"+"経路："+shuppatsu+"~"+totyaku+"\n手段："+shudan+"\n費用："+money+"\n回数："+times+"\nジョブ情報："+job+"\nメモ："+memo);
-      }
-      function rel() {
-    if (window.name != "any") {
-      location.reload();
-      window.name = "any";
-    } else {
-      window.name = "";
-    }
+<nav class="navbar"><!-- ナビを変更 -->
+  <ul class="bottom">
+    <li><a href="/te_newrecord">新規登録</a></li>
+  </ul>
+</nav>
+
+<table>
+  <tr>
+    <th width="120px">ステータス</th>
+    <th width="70px">No</th>
+    <th width="120px">利用日</th>
+    <th width="120px">From</th>
+    <th width="120px">To</th>
+    <th width="80px">単価</th>
+    <th width="80px">回数</th>
+    <th width="80px">小計</th>
+    <th width="150px">Jobコード</th>
+    <th width="130px">詳細</th>
+    <th>回数追加</th>
+  </tr>
+  <% for(let i in status){ %>
+  <tr id="records">   
+    <td id=status class=status><%= status[i] %> </td>
+    <td id=branch_no><%- branch_no[i] %></td>
+    <td id=month><%- month[i] %>/<%- day[i] %></td>
+    <td id=trans_from><%- trans_from[i] %></th>
+    <td id=trans_to><%- trans_to[i] %></td>
+    <td id=amount><%- amount[i] %></td>
+    <td id=count><%- count[i] %> </td>
+    <td id=><%- subtotal[i] %></td>
+    <td id=job_no><%- job_no[i] %> </td>
+    </div>
+    <form method="POST" action="/te_detail"> 
+      <!-- PKをDBに投げれるようにする。後工程でTe_DetailファイルでDBにSELECT文を送る -->
+      <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
+      <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
+      <input type="hidden" name=month value="<%= month[i] %>">
+      <input type="hidden" name=day value="<%= day[i] %>">
+      <td><input type="submit" class="more" name="te_detail" value="詳細"></td>
+    </form>
+    <form method="POST" action="/te_thismonth">
+      <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
+      <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
+      <input type="hidden" name=month value="<%= month[i] %>">
+      <input type="hidden" name=day value="<%= day[i] %>">
+      <td><input type="submit" class="onemore" name="add_one" value="+1"></td>
+    </form>
+  </tr>
+  <% } %>
+</table>
+
+<div class="box">
+  <form method="POST" action="ex_shinsei">
+    <input type="hidden" name="emp_no"  value="001">
+    <input type="submit"  value="申請" class="OK"><!-- クラス付与 -->
+  </form>
+</div>
+
+<hr class="mt-5">
+<div class="remind">
+  <p1 class="text-center h2">締め日<%= lastday  %> 日前です。</p>
+  <p1 class="text-center h2">締め日前にJM承認に上げてください。</p>
+</div>
+<hr class="mt-5">
+
+<script>　//Ph2teambのもの
+'use strict';
+document.getElementById("detail").onclick=function(){
+  document.location="/detail";//詳細設定ページへc
+}
+function copy(id,shuppatsu,totyaku,shudan,money,times,job,memo){
+  let result= window.confirm("以下のメモをコピーしますか？\n"+"経路："+shuppatsu+"~"+totyaku+"\n手段："+shudan+"\n費用："+money+"\n回数："+times+"\nジョブ情報："+job+"\nメモ："+memo);
+}
+function rel() {
+  if (window.name != "any") {
+    location.reload();
+    window.name = "any";
+  } else {
+    window.name = "";
   }
+}
+</script>
+
+<script src="/jquery/jquery.js"></script>
+
+<script>
+'use strict';
+$(".status:contains('88')").text("承認")
+$(".status:contains('11')").text("JM申請中")
+$(".status:contains('19')").text("JM却下")
+$(".status:contains('21')").text("経理申請中")
+$(".status:contains('29')").text("経理却下")
+$(".status:contains('00')").text("未申請")
+
+
+$("td:contains('未申請')").parent("tr").css("background-color", "#FFDBC9"); //未申請の行を赤で表示
+
+var today=new Date();　//本日が15~20であればリマインドを表示、他の場合はしない。
+if(today.getDate()>20　|| today.getDate()<15　){
+$('p1').remove();
+}else{
+  $('p1').css("background-color", "red");
+}
+
+</script>
   
-    </script>
-  <script src="/jquery/jquery.js"></script>
-  <script>
-    'use strict';
-    $(".status:contains('88')").text("承認")
-    $(".status:contains('11')").text("JM申請中")
-    $(".status:contains('19')").text("JM却下")
-    $(".status:contains('21')").text("経理申請中")
-    $(".status:contains('29')").text("経理却下")
-    $(".status:contains('00')").text("未申請")
-    
-
-    $("td:contains('未申請')").parent("tr").css("background-color", "#FFDBC9"); //未申請の行を赤で表示
-
-    var today=new Date();　//本日が15~20であればリマインドを表示、他の場合はしない。
-    if(today.getDate()>20　|| today.getDate()<15　){
-    $('p1').remove();
-    }else{
-      $('p1').css("background-color", "red");
-    }
-
-  </script>
-
-  </body>
-</html>
+<%- include('partials/footer1')%><!-- フッターを追加 -->
