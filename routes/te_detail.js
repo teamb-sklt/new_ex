@@ -83,14 +83,79 @@ router.get('/', async function(req, res, next) {
     // subtotal:subtotal,
     // job_no:job_no,
      }
-     res.render('te_newrecord', opt);
+     res.render('te_detail', opt);
     });
 
 
 
 router.post('/', async function(req,response,next){
-    //result.ejsの選択ボタンボタンが押されたら実行
-    if(req.body.search){
+    //te_thismonthの詳細ボタンを押された場合実行
+    if(req.body.te_detail){
+      let branch_no2 = req.body.branch_no
+      console.log(branch_no2)
+
+      const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+      }) : new Client({
+        user: 'postgres',
+        host: 'localhost',
+        database: 'itpjph3',
+        password: dbpassword,
+        port: 5432
+      })
+      await client.connect()
+
+    client.query("SELECT * FROM TeDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'" ,function(err,result){
+      if(err){
+        console.log('error')
+      }else{
+      // console.log(result)
+      branch_no2=result.rows[0].branch_no
+      trans_from=result.rows[0].trans_from;
+      trans_to=result.rows[0].trans_to;
+      trans_waypoint=result.rows[0].trans_waypoint;
+      trans_type=result.rows[0].trans_type;
+      year=result.rows[0].year;
+      month=result.rows[0].month;
+      day=result.rows[0].day;
+      amount=result.rows[0].month;
+      count=result.rows[0].count;
+      job_no=result.rows[0].job_no;
+      job_manager=result.rows[0].job_manager;
+      claim_flag=result.rows[0].claim_flag;
+      charge_flag=result.rows[0].charge_flag;
+      ref_no=result.rows[0].ref_no;
+      remarks=result.rows[0].remarks
+      }
+    client.end()
+    let opt={
+      title: '交通費',
+      branch_no2:branch_no2,
+      trans_from:trans_from,
+      trans_waypoint:trans_waypoint,
+      trans_to:trans_to,
+      trans_type:trans_type,
+      amount:amount,
+      year:year,
+      month:month,
+      day:day,
+      count:count,
+      job_no:job_no,
+      job_name:'',
+      job_manager_name:'',
+      job_manager:job_manager,
+      claim_flag:claim_flag,
+      charge_flag:charge_flag,
+      ref_no:ref_no,
+      remarks:remarks,
+    }
+    response.render('te_detail', opt);
+    })
+
+    }else if(req.body.search){
         //経路選択画面からPOSTで引っ張ってくる
         let trans_from = req.body.trans_from;
         let trans_waypoint = req.body.trans_waypoint;
