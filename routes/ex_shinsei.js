@@ -43,18 +43,39 @@ router.post('/', async function(req, res, next) {
     await client.connect()
 
     // let emp_no = req.body.emp_no
-      //Postgraseへレコード追加
-  const query = "UPDATE ExDetail SET status='11' WHERE emp_no='001' AND status='00' AND sheet_month="+ "'" + tmonth +"'" ;
+    function job_manager(){
+      return client
+        .query("SELECT job_manager from ExDetail WHERE sheet_month='"+tmonth+"'"+ "AND status='00'")
+        .then(res =>{return job_manager_no = res.rows[0].job_manager;})
+        .then (res1 => console.log(job_manager_no))
+        .catch(e => console.error(e.stack))
+  }
+  
 
-  // client.query(query)
-  // .then(res => console.log(res.rows[0]))
-  // .catch(e => console.error(e.stack))
+  function emp_mail(){
+      return client
+        .query("SELECT emp_mail from Employee WHERE emp_no='"+job_manager_no +"'")
+        .then(res =>{return job_manager_emp_mail = res.rows[0].emp_mail;})
+        .then(res =>console.log(job_manager_emp_mail))
+        // .catch(e => console.error(e.stack))
+  }
 
-    client.query(query ,function(err,result){
-      console.log(query)
-    
-    client.end()
-    res.redirect("/ex_thismonth");
-  })
+  function shinsei(){
+    client
+      .query("UPDATE ExDetail SET status='11' WHERE emp_no='001' AND status='00' AND sheet_month="+ "'" + tmonth +"'" )
+      .then(res => res)
+      .then(res.redirect("/ex_thismonth"))
+      .catch(e => console.error(e.stack))
+      // client.end()
+  }
+
+    async function inoue(){
+      await job_manager();
+
+      emp_mail();
+      shinsei();
+    }
+    //関数の呼び出し
+    inoue();
 })
 module.exports = router;

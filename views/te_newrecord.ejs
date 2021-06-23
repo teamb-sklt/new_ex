@@ -15,19 +15,19 @@
         <div class='form-group'>
             <div class='form-row'>
                 <div class="form-group col-2">
-                    <label for='year'>年 ※yyyy</label> 
+                    <label for='year'>年<br> ※yyyy</label> 
                     <input type="text" class='form-control' name='year' id='year' required>
                 </div>
                 <div class="form-group col-2">
-                    <label for='month'>月 ※mm</label> 
+                    <label for='month'>月<br> ※mm</label> 
                     <input type="text" class='form-control' name='month' id='month' required>
                 </div>
                 <div class="form-group col-2">
-                    <label for='day'>日 ※dd</label>
+                    <label for='day'>日<br>  ※dd</label>
                     <input type="text" class='form-control' name='day' id='day' required>
                 </div>
                 <div class="form-group col-2">
-                    <label for='time'>時刻 ※hhmm</label> 
+                    <label for='time'>時刻<br> ※hhmm</label> 
                     <input type="text" class='form-control' name='time'  id='time' required>
                     <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
                 </div>
@@ -73,15 +73,11 @@
         <div class='form-group form-inline'>
             <label for='trans_type'>手段</label> <br>
             <div class="col col-md-9 col-sm-8">
-            <select id='trans_type' name='trans_type' class='form-control' onchange="onChangeWay()">
-                <!-- <option>電車</option>
-                <option>バス</option>
-                <option>タクシー</option>
-                <option>その他</option> -->
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>0</option>
+            <select id='trans_type' name='trans_type' class='form-control'>
+                <option value="1">電車</option>
+                <option value="2">バス</option>
+                <option value="3">タクシー</option>
+                <option value="4">その他</option>
             </select>
             </div>
         </div>
@@ -113,12 +109,12 @@
     </div>
         <div class='form-group form-inline'>
         <div class='form-group form-inline'>
-            <label for='claim_flag'>　　　　　顧客に請求する</label> 
-                <input type="checkbox" class='form-control' id='claim_flag' name='claim_flag' onchange="onChangeCheckBox1()">
+            <label for='claim_flag'>　　　　　顧客に請求する<input name='claim_flag' type="hidden" value=0>
+            <input type="checkbox" class='form-control' id='claim_flag' name='claim_flag' value=1></label>
         </div>
         <div class='form-group form-inline'>
-            <label for='charge_flag'>　　　　　ジョブにチャージ</label> <br>
-                <input type="checkbox" class='form-control' id='charge_flag' name='charge_flag' onchange="onChangeCheckBox2()">
+            <label for='charge_flag'>　　　　　ジョブにチャージ<input name='charge_flag' type='hidden' value=0>
+            <input type='checkbox' class='form-control' id='charge_flag' name='charge_flag' value=1></label>
         </div>
         </div>
     </div>
@@ -180,35 +176,48 @@
             }
         }
         
-        // 「顧客に請求する」: チェック=1、未チェック=0に変換
-        function onChangeCheckBox1() {
-        var check1 = document.getElementById("claim_flag").checked;
-        if (check1 == true) {
-            claim_flag.value = 1;
-        } else {
-            claim_flag.value = 0;
-        }
-        }
+        // // 「顧客に請求する」: チェック=1、未チェック=0に変換
+        // function onChangeCheckBox1() {
+        // var check1 = document.getElementById("claim_flag").checked;
+        // if (check1 == true) {
+        //     claim_flag.value = 1;
+        //     cb1.value = 0;
+        //     console.log(claim_flag);
+        // } else {
+        //     claim_flag.value = 0;
+        //     cb1.value = 1;
+        //     console.log(claim_flag);
+        // }
+        // }
 
-        // 「ジョブにチャージ」: チェック=1、未チェック=0に変換
-        function onChangeCheckBox2() {
-        var check2 = document.getElementById("charge_flag").checked;
-        if (check2 == true) {
-            charge_flag.value = 1;
-        } else {
-            charge_flag.value = 0;
-        }
-        }
+        // // 「ジョブにチャージ」: チェック=1、未チェック=0に変換
+        // function onChangeCheckBox2() {
+        // var check2 = document.getElementById('charge_flag').checked;
+        // if (check2 == true) {
+        //     charge_flag.value = 1;
+        //     cb2.value = 0;
+        //     console.log(charge_flag);
+        // } else {
+        //     charge_flag.value = 0;
+        //     cb2.value = 1;
+        //     console.log(charge_flag);
+        // }
+        // }
 
-        // 「交通手段」: 電車=1、バス=2、タクシー=3、その他=0に変換
-        function onChangeWay() {
-            var element = document.getElementById("trans_type");
-            if (element == '電車') {
-                charge_flag.value = 1;
-            } else {
-                // 選択状態ではない
-            }
-            }
+        // //「交通手段」: 電車=1、バス=2、タクシー=3、その他=0に変換
+        // function onChangeWay() {
+        //     var element = document.getElementById("trans_type");
+        //     if (element == '電車') {
+        //         trans_type.value = 1;
+        //     } else if (element == 'バス') {
+        //         trans_type.value = 2;
+        //     } else if (element == 'タクシー') {
+        //         trans_type.value = 3;
+        //     } else if (element == 'その他') {
+        //         trans_type.value = 0;
+        //     }
+        // }
+
     </script>
   </body>
 </html>

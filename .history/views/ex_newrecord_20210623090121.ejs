@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' 
+    href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body class= 'container p-3'>
+    <h1 class = "display-4"><%= title %></h1>
+    <!-- <form method="POST" action="/ex_detail"> -->
+        <form method="POST">
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-2">
+                    <label for="year">年</label> 
+                    <input type="text" class='form-control' name='year' id='year'  required>
+                </div>
+                <div class="form-group col-2">
+                    <label for="month">月</label> 
+                    <input type="text" class='form-control' name='month' id='month'  required>
+                </div>
+                <div class="form-group col-2">
+                    <label for="day">日</label> 
+                    <input type="text" class='form-control' name='day' id='day'  required>
+                </div>
+                <div class="form-group col-4">
+                    <label for='branch_no'>No</label> 
+                    <input type="text" class='form-control' name='branch_no'  id='branch_no' value="<%- branch_no2 %>" >
+                    <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
+                </div>
+                <div class="form-group col-2">
+                    <label for='code_name'>勘定科目</label> <br>
+                    <select id='code_name' name='code_name' class='form-control'　required>
+                        <option>▼選択してください</option>
+                        <option>消耗品費</option>
+                        <option>新聞図書費</option>
+                        <option>会議費</option>
+                        <option>交際費</option>
+                        <option>その他</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-4">
+                    <label for='payee'>支払先</label>
+                    <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
+                    <input type="text" class='form-control' name='payee' id='payee'  required placeholder="必須">
+                </div>
+                <div class="form-group col-4">
+                    <label for='summary'>摘要</label>
+                    <span class="c-tooltip form-inline" data-tooltip="書籍購入制度利用の場合は『書籍代』と入力ください。">❔</span>
+                    <input type="text" class='form-control form-inline' name='summary' id='summary'  required placeholder="必須">
+                </div>
+            </div>
+        </div>
+        <div class='form-group form-inline'>            
+            <span><label for='amount'>金額　</label></span>
+            <input type="text" id='amount' name='amount' class="form-control" <%- amount%>>
+        </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='job_no'>ジョブコード</label> 
+                <div class="col-6">
+                <input type="text" class='form-control' id='job_no' name='job_no'>
+                </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='job_name'>ジョブ名</label> 
+                <div class="col-6">
+                <input type="text" class='form-control' id='job_name' name='job_name'>
+                </div>
+        </div>
+        <input type="submit" id="btn-return" value="ジョブ検索" class="btn btn-primary" onclick="frameClick();">
+        </div>
+        <div class='form-group form-inline'>
+            <div class='form-group form-inline'>
+                <label for="job_manager_name">ＪＭ　　</label>
+                <form action="#">
+                    <select name='job_manager_name' id='job_manager_name' class='form-control'>
+                        <option value=0>---------------</option>
+                        <option value=1>Aさん</option>
+                        <option value=2>Bさん</option>
+                    </select>
+                </form>
+            </div>
+            <div class='form-group form-inline'>
+                <div class='form-group form-inline'>
+                    <label for='claim_flag'>　　顧客に請求する</label> 
+                        <input type="checkbox" class='form-control' id='claim_flag' name='claim_flag' onchange="onChangeCheckBox1()">
+                </div>
+                <div class='form-group form-inline'>
+                    <label for='charge_flag'>　　ジョブにチャージ</label> <br>
+                        <input type="checkbox" class='form-control' id='charge_flag' name='charge_flag' onchange="onChangeCheckBox2()">
+                </div>
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='remarks'>備考</label>
+            <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔　</span>
+            <input type="text" class='form-control' id='remarks' name='remarks' >
+        </div>
+        <div>
+            <input type="submit" id="btn-return" value="戻る" class="btn btn-primary" onclick="frameClick();"　 formaction="/ex_newrecord">
+            <input type="submit" id="save" value="保存" class="btn btn-primary" name='save' formaction="/ex_newrecord">        </div>
+    </form>
+    <input type="hidden" name="id" value="<%- branch_no2 %>">
+    <script type="text/javascript">
+
+        'use strict'
+
+        //戻るボタンでex_thismonthに遷移
+        function frameClick() {
+            document.location.href = 'http://localhost:3000/ex_thismonth';
+        };
+
+        //日付・時刻の初期値の設定
+        var date = new Date();
+        date.setDate(date.getDate());
+        var year = date.getFullYear();
+        var month = ("0"+(date.getMonth()+1)).slice(-2);
+        var day = ("0"+date.getDate()).slice(-2);
+        var hours = ("0"+date.getHours()).slice(-2);
+        var minutes = ("0"+date.getMinutes()).slice(-2);
+        document.getElementById("date").value=yyyy+mm+dd;
+        // document.getElementById("time").value=hours+minutes;
+        document.getElementById("year").value=year;
+        document.getElementById("month").value=month;
+        document.getElementById("day").value=day;
+        document.getElementById("time").value=hours+minutes;
+
+
+    //     if(regularly.prop('checked')){
+	// 	hiddenInput.attr('disabled', 'disabled');
+	// 	checkboxInput.val('true');
+	// }else{
+	// 	hiddenInput.removeAttr('disabled');//hiddenのタグを有効にする
+	// 	hiddenInput.val('false');
+	// }
+
+        function jobClick() {
+            document.location.href = 'http://localhost:3000/ex_thismonth';
+        };
+        
+        var val = document.getElementById('jm');
+        val.onchange = function() {
+            if (val !== 0) {
+            alert('本来とは別のJMが選択されています。再確認の上、変更願います。');
+            }
+        }
+    </script>
+  </body>
+</html>
