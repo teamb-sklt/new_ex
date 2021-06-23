@@ -1,0 +1,37 @@
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer_area">
+    <div class="footer_block">
+      <div class="footer_box">
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+<script type="text/javascript">
+  //今日の日時を表示
+  window.onload = function () {
+      var date = new Date();
+      var yyyy = date.getFullYear();
+      var mm = ("0"+(date.getMonth()+1)).slice(-2);
+      var nn = ("0"+(date.getMonth()+2)).slice(-2);
+      var dd = ("0"+date.getDate()).slice(-2);
+      if (dd<21) { // 例) 5/21~5/31時、5/21~6/20表示、6/1~6/20の時、5/21~6/20表示
+          mm -= 1
+          nn -= 1
+      }
+      if (mm === 1 && dd<21) {
+          yyyy -=1
+      }
+      document.getElementById("date").textContent = mm + "/21 ~ " + nn + "/20";
+      document.getElementById("year").textContent = yyyy;
+  }
+</script>
+
+</html>

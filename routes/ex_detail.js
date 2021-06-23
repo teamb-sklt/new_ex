@@ -2,9 +2,11 @@ const { response } = require('express');
 var express = require('express');
 var router = express.Router();
 var moment = require("moment");
+const fetch = require('node-fetch');
 require('dotenv').config();
 const user=process.env.USER;
 const dbpassword=process.env.PASSWORD;
+const apiKey = process.env.APIKEY //APIkeyを使うのに必要
 var{Client}=require('pg');  //データベースを使うための宣言
 const { search } = require('../app');
 
@@ -18,6 +20,7 @@ var tmonth; //この変数に経費申請する月と同値が入る。
 var lmonth;
 var lastday;
 
+
 if(date>20){
   tmonth=moment().add(1,'month').format("MM");
   lmonth=tomonth;
@@ -28,12 +31,16 @@ if(date>20){
 }
 console.log(tmonth)
 
+
 //枝番を取得
 var branch_no1;
 var branch_no2;
 var branch_no;
 
-//各登録済み項目反映&DB接続
+//枝番を取得
+var branch_no1;
+var branch_no2;
+var branch_no;
 router.get('/', async function(req, res, next) {
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
@@ -132,6 +139,12 @@ router.post('/', async function(req, res, next) {
       job_no:job_no,
       job_name:'',
       job_manager_name:'',
+      summary:summary,
+      year:year,
+      month:month,
+      day:day,
+      amount:amount,
+      job_no:job_no,
       job_manager:job_manager,
       claim_flag:claim_flag,
       charge_flag:charge_flag,
@@ -235,5 +248,4 @@ router.post('/', async function(req, res, next) {
     //     response.render('te_detail', opt);
     // }
 })  
-
 module.exports = router;
