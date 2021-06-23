@@ -10,14 +10,9 @@
     <%- include('nav') %>
     <h1 class="mt-3 mb-3"><%= title %> </h1>
     <h2><%- lmonth %> 月21日～<%- tmonth %> 月20日データ</h2>
-
-    <h2 class="mt-3 mb-3">社員番号:　<%= emp_no %> </h2>
-
     <!-- 前月データへ移動 -->
     <p><a href="/te_lastmonth">前月データへ</a></p>
-    <form method="POST" action="/te_newrecord">
-        <input type="button" class='btn btn-primary' name='te_newrecord' id='te_newrecord' value='新規登録'>
-    </form>
+    <p><a href="/te_newrecord">新規登録</a></p>
     <div class="container">
       <table class="table">
         <thead class="thead-light">

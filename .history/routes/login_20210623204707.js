@@ -96,10 +96,9 @@ router.post('/',async function(req, res, next) {
         subtotal:subtotal,
         job_no:job_no,
     }
-    res.render('te_thismonth', opt);
-
   }
 
+    res.render('te_thismonth', opt);
     
   });
   
