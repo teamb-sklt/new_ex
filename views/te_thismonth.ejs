@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           <% for(let i in status){ %>
-          <div class="content"
+          <div class="content">
           <tr id="records">   
             <td id=status class=status><%= status[i] %> </td>
             <td id=branch_no><%- branch_no[i] %></td>
@@ -45,8 +45,6 @@
             <td id=job_no><%- job_no[i] %> </td>
             </div>
             <form method="POST" action="/te_detail"> 
-              <!-- PKをDBに投げれるようにする。後工程でTe_DetailファイルでDBにSELECT文を送る -->
-              <!-- <input type="hidden" name=status value="<%= status[i] %>"> -->
               <input type="hidden" name=branch_no value="<%= branch_no[i] %>">
               <input type="hidden" name=month value="<%= month[i] %>">
               <input type="hidden" name=day value="<%= day[i] %>">
@@ -66,6 +64,7 @@
       <form method="POST" action="te_shinsei">
         <input type="hidden" name="emp_no"  value="001">
         <input type="submit"  value="申請"  style="margin:0px; float:left;background:blue;color:white;">
+      </form>
     </div>
     <hr class="mt-5">
     <div class="remind">

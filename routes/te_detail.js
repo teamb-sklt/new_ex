@@ -122,7 +122,7 @@ router.post('/', async function(req,response,next){
       year=result[0].rows[0].year;
       month=result[0].rows[0].month;
       day=result[0].rows[0].day;
-      amount=result[0].rows[0].month;
+      amount=result[0].rows[0].amount;
       count=result[0].rows[0].count;
       job_no=result[0].rows[0].job_no;
       job_manager=result[0].rows[0].job_manager;

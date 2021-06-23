@@ -121,15 +121,15 @@
             <div class='form-row'>
                 <div class="form-group col-2.5">
                 <label for='year'>年 ※yyyy</label>
-                <input type="text" class='form-control' name='year' id='year' value="<%- rows[0].year %>" required>
+                <input type="text" class='form-control' name='year' id='year' value="<%- year %>" required>
                 </div>
                 <div class="form-group col-2.5">
                 <label for='month'>月 ※mm</label> 
-                <input type="text" class='form-control' name='month' id='month' value="<%- rows[0].month %>" required>
+                <input type="text" class='form-control' name='month' id='month' value="<%- month %>" required>
                 </div>
                 <div class="form-group col-2.5">
                 <label for='day'>日 ※dd</label>
-                <input type="text" class='form-control' name='day' id='day' value="<%- rows[0].day %>" required>
+                <input type="text" class='form-control' name='day' id='day' value="<%- day %>" required>
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
             <div class='form-row'>
                 <div class="form-group col-2.5">
                     <label for='code_name'>勘定科目</label> <br>
-                    <select id='code_name' name='code_name' class='form-control' value="<%- rows[0].code_name%>"　required>
+                    <select id='code_name' name='code_name' class='form-control' value="<%- code_name%>"　required>
                         <option>▼選択してください</option>
                         <option>消耗品費</option>
                         <option>新聞図書費</option>
@@ -149,19 +149,19 @@
                 <div class="form-group col-2.5">
                     <label for='payee'>支払先</label>
                     <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
-                    <input type="text" class='form-control' name='payee' id='payee' value="<%- rows[0].payee %>" required placeholder="必須">
+                    <input type="text" class='form-control' name='payee' id='payee' value="<%- payee %>" required placeholder="必須">
                 </div>
                 <div class="form-group col-2.5">
                     <label for='summary'>摘要</label>
                     <span class="c-tooltip form-inline" data-tooltip="書籍購入制度利用の場合は『書籍代』と入力ください。">❔</span>
-                    <input type="text" class='form-control form-inline' name='summary' id='summary' value='<%- rows[0].summary %>' required placeholder="必須">
+                    <input type="text" class='form-control form-inline' name='summary' id='summary' value='<%- summary %>' required placeholder="必須">
                 </div>
             </div>
         </div>
         <div class='form-group form-inline'>
             <span><label for='amount'>金額　</label></span>
             <div class="col col-md-7 col-sm-7">
-            <input type="text" id='amount' name='amount' class="form-control" value='<%- rows[0].amount %>'>
+            <input type="text" id='amount' name='amount' class="form-control" value='<%- amount %>'>
             </div>
             <span class="col col-md-4 col-sm-4">円</span>
         </div>
@@ -169,7 +169,7 @@
         <div class='form-group form-inline'>
             <label for='job_no'>ジョブコード</label> 
                 <div class="col-6">
-                <input type="text" class='form-control' id='job_no' name='job_no' value='<%- rows[0].job_no %>' >
+                <input type="text" class='form-control' id='job_no' name='job_no' value='<%- job_no %>' >
                 </div>
         </div>
         <div class='form-group form-inline'>
@@ -194,7 +194,7 @@
             <label for='remarks'>備考</label>
             <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
             <div class="col col-md-8 col-sm-7">
-            <input type="text" class='form-control' id='remarks' name='remarks' value='<%- rows[0].remarks %>' >
+            <input type="text" class='form-control' id='remarks' name='remarks' value='<%- remarks %>' >
             </div>
         </div>
         <div>
@@ -203,6 +203,21 @@
             <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'>
         </div>
     </form>
+
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+          <th>承認クラス</th>
+          <th>承認フラグ</th>
+          <th>コメント</th>
+        </tr>
+        </thead>
+        <tbody>
+            <td><%= app_class %> </td>
+            <td><%= app_flag %> </td>
+            <td><%= comment %> </td>
+        </tbody>
+    </table>
     <script type="text/javascript">
 
         'use strict'
