@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel='stylesheet' 
+    href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+        #routeWaypoint {
+            width: 735px;
+        }
+        #search {
+            width: 500px;
+            margin-left: 100px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        #price {
+            width: 682px;
+            margin: 5px;
+        }
+        #way {
+            width: 294px;
+            margin: 5px;
+        }
+        #moveDate {
+            width: 633px;
+            margin: 5px;
+        }
+        #memo {
+            width: 682px;
+            margin: 5px;
+        }
+        #times {
+            width: 316px;
+            margin: 5px;
+        }
+        #regularly {
+            transform: scale(1.4);
+        }
+    </style>
+  </head>
+  <body class= 'container p-3'>
+    <%- include('nav') %> 
+    <h1 class = "display-4"><%= title %></h1>
+    <form method="POST" action="/te_detail">
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-4">
+                    <label for="text">年</label> 
+                    <input type="text" class='form-control' name='year' id='year' value="<%- rows[0].year %>" required>
+                </div>
+                <div class="form-group col-4">
+                    <label for="text">月</label> 
+                    <input type="text" class='form-control' name='month' id='month' value="<%- rows[0].month %>" required>
+                </div>
+                <div class="form-group col-4">
+                    <label for="text">日</label> 
+                    <input type="text" class='form-control' name='day' id='day' value="<%- rows[0].day %>" required>
+                </div>
+                <div class="form-group col-4">
+                    <label for='time'>時刻 ※hhmm</label> 
+                    <input type="text" class='form-control' name='time'  id='time' required>
+                    <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
+                </div>
+            </div>
+        </div>
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-4">
+                    <label for='trans_from'>出発地</label> 
+                    <input type="text" class='form-control' name='trans_from' id='trans_from' value="<%- rows[0].trans_from %>" required placeholder="必須">
+                </div>
+                <div class="form-group col-4">
+                    <label for='trans_to'>目的地</label> 
+                    <input type="text" class='form-control' name='trans_to' id='trans_to' value='<%- rows[0].trans_to %>' required placeholder="必須">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for='trans_waypoint'>経由地</label>
+                <input type="text" class='form-control' name='trans_waypoint' id='trans_waypoint' value='<%- rows[0].trans_waypoint %>' placeholder="省略可">
+            </div>
+            <input type="submit" id='search' value="検索" class="btn btn-danger" name='search'>
+            <!--<button onclick="searchPrice()" class="btn btn-primary">調べよう</button>-->
+        </div>
+        <div class='form-group form-inline'>
+            <label for='amount'>運賃</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" id='amount' name='amount' class="form-control" value='<%- rows[0].amount %>'>
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='count'>回数</label> 
+                <div class="col col-md-9 col-sm-8">
+                <input type="number" class='form-control' value='<%- rows[0].count %>' min='1' id='count' name='count'>
+                </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='trans_type'>手段</label> <br>
+            <div class="col col-md-9 col-sm-8">
+            <select id='trans_type' name='trans_type' class='form-control'>
+                <option>電車</option>
+                <option>バス</option>
+                <option>タクシー</option>
+                <option>その他</option>
+            </select>
+            </div>
+        </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='job_no'>ジョブコード</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" class='form-control' id='job_no' name='job_no'  value='<%- rows[0].job_no %>'>
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='remarks'>備考</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" class='form-control' id='remarks' name='remarks' value='<%- rows[0].remarks %>'>
+            </div>
+        </div>
+        <!-- <input type="hidden" name="regularly" value="0"> -->
+        <div>
+            <input type="button" id="btn-return" value="戻る" class="btn btn-primary" onclick="location.href='http://localhost:3000'">
+            <!-- <button class="btn btn-primary" id="btn-return" name='return' onclick="location.href='http:/localhost:3000'">戻る</button> -->
+            <input type="submit" id="btn-save" value="保存" class="btn btn-primary" name='save'>
+            <!-- <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'> -->
+        </div>
+    </form>
+    <script type="text/javascript">
+
+        'use strict'
+
+        //戻るボタンでindex.jsに遷移
+        // function move() {
+        //     location.href = 'http://localhost:3000';
+        // };
+    //     document.getElementById("btn-return").onclick=function(){
+    //     document.location="/";//詳細設定ページへ
+    //   }
+
+        //日付・時刻の初期値の設定
+        var date = new Date();
+        date.setDate(date.getDate());
+        var year = date.getFullYear();
+        var month = ("0"+(date.getMonth()+1)).slice(-2);
+        var day = ("0"+date.getDate()).slice(-2);
+        var hours = ("0"+date.getHours()).slice(-2);
+        var minutes = ("0"+date.getMinutes()).slice(-2);
+        document.getElementById("year").value=year;
+        document.getElementById("month").value=month;
+        document.getElementById("day").value=day;
+        document.getElementById("time").value=hours+minutes;
+
+
+    //     if(regularly.prop('checked')){
+	// 	hiddenInput.attr('disabled', 'disabled');
+	// 	checkboxInput.val('true');
+	// }else{
+	// 	hiddenInput.removeAttr('disabled');//hiddenのタグを有効にする
+	// 	hiddenInput.val('false');
+	// }
+
+
+    </script>
+  </body>
+</html>
