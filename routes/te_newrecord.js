@@ -96,6 +96,10 @@ router.post('/', async function(req,response,next){
       let job_name = req.body.job_name
       let job_manager = req.body.job_manager
       let job_manager_name = req.body.job_manager_name
+      console.log(job_id)
+      console.log(job_name)
+      console.log(job_manager)
+      console.log(job_manager_name)
 
       let opt={
         title: '交通費',

@@ -87,21 +87,22 @@
     <div class='form-group form-inline'>
         <label for='job_no'>ジョブコード</label> 
             <div class="col-6">
-            <input type="text" class='form-control' id='job_no' name='job_no'>
+            <input type="text" class='form-control' id='job_no' name='job_no'  value="<%= job_no %> ">
             </div>
     </div>
     <div class='form-group form-inline'>
         <label for='job_name'>ジョブ名</label> 
             <div class="col-6">
-            <input type="text" class='form-control' id='job_name' name='job_name'>
+            <input type="text" class='form-control' id='job_name' name='job_name' value="<%= job_name %>">
             </div>
     </div>
+    <input type="hidden"  id="job_manager" name="job_manager"  value="<%= job_manager %>">
     <a href="/jobsearch"><input type="submit" id="btn-jobsearch" value="ジョブ検索" class="btn btn-primary" name="jobsearch"></a>
     </div>
     <div class='form-group form-inline'>
     <div class='form-group form-inline'>
         <label for="job_manager_name">ＪＭ　　　　　</label>
-        <select name='job_manager_name' id='job_manager_name' class='form-control'>
+        <select name='job_manager_name' id='job_manager_name' class='form-control' value="<%= job_manager_name %>">
             <option value=0>---------------</option>
             <option value=1>Aさん</option>
             <option value=2>Bさん</option>

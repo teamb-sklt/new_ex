@@ -108,28 +108,34 @@ router.post('/', async function(req,response,next){
       })
       await client.connect()
 
-    client.query("SELECT * FROM TeDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'" ,function(err,result){
+    client.query("SELECT * FROM TeDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'; SELECT * FROM TeComments WHERE sheet_year='2021' AND sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'" ,function(err,result){
       if(err){
         console.log('error')
       }else{
-      // console.log(result)
-      branch_no2=result.rows[0].branch_no
-      trans_from=result.rows[0].trans_from;
-      trans_to=result.rows[0].trans_to;
-      trans_waypoint=result.rows[0].trans_waypoint;
-      trans_type=result.rows[0].trans_type;
-      year=result.rows[0].year;
-      month=result.rows[0].month;
-      day=result.rows[0].day;
-      amount=result.rows[0].month;
-      count=result.rows[0].count;
-      job_no=result.rows[0].job_no;
-      job_manager=result.rows[0].job_manager;
-      claim_flag=result.rows[0].claim_flag;
-      charge_flag=result.rows[0].charge_flag;
-      ref_no=result.rows[0].ref_no;
-      remarks=result.rows[0].remarks
+      // console.log(result[0])
+      // console.log(result[1])
+      branch_no2=result[0].rows[0].branch_no
+      trans_from=result[0].rows[0].trans_from;
+      trans_to=result[0].rows[0].trans_to;
+      trans_waypoint=result[0].rows[0].trans_waypoint;
+      trans_type=result[0].rows[0].trans_type;
+      year=result[0].rows[0].year;
+      month=result[0].rows[0].month;
+      day=result[0].rows[0].day;
+      amount=result[0].rows[0].month;
+      count=result[0].rows[0].count;
+      job_no=result[0].rows[0].job_no;
+      job_manager=result[0].rows[0].job_manager;
+      claim_flag=result[0].rows[0].claim_flag;
+      charge_flag=result[0].rows[0].charge_flag;
+      ref_no=result[0].rows[0].ref_no;
+      remarks=result[0].rows[0].remarks;
+      app_class=result[1].rows[0].app_class;
+      app_flag=result[1].rows[0].app_flag;
+      comment=result[1].rows[0].comment;
+
       }
+    
     client.end()
     let opt={
       title: '交通費',
@@ -151,10 +157,12 @@ router.post('/', async function(req,response,next){
       charge_flag:charge_flag,
       ref_no:ref_no,
       remarks:remarks,
+      app_class:app_class,
+      app_flag:app_flag,
+      comment:comment,
     }
     response.render('te_detail', opt);
     })
-
     }else if(req.body.search){
         //経路選択画面からPOSTで引っ張ってくる
         let trans_from = req.body.trans_from;

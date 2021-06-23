@@ -98,7 +98,7 @@ router.post('/', async function(req,response,next){
       let job_manager_name = req.body.job_manager_name
 
       let opt={
-        title: '交通費',
+        title: '経費',
         job_no:job_id,
         job_name:job_name,
         job_manager:job_manager,
