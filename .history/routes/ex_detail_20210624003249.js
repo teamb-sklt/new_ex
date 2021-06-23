@@ -53,7 +53,7 @@ router.get('/', async function(req, res, next) {
     })
     await client.connect()
 
-    client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     //   console.log(result)
     //   console.log(result.rows[0].count)
       branch_no=result.rows[0].count
@@ -63,14 +63,14 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '交通費詳細変更',
+    title: '経費詳細変更',
     year:year,
     month:month,
     day:day,
     branch_no:branch_no1,
-    trans_from:trans_from,
-    trans_waypoint:trans_waypoint,
-    trans_to:trans_to,
+    // trans_from:trans_from,
+    // trans_waypoint:trans_waypoint,
+    // trans_to:trans_to,
     amount:'',
     // // status:status,
     // branch_no:branch_no,
@@ -83,14 +83,14 @@ router.get('/', async function(req, res, next) {
     // subtotal:subtotal,
     // job_no:job_no,
      }
-     res.render('te_detail', opt);
+     res.render('ex_detail', opt);
     });
 
 
 
 router.post('/', async function(req,response,next){
-    //te_thismonthの詳細ボタンを押された場合実行
-    if(req.body.te_detail){
+    //ex_thismonthの詳細ボタンを押された場合実行
+    if(req.body.ex_detail){
       let branch_no2 = req.body.branch_no
       console.log(branch_no2)
 
@@ -108,21 +108,19 @@ router.post('/', async function(req,response,next){
       })
       await client.connect()
 
-    client.query("SELECT * FROM TeDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'" ,function(err,result){
+    client.query("SELECT * FROM ExDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'" ,function(err,result){
       if(err){
         console.log('error')
       }else{
-      // console.log(result)
+      console.log(result)
       branch_no2=result.rows[0].branch_no
-      trans_from=result.rows[0].trans_from;
-      trans_to=result.rows[0].trans_to;
-      trans_waypoint=result.rows[0].trans_waypoint;
-      trans_type=result.rows[0].trans_type;
+      code_name=result.rows[0].code_name;
+      payee=result.rows[0].payee;
+      summary=result.rows[0].summary;
       year=result.rows[0].year;
       month=result.rows[0].month;
       day=result.rows[0].day;
       amount=result.rows[0].amount;
-      count=result.rows[0].count;
       job_no=result.rows[0].job_no;
       job_manager=result.rows[0].job_manager;
       claim_flag=result.rows[0].claim_flag;
@@ -132,50 +130,27 @@ router.post('/', async function(req,response,next){
       }
     client.end()
     let opt={
-      title: '交通費',
+      title: '経費',
       branch_no2:branch_no2,
-      trans_from:trans_from,
-      trans_waypoint:trans_waypoint,
-      trans_to:trans_to,
-      trans_type:trans_type,
-      amount:amount,
+      code_name:code_name,
+      payee:payee,
+      summary:summary,
       year:year,
       month:month,
       day:day,
-      count:count,
+      amount:amount,
       job_no:job_no,
-      job_name:'',
-      job_manager_name:'',
       job_manager:job_manager,
       claim_flag:claim_flag,
       charge_flag:charge_flag,
       ref_no:ref_no,
       remarks:remarks,
     }
-    response.render('te_detail', opt);
+    response.render('ex_detail', opt);
     })
 
-    }else if(req.body.search){
-        //経路選択画面からPOSTで引っ張ってくる
-        let trans_from = req.body.trans_from;
-        let trans_waypoint = req.body.trans_waypoint;
-        let trans_to = req.body.trans_to;
-        let branch_no2 = req.body.branch_no;
-        let amount = req.body.amount;
-
-            let opt={
-                title: '交通費',
-                branch_no2:branch_no2,
-                trans_from:trans_from,
-                trans_waypoint:trans_waypoint,
-                trans_to:trans_to,
-                amount:amount,
-            }
-            response.render('te_newrecord', opt);
-    }
-    
     //保存ボタンが押されたときに実行
-    else if(req.body.save){
+    } else if (req.body.save){
       console.log(req.body.save)
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
@@ -196,12 +171,10 @@ router.post('/', async function(req,response,next){
     let dYear = req.body.year;
     let dMonth = req.body.month;
     let dDay = req.body.day;
-    let dWay = req.body.trans_type;
-    let dStart = req.body.trans_from;
-    let dGoal = req.body.trans_to;
-    let dWaypoint = req.body.trans_waypoint;
+    let dCodename = req.body.code_name;
+    let dPayee = req.body.payee;
+    let dSummary = req.body.summary;
     let dPrice = req.body.amount;
-    let dTimes = req.body.count;
     let dJobno = req.body.job_no;
     let dJobmanager = 111; //仮で111
     let dClaimflag = req.body.claim_flag;
@@ -213,9 +186,8 @@ router.post('/', async function(req,response,next){
     let dNewdate = req.body.year+req.body.month+req.body.day;
 
     //インサートコマンドを定義
-    const sql = "INSERT INTO tedetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)";
-    //const values = ["'"+dEmpno+"'","'"+year+"'","'"+tmonth+"'","'"+branch_no2+"'","'"+dYear+"'","'"+dMonth+"'","'"+dDay+"'","'"+dWay+"'","'"+dStart+"'","'"+dGoal+"'","'"+dWaypoint+"'","'"+dPrice+"'","'"+dTimes+"'","'"+dJobno+"'","'"+dJobmanager+"'","'"+dClaimflag+"'","'"+dChargeflag+"'","'"+dRefno+"'","'"+dStasus+"'","'"+dMemo+"'","'"+dNew+"'","'"+dNewdate+"'","'"+dNew+"'","'"+dNewdate+"'"];
-    const values = [dEmpno,year,tmonth,branch_no2,dYear,dMonth,dDay,dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate,dNew,dNewdate];
+    const sql = "UPDATE ExDetail SET emp_no=, sheet_year, sheet_month, branch_no, year, month, day, code_name, payee, summary, amount, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date";
+    const values = [dEmpno,year,tmonth,branch_no2,dYear,dMonth,dDay,dCodename,dPayee,dSummary,dPrice,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate,dNew,dNewdate];
     console.log(values)
     client.query(sql, values)
     .then(res => {
@@ -223,9 +195,8 @@ router.post('/', async function(req,response,next){
         client.end()
     })
     .catch(e => console.error(e.stack));
-    response.redirect("/te_thismonth");
+    response.redirect("/ex_thismonth");
   }
 });
-
 
 module.exports = router;

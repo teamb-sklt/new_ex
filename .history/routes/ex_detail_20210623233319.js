@@ -53,7 +53,7 @@ router.get('/', async function(req, res, next) {
     })
     await client.connect()
 
-    client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     //   console.log(result)
     //   console.log(result.rows[0].count)
       branch_no=result.rows[0].count
@@ -63,14 +63,14 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '交通費詳細変更',
+    title: '経費詳細変更',
     year:year,
     month:month,
     day:day,
     branch_no:branch_no1,
-    trans_from:trans_from,
-    trans_waypoint:trans_waypoint,
-    trans_to:trans_to,
+    // trans_from:trans_from,
+    // trans_waypoint:trans_waypoint,
+    // trans_to:trans_to,
     amount:'',
     // // status:status,
     // branch_no:branch_no,
@@ -83,14 +83,14 @@ router.get('/', async function(req, res, next) {
     // subtotal:subtotal,
     // job_no:job_no,
      }
-     res.render('te_detail', opt);
+     res.render('ex_detail', opt);
     });
 
 
 
 router.post('/', async function(req,response,next){
-    //te_thismonthの詳細ボタンを押された場合実行
-    if(req.body.te_detail){
+    //ex_thismonthの詳細ボタンを押された場合実行
+    if(req.body.ex_detail){
       let branch_no2 = req.body.branch_no
       console.log(branch_no2)
 
@@ -108,7 +108,7 @@ router.post('/', async function(req,response,next){
       })
       await client.connect()
 
-    client.query("SELECT * FROM TeDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'" ,function(err,result){
+    client.query("SELECT * FROM ExDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'" ,function(err,result){
       if(err){
         console.log('error')
       }else{
@@ -121,7 +121,7 @@ router.post('/', async function(req,response,next){
       year=result.rows[0].year;
       month=result.rows[0].month;
       day=result.rows[0].day;
-      amount=result.rows[0].amount;
+      amount=result.rows[0].month;
       count=result.rows[0].count;
       job_no=result.rows[0].job_no;
       job_manager=result.rows[0].job_manager;
@@ -226,6 +226,5 @@ router.post('/', async function(req,response,next){
     response.redirect("/te_thismonth");
   }
 });
-
 
 module.exports = router;

@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
     <title><%= title %></title>
     <link rel='stylesheet' 
     href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
@@ -9,8 +10,7 @@
   </head>
   <body class= 'container p-3'>
     <h1 class = "display-4"><%= title %></h1>
-    <!-- <form method="POST" action="/ex_detail"> -->
-        <form method="POST">
+    <form method="POST">
         <div class='form-group'>
             <div class='form-row'>
                 <div class="form-group col-2">
@@ -118,6 +118,7 @@
         </div>
     </form>
     <input type="hidden" name="id" value="<%- branch_no2 %>">
+
     <script type="text/javascript">
 
         'use strict'
@@ -136,25 +137,17 @@
         var hours = ("0"+date.getHours()).slice(-2);
         var minutes = ("0"+date.getMinutes()).slice(-2);
         console.log(date);
+        document.getElementById("time").value=hours+minutes;
         document.getElementById("year").value=year;
         document.getElementById("month").value=month;
         document.getElementById("day").value=day;
-
-
-    //     if(regularly.prop('checked')){
-	// 	hiddenInput.attr('disabled', 'disabled');
-	// 	checkboxInput.val('true');
-	// }else{
-	// 	hiddenInput.removeAttr('disabled');//hiddenのタグを有効にする
-	// 	hiddenInput.val('false');
-	// }
 
         function jobClick() {
             document.location.href = 'http://localhost:3000/ex_thismonth';
         };
         
-        var val = document.getElementById('job_manager_name');
         val.onchange = function() {
+            var val = document.getElementById('jm');
             if (val !== 0) {
             alert('本来とは別のJMが選択されています。再確認の上、変更願います。');
             }

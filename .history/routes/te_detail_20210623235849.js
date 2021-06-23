@@ -112,7 +112,7 @@ router.post('/', async function(req,response,next){
       if(err){
         console.log('error')
       }else{
-      // console.log(result)
+      console.log(result)
       branch_no2=result.rows[0].branch_no
       trans_from=result.rows[0].trans_from;
       trans_to=result.rows[0].trans_to;

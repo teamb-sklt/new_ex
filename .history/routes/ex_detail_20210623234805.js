@@ -53,7 +53,7 @@ router.get('/', async function(req, res, next) {
     })
     await client.connect()
 
-    client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     //   console.log(result)
     //   console.log(result.rows[0].count)
       branch_no=result.rows[0].count
@@ -63,14 +63,14 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '交通費詳細変更',
+    title: '経費詳細変更',
     year:year,
     month:month,
     day:day,
     branch_no:branch_no1,
-    trans_from:trans_from,
-    trans_waypoint:trans_waypoint,
-    trans_to:trans_to,
+    // trans_from:trans_from,
+    // trans_waypoint:trans_waypoint,
+    // trans_to:trans_to,
     amount:'',
     // // status:status,
     // branch_no:branch_no,
@@ -83,14 +83,14 @@ router.get('/', async function(req, res, next) {
     // subtotal:subtotal,
     // job_no:job_no,
      }
-     res.render('te_detail', opt);
+     res.render('ex_detail', opt);
     });
 
 
 
 router.post('/', async function(req,response,next){
-    //te_thismonthの詳細ボタンを押された場合実行
-    if(req.body.te_detail){
+    //ex_thismonthの詳細ボタンを押された場合実行
+    if(req.body.ex_detail){
       let branch_no2 = req.body.branch_no
       console.log(branch_no2)
 
@@ -108,21 +108,19 @@ router.post('/', async function(req,response,next){
       })
       await client.connect()
 
-    client.query("SELECT * FROM TeDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'" ,function(err,result){
+    client.query("SELECT * FROM ExDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'" ,function(err,result){
       if(err){
         console.log('error')
       }else{
       // console.log(result)
       branch_no2=result.rows[0].branch_no
-      trans_from=result.rows[0].trans_from;
-      trans_to=result.rows[0].trans_to;
-      trans_waypoint=result.rows[0].trans_waypoint;
-      trans_type=result.rows[0].trans_type;
+      code_name=result.rows[0].code_name;
+      payee=result.rows[0].payee;
+      summary=result.rows[0].summary;
       year=result.rows[0].year;
       month=result.rows[0].month;
       day=result.rows[0].day;
       amount=result.rows[0].amount;
-      count=result.rows[0].count;
       job_no=result.rows[0].job_no;
       job_manager=result.rows[0].job_manager;
       claim_flag=result.rows[0].claim_flag;
@@ -132,50 +130,27 @@ router.post('/', async function(req,response,next){
       }
     client.end()
     let opt={
-      title: '交通費',
+      title: '経費',
       branch_no2:branch_no2,
-      trans_from:trans_from,
-      trans_waypoint:trans_waypoint,
-      trans_to:trans_to,
-      trans_type:trans_type,
-      amount:amount,
+      code_name:code_name,
+      payee:payee,
+      summary:summary,
       year:year,
       month:month,
       day:day,
-      count:count,
+      amount:amount,
       job_no:job_no,
-      job_name:'',
-      job_manager_name:'',
       job_manager:job_manager,
       claim_flag:claim_flag,
       charge_flag:charge_flag,
       ref_no:ref_no,
-      remarks:remarks,
+      remarks:remarks
     }
-    response.render('te_detail', opt);
+    response.render('ex_detail', opt);
     })
 
-    }else if(req.body.search){
-        //経路選択画面からPOSTで引っ張ってくる
-        let trans_from = req.body.trans_from;
-        let trans_waypoint = req.body.trans_waypoint;
-        let trans_to = req.body.trans_to;
-        let branch_no2 = req.body.branch_no;
-        let amount = req.body.amount;
-
-            let opt={
-                title: '交通費',
-                branch_no2:branch_no2,
-                trans_from:trans_from,
-                trans_waypoint:trans_waypoint,
-                trans_to:trans_to,
-                amount:amount,
-            }
-            response.render('te_newrecord', opt);
-    }
-    
     //保存ボタンが押されたときに実行
-    else if(req.body.save){
+    } else if (req.body.save){
       console.log(req.body.save)
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
@@ -226,6 +201,5 @@ router.post('/', async function(req,response,next){
     response.redirect("/te_thismonth");
   }
 });
-
 
 module.exports = router;

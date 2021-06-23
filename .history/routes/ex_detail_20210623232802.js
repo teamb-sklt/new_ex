@@ -53,7 +53,7 @@ router.get('/', async function(req, res, next) {
     })
     await client.connect()
 
-    client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     //   console.log(result)
     //   console.log(result.rows[0].count)
       branch_no=result.rows[0].count
@@ -63,7 +63,7 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '交通費詳細変更',
+    title: '経費詳細変更',
     year:year,
     month:month,
     day:day,
@@ -121,7 +121,7 @@ router.post('/', async function(req,response,next){
       year=result.rows[0].year;
       month=result.rows[0].month;
       day=result.rows[0].day;
-      amount=result.rows[0].amount;
+      amount=result.rows[0].month;
       count=result.rows[0].count;
       job_no=result.rows[0].job_no;
       job_manager=result.rows[0].job_manager;
@@ -226,6 +226,5 @@ router.post('/', async function(req,response,next){
     response.redirect("/te_thismonth");
   }
 });
-
 
 module.exports = router;
