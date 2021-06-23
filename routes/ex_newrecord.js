@@ -68,10 +68,10 @@ router.get('/', async function(req, res, next) {
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,
-    // trans_from:'',
-    // trans_waypoint:'',
-    // trans_to:'',
     amount:'',
+    job_no:'',
+    job_name:'',
+    job_manager_name:'',
     // // status:status,
     // branch_no:branch_no,
     // month:month,
@@ -90,7 +90,31 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req,response,next){
     //保存ボタンが押されたら実行
-    if(req.body.save){
+
+    if(req.body.jobsearch){
+      let job_id = req.body.job_id
+      let job_name = req.body.job_name
+      let job_manager = req.body.job_manager
+      let job_manager_name = req.body.job_manager_name
+
+      let opt={
+        title: '経費',
+        job_no:job_id,
+        job_name:job_name,
+        job_manager:job_manager,
+        job_manager_name:job_manager_name,
+        branch_no2:'',
+        amount:'',
+
+        // branch_no2:branch_no2,
+        // trans_from:trans_from,
+        // trans_waypoint:trans_waypoint,
+        // trans_to:trans_to,
+        // amount:amount,
+    }
+    response.render('ex_newrecord', opt);
+
+  }else if(req.body.save){
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
       ssl: {
