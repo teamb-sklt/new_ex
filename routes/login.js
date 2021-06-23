@@ -99,9 +99,7 @@ router.post('/',async function(req, res, next) {
     res.render('te_thismonth', opt);
 
   }
-
-    
-  });
+});
   
 
 // router.post('/te_thismonth',async function(req, res, next) {

@@ -132,9 +132,8 @@ router.post('/', async function(req,response,next){
       remarks=result[0].rows[0].remarks;
       app_class=result[1].rows[0].app_class;
       app_flag=result[1].rows[0].app_flag;
-      comment=result[1].rows[0].comment;
+      comment=result[1].rows[0].comment;   
       }
-    
     client.end()
     let opt={
       title: '交通費',
