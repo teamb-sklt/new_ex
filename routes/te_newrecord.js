@@ -90,7 +90,34 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req,response,next){
     //result.ejsの選択ボタンボタンが押されたら実行
-    if(req.body.search){
+
+    if(req.body.te_jobsearch){
+      let job_id = req.body.job_id
+      let job_name = req.body.job_name
+      let job_manager = req.body.job_manager
+      let job_manager_name = req.body.job_manager_name
+
+      let opt={
+        title: '交通費',
+        job_no:job_id,
+        job_name:job_name,
+        job_manager:job_manager,
+        job_manager_name:job_manager_name,
+        trans_from:'',
+        trans_to:'',
+        trans_waypoint:'',
+        branch_no2:'',
+        amount:'',
+
+        // branch_no2:branch_no2,
+        // trans_from:trans_from,
+        // trans_waypoint:trans_waypoint,
+        // trans_to:trans_to,
+        // amount:amount,
+    }
+    response.render('te_newrecord', opt);
+  }
+    else if(req.body.search){
         //経路選択画面からPOSTで引っ張ってくる
         let trans_from = req.body.trans_from;
         let trans_waypoint = req.body.trans_waypoint;

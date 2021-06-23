@@ -1,6 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var {Client}=require('pg');
+const moment = require("moment");
+var today = moment();
+var year = moment().format("YYYY");
+var tomonth = moment().format("MM");
+// var nm = moment().add(1,'month').format("MM");　//翌月
+// var lm = moment().add(-1,'month',).format("MM");　//先月
+var date = moment().format("DD")
+var tmonth;
+var lmonth;
+var lastday;
+
+// console.log(date)
+
+if(date>20){
+  tmonth=moment().add(1,'month').format("MM");
+  lmonth=tomonth;
+}else{
+  tmonth=tomonth;
+  lmonth=moment().add(-1,'month',).format("MM");
+  lastday = 20 - date;
+}
 
 require('dotenv').config();
 const user=process.env.USER;
@@ -31,13 +52,14 @@ router.post('/',async function(req, res, next) {
   })
   let account=req.body.account;
   let pass=req.body.password;
-  console.log(account+pass);
+  // console.log(account+pass);
 
   await client.connect()
-  console.log(client)
-  client.query("SELECT * from Employee where emp_no='"+account+"'", function(err, result){
+  // console.log(client)
+
+   client.query("SELECT * from Employee where emp_no='"+account+"'", function(err, result){
     if (err){
-      console.log(err) //show error infomation
+      console.log('err') //show error infomation
     }
     let record = result.rows
     for(let i = 0; i <= result.rows; i++){
@@ -48,11 +70,19 @@ router.post('/',async function(req, res, next) {
         // let name=result.rows[0].emp_name;
         let a=result.rows[0];
         client.end();
-        res.redirect('/te_thismonth');    //成功時の遷移先
+        res.redirect('/te_thismonth')    //成功時の遷移先
     }else{
       client.end();
       res.redirect('/login')  //失敗時の遷移先
     }
+  })
+  });
+  
+
+router.post('/te_thismonth',async function(req, res, next) {
+    let emp_no = req.body.account;
+    res.render('te_thismonth', {
+      emp_no:emp_no
   });
 });
 
