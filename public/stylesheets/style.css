@@ -11,6 +11,11 @@ a {
 
 /* .mishinsei {background-color: red;} */
 /* 申請チーム用CSS */
+#branch_no{
+  width: 50px;
+  
+}
+
 #trans_waypoint {
   width: 735px;
 }
@@ -130,8 +135,19 @@ input:checked+.content{
         #search{width: 200px;
                 margin:0 auto;
               }
+        #year{width: 60px;
+         }
+        
 
+        #time{width: 63px;}
+        
+
+        #branch_no{display:none;}
+
+        label[for="branch_no"]{display:none;}
+        
         #trans_waypoint{width:200px;}
-        
-        
+        #claim_flag{width: 20px;
+                    ;}
+        #charge_flag{width: 20px;}
       }
