@@ -57,6 +57,7 @@ router.post('/',async function(req, res, next) {
     await client.connect();
     // console.log(client)
     client.query(sql,function(err,result){
+      console.log(sql);
       if(err){
           console.log(err)
         }
