@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
+    <title><%= title %></title>
+    <link rel='stylesheet' 
+    href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body class= 'container p-3'>
+    <h1 class = "display-4"><%= title %></h1>
+    <!-- <form method="POST" action="/te_newrecord"> -->
+        <form method="POST"> 
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-2">
+                    <label for='year'>年 ※yyyy</label> 
+                    <input type="text" class='form-control' name='year' id='year' required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='month'>月 ※mm</label> 
+                    <input type="text" class='form-control' name='month' id='month' required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='day'>日 ※dd</label>
+                    <input type="text" class='form-control' name='day' id='day' required>
+                </div>
+                <div class="form-group col-2">
+                    <label for='time'>時刻 ※hhmm</label> 
+                    <input type="text" class='form-control' name='time'  id='time' required>
+                    <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
+                </div>
+                <div class="form-group col-4">
+                    <label for='branch_no'>No</label> 
+                    <input type="text" class='form-control' name='branch_no'  id='branch_no' value="<%- branch_no2 %>" >
+                    <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
+                </div>
+            </div>
+        </div>
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-4">
+                    <label for='trans_from'>出発地</label> 
+                    <input type="text" class='form-control' name='trans_from' id='trans_from' value="<%- trans_from %>" required placeholder="必須">
+                </div>
+                <div class="form-group col-4">
+                    <label for='trans_to'>目的地</label> 
+                    <input type="text" class='form-control' name='trans_to' id='trans_to' value="<%- trans_to %>" required placeholder="必須">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for='route'>経由地</label>
+                <input type="text" class='form-control' name='trans_waypoint' id='trans_waypoint' value="<%- trans_waypoint %>" placeholder="省略可">
+            </div>
+            <input type="submit" id='search' value="検索" class="btn btn-danger" name='search'　 formaction="/result">
+            <!--<button onclick="searchPrice()" class="btn btn-primary">調べよう</button>-->
+        </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='amount'>運賃</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" id='amount' name='amount' value="<%- amount %>"class="form-control" >
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='count'>回数</label> 
+                <div class="col col-md-9 col-sm-8">
+                <input type="number" class='form-control' value='1' min='1' id='count' name='count'>
+                </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='trans_type'>手段</label> <br>
+            <div class="col col-md-9 col-sm-8">
+            <select id='trans_type' name='trans_type' class='form-control' onchange="onChangeWay()">
+                <!-- <option>電車</option>
+                <option>バス</option>
+                <option>タクシー</option>
+                <option>その他</option> -->
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>0</option>
+            </select>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class='form-group form-inline'>
+    <div class='form-group form-inline'>
+        <label for='job_no'>ジョブコード</label> 
+            <div class="col-6">
+            <input type="text" class='form-control' id='job_no' name='job_no'>
+            </div>
+    </div>
+    <div class='form-group form-inline'>
+        <label for='job_name'>ジョブ名</label> 
+            <div class="col-6">
+            <input type="text" class='form-control' id='job_name' name='job_name'>
+            </div>
+    </div>
+    <a href="/jobsearch"><input type="submit" id="btn-jobsearch" value="ジョブ検索" class="btn btn-primary" name="jobsearch"></a>
+    </div>
+    <div class='form-group form-inline'>
+    <div class='form-group form-inline'>
+        <label for="job_manager_name">ＪＭ　　　　　</label>
+        <select name='job_manager_name' id='job_manager_name' class='form-control'>
+            <option value=0>---------------</option>
+            <option value=1>Aさん</option>
+            <option value=2>Bさん</option>
+        </select>
+    </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='claim_flag'>　　　　　顧客に請求する</label>
+            <input name="claim_flag" type="hidden" value="0" onchange="onChangeCheckBox1()">
+            <input type="checkbox" class='form-control' id='claim_flag' name='claim_flag' value="1" onchange="onChangeCheckBox2()">
+        </div>
+        <div class='form-group form-inline'>
+            <label for='charge_flag'>　　　　　ジョブにチャージ</label> <br>
+            <input name="charge_flag" type="hidden" value="0" onchange="onChangeCheckBox3()">
+            <input type="checkbox" class='form-control' id='charge_flag' name='charge_flag' value="1" onchange="onChangeCheckBox4()">
+        </div>
+        </div>
+    </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='ref_no'>領収書番号</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" class='form-control' id='ref_no' name='ref_no'>
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='remarks'>備考</label> 
+            <div class="col col-md-9 col-sm-8">
+            <input type="text" class='form-control' id='remarks' name='remarks'>
+            </div>
+        </div>
+        <div>
+            <input type="submit" id="btn-return" value="戻る" class="btn btn-primary" onclick="frameClick();"　 formaction="/te_newrecord">
+            <input type="submit" id="save" value="保存" class="btn btn-primary" name='save' formaction="/te_newrecord">
+        </div>
+        <input type="hidden" name="id" value="<%- branch_no2 %>">
+    </form>
+    <script type="text/javascript">
+
+        'use strict'
+
+        //戻るボタンでte_thismonth.jsに遷移
+        function frameClick() {
+            document.location.href = 'http://localhost:3000/te_thismonth';
+        };
+
+        //日付・時刻の初期値の設定
+        var date = new Date();
+        date.setDate(date.getDate());
+        var year = date.getFullYear();
+        var month = ("0"+(date.getMonth()+1)).slice(-2);
+        var day = ("0"+date.getDate()).slice(-2);
+        var hours = ("0"+date.getHours()).slice(-2);
+        var minutes = ("0"+date.getMinutes()).slice(-2);
+        console.log(date);
+        document.getElementById("year").value=year;
+        document.getElementById("month").value=month;
+        document.getElementById("day").value=day;
+        document.getElementById("time").value=hours+minutes;
+        
+  //     if(regularly.prop('checked')){
+	// 	hiddenInput.attr('disabled', 'disabled');
+	// 	checkboxInput.val('true');
+	// }else{
+	// 	hiddenInput.removeAttr('disabled');//hiddenのタグを有効にする
+	// 	hiddenInput.val('false');
+	// }
+  
+        // ジョブ検索で表示されたJMから変更される→注意喚起ポップアップ
+        var val = document.getElementById('job_manager_name');
+        val.onchange = function() {
+            if (val !== 0) {
+            alert('本来とは別のJMが選択されています。再確認の上、変更願います。');
+            }
+        }
+        
+        // 「顧客に請求する」: チェック=1、未チェック=0に変換
+        function onChangeCheckBox1() {
+        var check1 = document.getElementById("claim_flag").checked;
+        if (check1 == true) {
+            claim_flag.value = 1;
+            console.log(claim_flag)
+        } else {
+            claim_flag.value = 0;
+            console.log(claim_flag)
+        }
+        }
+        function onChangeCheckBox2() {
+        var check1 = document.getElementById("claim_flag").checked;
+        if (check1 == true) {
+            claim_flag.value = 1;
+            console.log(claim_flag)
+        } else {
+            claim_flag.value = 0;
+            console.log(claim_flag)
+        }
+        }
+
+        // 「ジョブにチャージ」: チェック=1、未チェック=0に変換
+        function onChangeCheckBox2() {
+        var check2 = document.getElementById("charge_flag").checked;
+        if (check2 == true) {
+            charge_flag.value = 1;
+            console.log(charge_flag)
+        } else {
+            charge_flag.value = 0;
+            console.log(charge_flag)
+        }
+        }
+
+        // 「交通手段」: 電車=1、バス=2、タクシー=3、その他=0に変換
+        // function onChangeWay() {
+        //     var element = document.getElementById("trans_type");
+        //     if (element == '電車') {
+        //         charge_flag.value = 1;
+        //     } else {
+        //         // 選択状態ではない
+        //     }
+        //     }
+    </script>
+  </body>
+</html>
