@@ -220,67 +220,12 @@ router.post('/', async function(req,response,next){
 
     //インサートコマンドを定義
     //const sql = "UPDATE TeDetail SET emp_no='"+dEmpno+"', sheet_year='"+year+"', sheet_month='"+tmonth+"', branch_no='"+branch_no2+"', year='"+dYear+"', month='"+dMonth+"', day='"+dDay+"', trans_type='"+dWay+"', trans_from='"+dStart+"', trans_to='"+dGoal+"', trans_waypoint='"+dWaypoint+"', amount='"+dPrice+"', count='"+dTimes+"', job_no='"+dJobno+"', job_manager='"+dJobmanager+"', claim_flag='"+dClaimflag+"', charge_flag='"+dChargeflag+"', ref_no='"+dRefno+"', status='"+dStasus+"', remarks='"+dMemo+"', new='"+dNew+"', new_date='"+dNewdate+"', renew='"+dNew+"', renew_date='"+dNewdate+"' WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
-    const sql = "UPDATE TeDetail SET (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) = ('"+dEmpno+"', '"+year+"', '"+tmonth+"', '"+branch_no2+"', '"+dYear+"', '"+dMonth+"', '"+dDay+"', '"+dWay+"', '"+dStart+"', '"+dGoal+"', '"+dWaypoint+"', '"+dPrice+"', '"+dTimes+"', '"+dJobno+"', '"+dJobmanager+"', '"+dClaimflag+"', '"+dChargeflag+"', '"+dRefno+"', '"+dStasus+"', '"+dMemo+"', '"+dNew+"', '"+dNewdate+"', '"+dNew+"', '"+dNewdate+"') WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
     console.log(sql)
     client.query(sql, function(err, result){
-      console.log(result)
+    client.end()
     });
-    let opt={
-      title:'example',
-    }
-    res.render('te_thismonth',opt);
+    response.redirect("/te_thismonth");
   }
-
-      //削除ボタンが押されたときに実行
-      else if(req.body.delete){
-        console.log(req.body.delete)
-      const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false
-        }
-      }) : new Client({
-        user: user,
-        host: 'localhost',
-        database: 'itpjph3',
-        password: dbpassword,
-        port: 5432
-      })
-      await client.connect()
-        
-      //フォームに入力された値を定義
-      let dEmpno = '001'; //ログインID=社員IDに変更要
-      let dYear = req.body.year;
-      let dMonth = req.body.month;
-      let dDay = req.body.day;
-      let dWay = req.body.trans_type;
-      let dStart = req.body.trans_from;
-      let dGoal = req.body.trans_to;
-      let dWaypoint = req.body.trans_waypoint;
-      let dPrice = req.body.amount;
-      let dTimes = req.body.count;
-      let dJobno = req.body.job_no;
-      let dJobmanager = 111; //仮で111
-      let dClaimflag = req.body.claim_flag;
-      let dChargeflag = req.body.charge_flag;
-      let dRefno = req.body.ref_no;
-      let dStasus = '00'; //未申請ステータス
-      let dMemo = req.body.remarks;
-      let dNew = '001'; //ログインID=社員IDに変更要
-      let dNewdate = req.body.year+req.body.month+req.body.day;
-  
-      //インサートコマンドを定義
-      //const sql = "UPDATE TeDetail SET emp_no='"+dEmpno+"', sheet_year='"+year+"', sheet_month='"+tmonth+"', branch_no='"+branch_no2+"', year='"+dYear+"', month='"+dMonth+"', day='"+dDay+"', trans_type='"+dWay+"', trans_from='"+dStart+"', trans_to='"+dGoal+"', trans_waypoint='"+dWaypoint+"', amount='"+dPrice+"', count='"+dTimes+"', job_no='"+dJobno+"', job_manager='"+dJobmanager+"', claim_flag='"+dClaimflag+"', charge_flag='"+dChargeflag+"', ref_no='"+dRefno+"', status='"+dStasus+"', remarks='"+dMemo+"', new='"+dNew+"', new_date='"+dNewdate+"', renew='"+dNew+"', renew_date='"+dNewdate+"' WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
-      const sql = "UPDATE TeDetail SET (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) = ('"+dEmpno+"', '"+year+"', '"+tmonth+"', '"+branch_no2+"', '"+dYear+"', '"+dMonth+"', '"+dDay+"', '"+dWay+"', '"+dStart+"', '"+dGoal+"', '"+dWaypoint+"', '"+dPrice+"', '"+dTimes+"', '"+dJobno+"', '"+dJobmanager+"', '"+dClaimflag+"', '"+dChargeflag+"', '"+dRefno+"', '"+dStasus+"', '"+dMemo+"', '"+dNew+"', '"+dNewdate+"', '"+dNew+"', '"+dNewdate+"') WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
-      console.log(sql)
-      client.query(sql, function(err, result){
-        console.log(result)
-      });
-      let opt={
-        title:'example',
-      }
-      res.render('te_thismonth',opt);
-    }
 });
 
 module.exports = router;
