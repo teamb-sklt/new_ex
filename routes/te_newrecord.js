@@ -125,6 +125,34 @@ router.post('/', async function(req,response,next){
     }
     response.render('te_newrecord', opt);
   }
+  else if(req.body.te_jobsearch_to){
+    let trans_from = req.body.trans_from;
+    let trans_waypoint = req.body.trans_waypoint;
+    let trans_to = req.body.trans_to;
+    let year = req.body.year;
+    let month = req.body.month;
+    let day = req.body.day;
+    let branch_no2 = req.body.branch_no;
+    let job_id = req.body.job.no
+    let job_name = rer.body.job_name
+    let job_manager = req.body.job_manager
+    let job_manager_name = req.body.job_manager_name
+    let opt={
+      job_no:job_id,
+      job_name:job_name,
+      job_manager:job_manager,
+      job_manager_name:job_manager_name,
+      trans_from:trans_from,
+      trans_to:trans_to,
+      trans_waypoint:trans_waypoint,
+      branch_no2:branch_no2,
+      year:year,
+      month:month,
+      day:day,
+    }
+    response.render('te_jobsearch', opt);
+
+  }
     else if(req.body.search){
         //経路選択画面からPOSTで引っ張ってくる
         let trans_from = req.body.trans_from;
