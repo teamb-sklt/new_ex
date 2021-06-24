@@ -56,21 +56,21 @@ router.get('/', async function(req, res, next) {
     client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     //   console.log(result)
     //   console.log(result.rows[0].count)
-    branch_no=result.rows[0].count
+      branch_no=result.rows[0].count
       branch_no1=Number(branch_no);
-      branch_no2=branch_no1+1
-      console.log(branch_no2)
+      console.log(branch_no1)
 
       client.end()
     });
   let opt={
-    title: '交通費',
-    tmonth:tmonth,
-    lmonth:lmonth,
-    branch_no2:branch_no2,
-    trans_from:'',
-    trans_waypoint:'',
-    trans_to:'',
+    title: '交通費詳細変更',
+    year:year,
+    month:month,
+    day:day,
+    branch_no:branch_no1,
+    trans_from:trans_from,
+    trans_waypoint:trans_waypoint,
+    trans_to:trans_to,
     amount:'',
     // // status:status,
     // branch_no:branch_no,
@@ -81,47 +81,87 @@ router.get('/', async function(req, res, next) {
     // amount:amount,
     // count:count,
     // subtotal:subtotal,
-    // job_no:'',
+    // job_no:job_no,
      }
-     res.render('te_newrecord', opt);
+     res.render('te_detail', opt);
     });
 
 
 
 router.post('/', async function(req,response,next){
-    //result.ejsの選択ボタンボタンが押されたら実行
+    //te_thismonthの詳細ボタンを押された場合実行
+    if(req.body.te_detail){
+      let branch_no2 = req.body.branch_no
+      console.log(branch_no2)
 
-    if(req.body.te_jobsearch){
-      let job_id = req.body.job_id
-      let job_name = req.body.job_name
-      let job_manager = req.body.job_manager
-      let job_manager_name = req.body.job_manager_name
-      console.log(job_id)
-      console.log(job_name)
-      console.log(job_manager)
-      console.log(job_manager_name)
+      const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+      }) : new Client({
+        user: 'postgres',
+        host: 'localhost',
+        database: 'itpjph3',
+        password: dbpassword,
+        port: 5432
+      })
+      await client.connect()
 
-      let opt={
-        title: '交通費',
-        job_no:job_id,
-        job_name:job_name,
-        job_manager:job_manager,
-        job_manager_name:job_manager_name,
-        trans_from:'',
-        trans_to:'',
-        trans_waypoint:'',
-        branch_no2:'',
-        amount:'',
-
-        // branch_no2:branch_no2,
-        // trans_from:trans_from,
-        // trans_waypoint:trans_waypoint,
-        // trans_to:trans_to,
-        // amount:amount,
+    client.query("SELECT * FROM TeDetail WHERE branch_no='"+branch_no2 +"'" +"AND sheet_month='"+tmonth+"'; SELECT * FROM TeComments WHERE sheet_year='2021' AND sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'" ,function(err,result){
+      if(err){
+        console.log('error')
+      }else{
+      // console.log(result[0])
+      console.log(result[1])
+      branch_no2=result[0].rows[0].branch_no
+      trans_from=result[0].rows[0].trans_from;
+      trans_to=result[0].rows[0].trans_to;
+      trans_waypoint=result[0].rows[0].trans_waypoint;
+      trans_type=result[0].rows[0].trans_type;
+      year=result[0].rows[0].year;
+      month=result[0].rows[0].month;
+      day=result[0].rows[0].day;
+      amount=result[0].rows[0].amount;
+      count=result[0].rows[0].count;
+      job_no=result[0].rows[0].job_no;
+      job_manager=result[0].rows[0].job_manager;
+      claim_flag=result[0].rows[0].claim_flag;
+      charge_flag=result[0].rows[0].charge_flag;
+      ref_no=result[0].rows[0].ref_no;
+      remarks=result[0].rows[0].remarks;
+      app_class=result[1].rows[0].app_class;
+      app_flag=result[1].rows[0].app_flag;
+      comment=result[1].rows[0].comment;   
+      }
+    client.end()
+    let opt={
+      title: '交通費',
+      branch_no2:branch_no2,
+      trans_from:trans_from,
+      trans_waypoint:trans_waypoint,
+      trans_to:trans_to,
+      trans_type:trans_type,
+      amount:amount,
+      year:year,
+      month:month,
+      day:day,
+      count:count,
+      job_no:job_no,
+      job_name:'',
+      job_manager_name:'',
+      job_manager:job_manager,
+      claim_flag:claim_flag,
+      charge_flag:charge_flag,
+      ref_no:ref_no,
+      remarks:remarks,
+      app_class:app_class,
+      app_flag:app_flag,
+      comment:comment,
     }
-    response.render('te_newrecord', opt);
-  }
-    else if(req.body.search){
+    response.render('te_detail', opt);
+    })
+    }else if(req.body.search){
         //経路選択画面からPOSTで引っ張ってくる
         let trans_from = req.body.trans_from;
         let trans_waypoint = req.body.trans_waypoint;
