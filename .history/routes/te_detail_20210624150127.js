@@ -217,7 +217,7 @@ router.post('/', async function(req,response,next){
     let dMemo = req.body.remarks;
     let dNew = '001'; //ログインID=社員IDに変更要
     let dNewdate = req.body.year+req.body.month+req.body.day;
-
+    console.log(dNewdate)
     //インサートコマンドを定義
     const sql = "UPDATE TeDetail SET emp_no='"+dEmpno+"', sheet_year='"+year+"', sheet_month='"+tmonth+"', branch_no='"+branch_no2+"', year='"+dYear+"', month='"+dMonth+"', day='"+dDay+"', trans_type='"+dWay+"', trans_from='"+dStart+"', trans_to='"+dGoal+"', trans_waypoint='"+dWaypoint+"', amount='"+dPrice+"', count='"+dTimes+"', job_no='"+dJobno+"', job_manager='"+dJobmanager+"', claim_flag='"+dClaimflag+"', charge_flag='"+dChargeflag+"', ref_no='"+dRefno+"', status='"+dStasus+"', remarks='"+dMemo+"', new='"+dNew+"', new_date='"+dNewdate+"', renew='"+dNew+"', renew_date='"+dNewdate+"' WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
     console.log('sql1')
@@ -225,6 +225,11 @@ router.post('/', async function(req,response,next){
       console.log('sql2');
       client.end()
     });
+    let opt={
+      title:'example',
+      id:id,
+      mail:mail,
+    }
     response.redirect("/te_thismonth");
   }
 });

@@ -225,7 +225,12 @@ router.post('/', async function(req,response,next){
       console.log('sql2');
       client.end()
     });
-    response.redirect("/te_thismonth");
+    let opt={
+      title:'example',
+      id:id,
+      mail:mail,
+    }
+    res.render('te_thismonth',opt);
   }
 });
 

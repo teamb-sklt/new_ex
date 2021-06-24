@@ -43,7 +43,7 @@ var branch_no2;
 var branch_no;
 router.get('/', async function(req, res, next) {
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-      connectionString: process.env.HEROKU_POSTGRESQL_BRONZE_URL,
+      connectionString: process.env.DATABASE_URL,
       ssl: {
           rejectUnauthorized: false
       }
@@ -88,7 +88,7 @@ router.post('/', async function(req, res, next) {
         console.log(branch_no2)
 
         const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-            connectionString: process.env.HEROKU_POSTGRESQL_BRONZE_URL,
+            connectionString: process.env.DATABASE_URL,
             ssl: {
                 rejectUnauthorized: false
             }
@@ -160,7 +160,7 @@ router.post('/', async function(req, res, next) {
 } else if (req.body.save){
     console.log(req.body.save)
   const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-    connectionString: process.env.HEROKU_POSTGRESQL_BRONZE_URL,
+    connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
     }
