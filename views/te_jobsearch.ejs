@@ -8,20 +8,21 @@
   <body class= 'container p-3'>
     <h1>ジョブ検索</h1>
     <form method="POST"> 
-      <input type="text" name='trans_from' id='trans_from' value="<%= trans_from  %>">
+      <input type="hidden" name='trans_from' id='trans_from' value="<%= trans_from  %>">
       <input type="hidden" name='trans_to' id='trans_to'  value="<%= trans_to  %>">
       <input type="hidden" name='trans_waypoint' id='trans_waypoint'  value="<%= trans_waypoint  %>">
       <input type="hidden" class='form-control' name='branch_no'  id='branch_no' value="<%- branch_no2 %>" >
       <input type="hidden" class='form-control' name='year' id='year'value="<%- year %>" >
       <input type="hidden" class='form-control' name='month' id='month' value="<%- month %>">
       <input type="hidden" class='form-control' name='day' id='day' value="<%- day %>">
+      <input type="hidden" class='form-control' name='amount' id='amount' value="<%- amount %>">
       <div class='form-group'>
         <label for='jobcode'>ジョブコード</label> 
-        <input type="text" class='form-control' id='jobsearchcode' name='jobsearchcode' value="<%= job_no  %> ">
+        <input type="text" class='form-control' id='jobsearchcode' name='jobsearchcode' value="<%=jobsearchcode%>">
       </div>
     <div class="form-group">
       <label for='jobname'>ジョブ名</label> 
-      <input type="text" class='form-control' id='jobsearchname' name='jobsearchname' value="<%= job_name  %> ">
+      <input type="text" class='form-control' id='jobsearchname' name='jobsearchname' value="<%=jobsearchname%>">
         </div>
         <div>
           <input type="submit" value="検索" class="btn btn-primary" name='jobsearch' formaction="/te_jobsearch" >
@@ -54,6 +55,10 @@
                   <input type="hidden" name='trans_to' id='trans_to'  value="<%= trans_to  %>">
                   <input type="hidden" name='trans_waypoint' id='trans_waypoint'  value="<%= trans_waypoint  %>">
                   <input type="hidden" name='branch_no'  id='branch_no' value="<%= branch_no2 %>">
+                  <input type="hidden" class='form-control' name='year' id='year'value="<%- year %>" >
+                  <input type="hidden" class='form-control' name='month' id='month' value="<%- month %>">
+                  <input type="hidden" class='form-control' name='day' id='day' value="<%- day %>">
+                  <input type="hidden" class='form-control' name='amount' id='amount' value="<%- amount %>">
                 <td><input type="submit" class="btn btn-secondary" name="te_jobsearch" id="te_jobsearch" value="選択"></td>
               </form>
             </tr>

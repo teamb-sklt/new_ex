@@ -45,7 +45,7 @@ router.get('/', async function(req, res, next) {
           rejectUnauthorized: false
       }
     }) : new Client({
-      user: 'postgres',
+      user: user,
       host: 'localhost',
       database: 'itpjph3',
       password: dbpassword,
@@ -76,6 +76,7 @@ router.get('/', async function(req, res, next) {
     payee:'',
     summary:'',
     job_manager:'',
+    remarks:'',
     
   
   }
@@ -91,6 +92,14 @@ router.post('/', async function(req,response,next){
       let job_name = req.body.job_name
       let job_manager = req.body.job_manager
       let job_manager_name = req.body.job_manager_name
+      let amount = req.body.amount
+      let year = req.body.year;
+      let month = req.body.month;
+      let day = req.body.day;
+      let branch_no2 = req.body.branch_no;
+      let code_name = req.body.code_name;
+      let summary = req.body.summary;
+      let payee = req.body.payee;
 
       let opt={
         title: '新規登録 - 経費',
@@ -98,8 +107,15 @@ router.post('/', async function(req,response,next){
         job_name:job_name,
         job_manager:job_manager,
         job_manager_name:job_manager_name,
-        branch_no2:'',
-        amount:'',
+        code_name:code_name,
+        summary:summary,
+        payee:payee,
+        branch_no2:branch_no2,
+        year:year,
+        month:month,
+        day:day,
+        amount:amount,
+        remarks:'',
 
         // branch_no2:branch_no2,
         // trans_from:trans_from,
@@ -109,14 +125,44 @@ router.post('/', async function(req,response,next){
     }
     response.render('ex_newrecord', opt);
 
-  }else if(req.body.save){
+  }  else if(req.body.ex_jobsearch_to){ //フォーム内を読み取り、ジョブ検索画面へ飛ばす
+    let code_name = req.body.code_name;
+    let summary = req.body.summary;
+    let payee = req.body.payee;
+    let year = req.body.year;
+    let month = req.body.month;
+    let day = req.body.day;
+    let branch_no2 = req.body.branch_no;
+    let jobsearchcode = req.body.job_no
+    let jobsearchname = req.body.job_name
+    // let job_manager = req.body.job_manager
+    // let job_manager_name = req.body.job_manager_name
+    let opt={
+      jobsearchcode:jobsearchcode,
+      jobsearchname:jobsearchname,
+      job_manager:'',
+      job_manager_name:'',
+      code_name:code_name,
+      summary:summary,
+      payee:payee,
+      branch_no2:branch_no2,
+      year:year,
+      month:month,
+      day:day,
+      job_id:'',
+      remarks:'',
+    }
+    response.render('ex_jobsearch', opt);
+
+  }
+  else if(req.body.save){
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
       ssl: {
           rejectUnauthorized: false
       }
     }) : new Client({
-      user: 'postgres',
+      user: user,
       host: 'localhost',
       database: 'itpjph3',
       password: dbpassword,
@@ -154,6 +200,138 @@ router.post('/', async function(req,response,next){
     })
     .catch(e => console.error(e.stack));
     response.redirect("/ex_thismonth");
+  }else if(req.body.book){
+    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+          rejectUnauthorized: false
+      }
+    }) : new Client({
+      user: 'postgres',
+      host: 'localhost',
+      database: 'itpjph3',
+      password: dbpassword,
+      port: 5432
+    })
+    await client.connect()
+
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    //   console.log(result)
+    //   console.log(result.rows[0].count)
+      branch_no=result.rows[0].count
+      branch_no1=Number(branch_no);
+      branch_no2=branch_no1+1
+      console.log(branch_no2)
+
+      client.end()
+    });
+  let opt={
+    title: '経費',
+    tmonth:tmonth,
+    lmonth:lmonth,
+    branch_no2:branch_no2,
+    amount:'',
+    job_no:'SKLRAD0103',
+    job_name:'SKLT書籍購入',
+    job_manager_name:'新田さん',
+    code_name:1,
+    payee:'Amazon株式会社',
+    summary:'書籍代',
+    job_manager:'111',
+    remarks:'',
+    
+  
+  }
+     response.render('ex_newrecord', opt);
+
+  }else if(req.body.mtg){
+    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+          rejectUnauthorized: false
+      }
+    }) : new Client({
+      user: 'postgres',
+      host: 'localhost',
+      database: 'itpjph3',
+      password: dbpassword,
+      port: 5432
+    })
+    await client.connect()
+
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    //   console.log(result)
+    //   console.log(result.rows[0].count)
+      branch_no=result.rows[0].count
+      branch_no1=Number(branch_no);
+      branch_no2=branch_no1+1
+      console.log(branch_no2)
+
+      client.end()
+    });
+  let opt={
+    title: '経費',
+    tmonth:tmonth,
+    lmonth:lmonth,
+    branch_no2:branch_no2,
+    amount:'',
+    job_no:'',
+    job_name:'',
+    job_manager_name:'',
+    code_name:2,
+    payee:'',
+    summary:'',
+    job_manager:'',
+    remarks:'会社名:　名前:　役職:　人数:',
+    
+  
+  }
+     response.render('ex_newrecord', opt);
+    
+  }else if(req.body.kousai){
+    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+          rejectUnauthorized: false
+      }
+    }) : new Client({
+      user: 'postgres',
+      host: 'localhost',
+      database: 'itpjph3',
+      password: dbpassword,
+      port: 5432
+    })
+    await client.connect()
+
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    //   console.log(result)
+    //   console.log(result.rows[0].count)
+      branch_no=result.rows[0].count
+      branch_no1=Number(branch_no);
+      branch_no2=branch_no1+1
+      console.log(branch_no2)
+
+      client.end()
+    });
+  let opt={
+    title: '経費',
+    tmonth:tmonth,
+    lmonth:lmonth,
+    branch_no2:branch_no2,
+    amount:'',
+    job_no:'',
+    job_name:'',
+    job_manager_name:'',
+    code_name:'',
+    payee:'',
+    summary:'',
+    job_manager:'',
+    remarks:'会社名:　名前:　役職:　人数:',
+    
+  
+  }
+     response.render('ex_newrecord', opt);
+    
   }
 });
 
