@@ -53,63 +53,95 @@ router.get('/', async function(req, res, next) {
     })
     await client.connect()
 
-    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
     //   console.log(result)
     //   console.log(result.rows[0].count)
-      branch_no=result.rows[0].count
+    branch_no=result.rows[0].count
       branch_no1=Number(branch_no);
       branch_no2=branch_no1+1
       console.log(branch_no2)
 
       client.end()
     });
-  let opt={
-    title: '経費',
-    tmonth:tmonth,
-    lmonth:lmonth,
-    branch_no2:branch_no2,
-    amount:'',
-    job_no:'',
-    job_name:'',
-    job_manager_name:'',
-    code_name:'',
-    payee:'',
-    summary:'',
-    job_manager:'',
-    
+    let opt={
+      title: '交通費',
+      tmonth:tmonth,
+      lmonth:lmonth,
+      branch_no2:branch_no2,
+      trans_from:'',
+      trans_waypoint:'',
+      trans_to:'',
+      amount:'',
+      job_no:'',
+      job_name:'',
+      job_manager:'',
+      job_manager_name:'',
   
-  }
-     res.render('ex_newrecord', opt);
+     }
+     res.render('te_newrecord', opt);
     });
 
 
-router.post('/', async function(req,response,next){
-    //保存ボタンが押されたら実行
 
-    if(req.body.jobsearch){
+router.post('/', async function(req,response,next){
+    //result.ejsの選択ボタンボタンが押されたら実行
+
+    if(req.body.te_jobsearch){
       let job_id = req.body.job_id
       let job_name = req.body.job_name
       let job_manager = req.body.job_manager
       let job_manager_name = req.body.job_manager_name
+      console.log(job_id)
+      console.log(job_name)
+      console.log(job_manager)
+      console.log(job_manager_name)
 
       let opt={
-        title: '経費',
-        job_no:job_id,
-        job_name:job_name,
-        job_manager:job_manager,
-        job_manager_name:job_manager_name,
-        branch_no2:'',
+        title: '交通費',
+        tmonth:tmonth,
+        lmonth:lmonth,
+        branch_no2:branch_no2,
+        trans_from:'',
+        trans_waypoint:'',
+        trans_to:'',
         amount:'',
+        job_no:'',
+        job_name:'',
+        job_manager:'',
+        job_manager_name:'',
+    
+       }
+       res.render('te_newrecord', opt);
+  }
+    else if(req.body.search){
+        //経路選択画面からPOSTで引っ張ってくる
+        let trans_from = req.body.trans_from;
+        let trans_waypoint = req.body.trans_waypoint;
+        let trans_to = req.body.trans_to;
+        let branch_no2 = req.body.branch_no;
+        let amount = req.body.amount;
 
-        // branch_no2:branch_no2,
-        // trans_from:trans_from,
-        // trans_waypoint:trans_waypoint,
-        // trans_to:trans_to,
-        // amount:amount,
+            let opt={
+                title: '交通費',
+                branch_no2:branch_no2,
+                trans_from:trans_from,
+                trans_waypoint:trans_waypoint,
+                trans_to:trans_to,
+                amount:amount,
+                title: '交通費',
+                tmonth:tmonth,
+                lmonth:lmonth,
+                job_no:'',
+                job_name:'',
+                job_manager:'',
+                job_manager_name:'',
+            }
+            response.render('te_newrecord', opt);
     }
-    response.render('ex_newrecord', opt);
-
-  }else if(req.body.save){
+    
+    //保存ボタンが押されたときに実行
+    else if(req.body.save){
+      console.log(req.body.save)
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
       ssl: {
@@ -129,10 +161,12 @@ router.post('/', async function(req,response,next){
     let dYear = req.body.year;
     let dMonth = req.body.month;
     let dDay = req.body.day;
-    let dCodename = req.body.code_name;
-    let dPayee = req.body.payee;
-    let dSummary = req.body.summary;
+    let dWay = req.body.trans_type;
+    let dStart = req.body.trans_from;
+    let dGoal = req.body.trans_to;
+    let dWaypoint = req.body.trans_waypoint;
     let dPrice = req.body.amount;
+    let dTimes = req.body.count;
     let dJobno = req.body.job_no;
     let dJobmanager = 111; //仮で111
     let dClaimflag = req.body.claim_flag;
@@ -144,8 +178,9 @@ router.post('/', async function(req,response,next){
     let dNewdate = req.body.year+req.body.month+req.body.day;
 
     //インサートコマンドを定義
-    const sql = "INSERT INTO ExDetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, code_name, payee, summary, amount, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)";
-    const values = [dEmpno,year,tmonth,branch_no2,dYear,dMonth,dDay,dCodename,dPayee,dSummary,dPrice,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate,dNew,dNewdate];
+    const sql = "INSERT INTO tedetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)";
+    //const values = ["'"+dEmpno+"'","'"+year+"'","'"+tmonth+"'","'"+branch_no2+"'","'"+dYear+"'","'"+dMonth+"'","'"+dDay+"'","'"+dWay+"'","'"+dStart+"'","'"+dGoal+"'","'"+dWaypoint+"'","'"+dPrice+"'","'"+dTimes+"'","'"+dJobno+"'","'"+dJobmanager+"'","'"+dClaimflag+"'","'"+dChargeflag+"'","'"+dRefno+"'","'"+dStasus+"'","'"+dMemo+"'","'"+dNew+"'","'"+dNewdate+"'","'"+dNew+"'","'"+dNewdate+"'"];
+    const values = [dEmpno,year,tmonth,branch_no2,dYear,dMonth,dDay,dWay,dStart,dGoal,dWaypoint,dPrice,dTimes,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate,dNew,dNewdate];
     console.log(values)
     client.query(sql, values)
     .then(res => {
@@ -153,7 +188,7 @@ router.post('/', async function(req,response,next){
         client.end()
     })
     .catch(e => console.error(e.stack));
-    response.redirect("/ex_thismonth");
+    response.redirect("/te_thismonth");
   }
 });
 
