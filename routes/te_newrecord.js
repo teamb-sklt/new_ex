@@ -64,7 +64,7 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '交通費',
+    title: '新規登録 - 交通費',
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,
@@ -118,7 +118,10 @@ router.post('/', async function(req,response,next){
       let amount = req.body.amount
 
       let opt={
-        title: '交通費',
+        title: '新規登録 - 交通費',
+        tmonth:tmonth,
+        lmonth:lmonth,
+        title: '新規登録 - 交通費',
         job_no:job_id,
         job_name:job_name,
         job_manager:job_manager,
@@ -181,12 +184,14 @@ router.post('/', async function(req,response,next){
         let amount = req.body.amount;
 
             let opt={
-                title: '交通費',
+                title: '新規登録 - 交通費',
                 branch_no2:branch_no2,
                 trans_from:trans_from,
                 trans_waypoint:trans_waypoint,
                 trans_to:trans_to,
                 amount:amount,
+                tmonth:tmonth,
+                lmonth:lmonth,
                 job_no:'',
                 job_name:'',
                 job_manager:'',
