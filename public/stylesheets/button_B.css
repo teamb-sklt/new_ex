@@ -75,7 +75,7 @@ button.next:hover {
 }
 
 .more { /* 詳細、コピーボタン */
-  margin: 5px 0 0 5px; /* 上 右 下 左 */
+  margin: auto 0 auto 0; /* 上 右 下 左 */
   color: #002b49;
   background: #ffffff;
   width: 70px;
@@ -88,8 +88,8 @@ button.next:hover {
   color: #ffffff;
   background: #002b49;
 }
-.onemore { /* 詳細、コピーボタン */
-  margin: 5px 0 0 5px; /* 上 右 下 左 */
+.onemore { /* +1ボタン */
+  margin: auto 0 auto 0; /* 上 右 下 左 */
   color: #78aa00;
   background: #ffffff;
   border-color: #78aa00;
@@ -110,6 +110,30 @@ button.next:hover {
   font-weight: bold;
   border-radius: 7px; /* 角の丸み */
 }
+.jobsearch { /* ジョブボタン */
+  margin: auto 0 auto 15px; /* 上 右 下 左 */
+  color: #78aa00;
+  background: #ffffff;
+  border-color: #78aa00;
+  width: 70px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+}
+.teselect { /* 交通費ボタン */
+  margin: auto 0 auto 0; /* 上 右 下 左 */
+  color: #78aa00;
+  background: #ffffff;
+  border-color: #78aa00;
+  width: 70px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+}
+.teselect:hover,
+.jobsearch:hover,
 .search:hover,
 .onemore:hover {
   color: #ffffff;
@@ -143,6 +167,20 @@ button.next:hover {
   right: 5px;
   top: 15px;
 }
+.delete { /* 申請ボタン */
+  color: #cb2c30;
+  background: #ffffff;
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+  border-color: #cb2c30;
+  position: absolute;
+  right: 100px;
+  top: 15px;
+}
+.delete:hover,
 .save:hover,
 .OK:hover {
   color: #ffffff;
