@@ -76,6 +76,7 @@ var branch_no;
 //     res.render('ex_detail',opt);
 //   });
 
+
 //ページが読み込まれた際の初期画面
 router.post('/', async function(req, res, next) {
     //Ex_thismonthの詳細ボタンを押されたとき
@@ -123,7 +124,7 @@ router.post('/', async function(req, res, next) {
           }
           client.end()
     let opt={
-      title: '詳細変更 - 経費',
+      title: '経費詳細変更',
       branch_no2:branch_no2,
       code_name:code_name,
       payee:payee,

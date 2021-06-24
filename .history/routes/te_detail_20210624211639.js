@@ -86,6 +86,8 @@ var branch_no;
 //      res.render('te_detail', opt);
 //     });
 
+
+
 router.post('/', async function(req,response,next){
     //te_thismonthの詳細ボタンを押された場合実行
     if(req.body.te_detail){
@@ -112,7 +114,7 @@ router.post('/', async function(req,response,next){
       }else{
       // console.log(result[0])
       // console.log(result[1])
-      branch_no2=result[0].rows[0].branch_no;
+      branch_no2=result[0].rows[0].branch_no
       trans_from=result[0].rows[0].trans_from;
       trans_to=result[0].rows[0].trans_to;
       trans_waypoint=result[0].rows[0].trans_waypoint;
@@ -134,7 +136,7 @@ router.post('/', async function(req,response,next){
       }
     client.end()
     let opt={
-      title: '詳細変更 - 交通費',
+      title: '交通費詳細変更',
       branch_no2:branch_no2,
       trans_from:trans_from,
       trans_waypoint:trans_waypoint,
@@ -168,7 +170,7 @@ router.post('/', async function(req,response,next){
         let amount = req.body.amount;
 
             let opt={
-                title: '詳細変更 - 交通費',
+                title: '交通費詳細変更',
                 branch_no2:branch_no2,
                 trans_from:trans_from,
                 trans_waypoint:trans_waypoint,
