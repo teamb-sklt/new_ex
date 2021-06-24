@@ -48,11 +48,6 @@ router.post('/', async function(req,response,next){
   let month = req.body.month;
   let day = req.body.day;
   let branch_no2 = req.body.branch_no;
-  console.log(trans_from)
-  console.log(year)
-  console.log(branch_no2)
-  console.log(jobsearchname)
-  console.log(jobsearchcode)
   
   if(jobsearchcode ===''){
       client.query("SELECT * FROM Job WHERE job_name LIKE '%"+　jobsearchname　+"%'",function(err,result){
@@ -63,44 +58,6 @@ router.post('/', async function(req,response,next){
           let job_name=[]
           let job_manager=[]
           let job_manager_name=[]
-          // console.log(result)
-          for(var i in result.rows){
-            job_id.push(result.rows[i].job_id)
-            job_name.push(result.rows[i].job_name)
-            job_manager.push(result.rows[i].job_manager)
-            job_manager_name.push(result.rows[i].job_manager_name)
-            }
-            console.log(job_id)
-            let opt={
-              jobsearchcode:jobsearchcode,
-              jobsearchname:jobsearchname,
-              job_id:job_id,
-              job_name:job_name,
-              job_manager:job_manager,
-              job_manager_name:job_manager_name,
-              trans_from:trans_from,
-              trans_to:trans_to,
-              trans_waypoint:trans_waypoint,
-              year:year,
-              month:month,
-              day:day,
-              branch_no2:branch_no2,
-              amount:'',
-            }
-            response.render('te_jobsearch', opt);
-        }
-        client.end()
-      })   
-    }else{
-      client.query("SELECT * FROM Job WHERE job_id LIKE "+"'%"+jobsearchcode+"%'",function(err,result){
-        if (err) {
-          console.log(err); //エラー時にコンソールに表示
-        } else {
-          let job_id=[]
-          let job_name=[]
-          let job_manager=[]
-          let job_manager_name=[]
-          console.log(result)
 
           for(var i in result.rows){
             job_id.push(result.rows[i].job_id)
@@ -110,8 +67,6 @@ router.post('/', async function(req,response,next){
             }
             console.log(job_id)
             let opt={
-              jobsearchcode:jobsearchcode,
-              jobsearchname:jobsearchname,
               job_id:job_id,
               job_name:job_name,
               job_manager:job_manager,
@@ -122,8 +77,41 @@ router.post('/', async function(req,response,next){
               year:year,
               month:month,
               day:day,
-              branch_no2:branch_no2,
-              amount:'',
+              branch_no2:branch_no2
+            }
+            response.render('te_jobsearch', opt);
+        }
+        client.end()
+      })   
+    }else{
+      client.query("SELECT * FROM Job WHERE job_id LIKE "+"'"+jobsearchcode+"'",function(err,result){
+        if (err) {
+          console.log(err); //エラー時にコンソールに表示
+        } else {
+          let job_id=[]
+          let job_name=[]
+          let job_manager=[]
+          let job_manager_name=[]
+
+          for(var i in result.rows){
+            job_id.push(result.rows[i].job_id)
+            job_name.push(result.rows[i].job_name)
+            job_manager.push(result.rows[i].job_manager)
+            job_manager_name.push(result.rows[i].job_manager_name)
+            }
+            console.log(job_id)
+            let opt={
+              job_id:job_id,
+              job_name:job_name,
+              job_manager:job_manager,
+              job_manager_name:job_manager_name,
+              trans_from:trans_from,
+              trans_to:trans_to,
+              trans_waypoint:trans_waypoint,
+              year:year,
+              month:month,
+              day:day,
+              branch_no2:branch_no2
             }
             response.render('te_jobsearch', opt);
         }

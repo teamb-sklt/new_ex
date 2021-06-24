@@ -91,14 +91,6 @@ router.post('/', async function(req,response,next){
       let job_name = req.body.job_name
       let job_manager = req.body.job_manager
       let job_manager_name = req.body.job_manager_name
-      let amount = req.body.amount
-      let year = req.body.year;
-      let month = req.body.month;
-      let day = req.body.day;
-      let branch_no2 = req.body.branch_no;
-      let code_name = req.body.code_name;
-      let summary = req.body.summary;
-      let payee = req.body.payee;
 
       let opt={
         title: '経費',
@@ -106,14 +98,8 @@ router.post('/', async function(req,response,next){
         job_name:job_name,
         job_manager:job_manager,
         job_manager_name:job_manager_name,
-        code_name:code_name,
-        summary:summary,
-        payee:payee,
-        branch_no2:branch_no2,
-        year:year,
-        month:month,
-        day:day,
-        amount:amount,
+        branch_no2:'',
+        amount:'',
 
         // branch_no2:branch_no2,
         // trans_from:trans_from,
@@ -123,36 +109,7 @@ router.post('/', async function(req,response,next){
     }
     response.render('ex_newrecord', opt);
 
-  }  else if(req.body.ex_jobsearch_to){ //フォーム内を読み取り、ジョブ検索画面へ飛ばす
-    let code_name = req.body.code_name;
-    let summary = req.body.summary;
-    let payee = req.body.payee;
-    let year = req.body.year;
-    let month = req.body.month;
-    let day = req.body.day;
-    let branch_no2 = req.body.branch_no;
-    let jobsearchcode = req.body.job_no
-    let jobsearchname = req.body.job_name
-    // let job_manager = req.body.job_manager
-    // let job_manager_name = req.body.job_manager_name
-    let opt={
-      jobsearchcode:jobsearchcode,
-      jobsearchname:jobsearchname,
-      job_manager:'',
-      job_manager_name:'',
-      code_name:code_name,
-      summary:summary,
-      payee:payee,
-      branch_no2:branch_no2,
-      year:year,
-      month:month,
-      day:day,
-      job_id:'',
-    }
-    response.render('ex_jobsearch', opt);
-
-  }
-  else if(req.body.save){
+  }else if(req.body.save){
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
       connectionString: process.env.DATABASE_URL,
       ssl: {

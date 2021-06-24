@@ -40,7 +40,7 @@ var branch_no2;
 var branch_no;
 router.get('/', async function(req, res, next) {
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: process.env.HEROKU_POSTGRESQL_BRONZE_URL,
       ssl: {
           rejectUnauthorized: false
       }
@@ -95,7 +95,7 @@ router.post('/', async function(req,response,next){
       console.log(branch_no2)
 
       const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-        connectionString: process.env.DATABASE_URL,
+        connectionString: process.env.HEROKU_POSTGRESQL_BRONZE_URL,
         ssl: {
             rejectUnauthorized: false
         }
@@ -184,7 +184,7 @@ router.post('/', async function(req,response,next){
     else if(req.body.save){
       console.log(req.body.save)
     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-      connectionString: process.env.DATABASE_URL,
+      connectionString: process.env.HEROKU_POSTGRESQL_BRONZE_URL,
       ssl: {
           rejectUnauthorized: false
       }
@@ -225,7 +225,12 @@ router.post('/', async function(req,response,next){
       console.log('sql2');
       client.end()
     });
-    response.redirect("/te_thismonth");
+    let opt={
+      title:'example',
+      id:id,
+      mail:mail,
+    }
+    res.render('te_thismonth',opt);
   }
 });
 
