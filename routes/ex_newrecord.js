@@ -72,17 +72,13 @@ router.get('/', async function(req, res, next) {
     job_no:'',
     job_name:'',
     job_manager_name:'',
-    // // status:status,
-    // branch_no:branch_no,
-    // month:month,
-    // day:day,
-    // trans_from:trans_from,
-    // trans_to:trans_to,
-    // amount:amount,
-    // count:count,
-    // subtotal:subtotal,
-    // job_no:job_no,
-     }
+    code_name:'',
+    payee:'',
+    summary:'',
+    job_manager:'',
+    
+  
+  }
      res.render('ex_newrecord', opt);
     });
 
