@@ -66,7 +66,7 @@ router.get('/', async function(req, res, next) {
           client.end()
         });
     let opt={
-        title: '（経費）詳細変更ページ',
+        title: '詳細変更 - 経費',
         message: '各項目を入力してください',
         price: '',
         year: '',
@@ -127,7 +127,7 @@ router.post('/', async function(req, res, next) {
           }
           client.end()
     let opt={
-      title: '経費',
+      title: '詳細変更 - 経費',
       branch_no2:branch_no2,
       code_name:code_name,
       payee:payee,

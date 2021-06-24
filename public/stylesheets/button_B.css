@@ -143,6 +143,20 @@ button.next:hover {
   right: 5px;
   top: 15px;
 }
+.delete { /* 申請ボタン */
+  color: #cb2c30;
+  background: #ffffff;
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+  border-color: #cb2c30;
+  position: absolute;
+  right: 100px;
+  top: 15px;
+}
+.delete:hover,
 .save:hover,
 .OK:hover {
   color: #ffffff;
