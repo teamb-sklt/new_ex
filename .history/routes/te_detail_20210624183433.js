@@ -63,7 +63,7 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '詳細変更 - 交通費',
+    title: '交通費詳細変更',
     year:year,
     month:month,
     day:day,
@@ -136,7 +136,7 @@ router.post('/', async function(req,response,next){
       }
     client.end()
     let opt={
-      title: '詳細変更 - 交通費',
+      title: '交通費',
       branch_no2:branch_no2,
       trans_from:trans_from,
       trans_waypoint:trans_waypoint,
@@ -170,14 +170,14 @@ router.post('/', async function(req,response,next){
         let amount = req.body.amount;
 
             let opt={
-                title: '詳細変更 - 交通費',
+                title: '交通費',
                 branch_no2:branch_no2,
                 trans_from:trans_from,
                 trans_waypoint:trans_waypoint,
                 trans_to:trans_to,
                 amount:amount,
             }
-            response.render('te_detail', opt);
+            response.render('te_newrecord', opt);
     }
     
     //保存ボタンが押されたときに実行
@@ -202,7 +202,6 @@ router.post('/', async function(req,response,next){
     let dYear = req.body.year;
     let dMonth = req.body.month;
     let dDay = req.body.day;
-    let branch_no2 = req.body.branch_no;
     let dWay = req.body.trans_type;
     let dStart = req.body.trans_from;
     let dGoal = req.body.trans_to;
@@ -220,6 +219,7 @@ router.post('/', async function(req,response,next){
     let dNewdate = req.body.year+req.body.month+req.body.day;
 
     //インサートコマンドを定義
+    //const sql = "UPDATE TeDetail SET emp_no='"+dEmpno+"', sheet_year='"+year+"', sheet_month='"+tmonth+"', branch_no='"+branch_no2+"', year='"+dYear+"', month='"+dMonth+"', day='"+dDay+"', trans_type='"+dWay+"', trans_from='"+dStart+"', trans_to='"+dGoal+"', trans_waypoint='"+dWaypoint+"', amount='"+dPrice+"', count='"+dTimes+"', job_no='"+dJobno+"', job_manager='"+dJobmanager+"', claim_flag='"+dClaimflag+"', charge_flag='"+dChargeflag+"', ref_no='"+dRefno+"', status='"+dStasus+"', remarks='"+dMemo+"', new='"+dNew+"', new_date='"+dNewdate+"', renew='"+dNew+"', renew_date='"+dNewdate+"' WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
     const sql = "UPDATE TeDetail SET (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) = ('"+dEmpno+"', '"+year+"', '"+tmonth+"', '"+branch_no2+"', '"+dYear+"', '"+dMonth+"', '"+dDay+"', '"+dWay+"', '"+dStart+"', '"+dGoal+"', '"+dWaypoint+"', '"+dPrice+"', '"+dTimes+"', '"+dJobno+"', '"+dJobmanager+"', '"+dClaimflag+"', '"+dChargeflag+"', '"+dRefno+"', '"+dStasus+"', '"+dMemo+"', '"+dNew+"', '"+dNewdate+"', '"+dNew+"', '"+dNewdate+"') WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
     console.log(sql)
     client.query(sql, function(err, result){
@@ -249,10 +249,29 @@ router.post('/', async function(req,response,next){
       await client.connect()
         
       //フォームに入力された値を定義
-      let branch_no2 = req.body.branch_no;
-
+      let dEmpno = '001'; //ログインID=社員IDに変更要
+      let dYear = req.body.year;
+      let dMonth = req.body.month;
+      let dDay = req.body.day;
+      let dWay = req.body.trans_type;
+      let dStart = req.body.trans_from;
+      let dGoal = req.body.trans_to;
+      let dWaypoint = req.body.trans_waypoint;
+      let dPrice = req.body.amount;
+      let dTimes = req.body.count;
+      let dJobno = req.body.job_no;
+      let dJobmanager = 111; //仮で111
+      let dClaimflag = req.body.claim_flag;
+      let dChargeflag = req.body.charge_flag;
+      let dRefno = req.body.ref_no;
+      let dStasus = '00'; //未申請ステータス
+      let dMemo = req.body.remarks;
+      let dNew = '001'; //ログインID=社員IDに変更要
+      let dNewdate = req.body.year+req.body.month+req.body.day;
+  
       //インサートコマンドを定義
-      const sql = "DELETE from TeDetail WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
+      //const sql = "UPDATE TeDetail SET emp_no='"+dEmpno+"', sheet_year='"+year+"', sheet_month='"+tmonth+"', branch_no='"+branch_no2+"', year='"+dYear+"', month='"+dMonth+"', day='"+dDay+"', trans_type='"+dWay+"', trans_from='"+dStart+"', trans_to='"+dGoal+"', trans_waypoint='"+dWaypoint+"', amount='"+dPrice+"', count='"+dTimes+"', job_no='"+dJobno+"', job_manager='"+dJobmanager+"', claim_flag='"+dClaimflag+"', charge_flag='"+dChargeflag+"', ref_no='"+dRefno+"', status='"+dStasus+"', remarks='"+dMemo+"', new='"+dNew+"', new_date='"+dNewdate+"', renew='"+dNew+"', renew_date='"+dNewdate+"' WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
+      const sql = "UPDATE TeDetail SET (emp_no, sheet_year, sheet_month, branch_no, year, month, day, trans_type, trans_from, trans_to, trans_waypoint, amount, count, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) = ('"+dEmpno+"', '"+year+"', '"+tmonth+"', '"+branch_no2+"', '"+dYear+"', '"+dMonth+"', '"+dDay+"', '"+dWay+"', '"+dStart+"', '"+dGoal+"', '"+dWaypoint+"', '"+dPrice+"', '"+dTimes+"', '"+dJobno+"', '"+dJobmanager+"', '"+dClaimflag+"', '"+dChargeflag+"', '"+dRefno+"', '"+dStasus+"', '"+dMemo+"', '"+dNew+"', '"+dNewdate+"', '"+dNew+"', '"+dNewdate+"') WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
       console.log(sql)
       client.query(sql, function(err, result){
         if (err) {

@@ -63,7 +63,7 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '詳細変更 - 交通費',
+    title: '交通費詳細変更',
     year:year,
     month:month,
     day:day,
@@ -136,7 +136,7 @@ router.post('/', async function(req,response,next){
       }
     client.end()
     let opt={
-      title: '詳細変更 - 交通費',
+      title: '交通費詳細編集ページ',
       branch_no2:branch_no2,
       trans_from:trans_from,
       trans_waypoint:trans_waypoint,
@@ -170,7 +170,7 @@ router.post('/', async function(req,response,next){
         let amount = req.body.amount;
 
             let opt={
-                title: '詳細変更 - 交通費',
+                title: '交通費',
                 branch_no2:branch_no2,
                 trans_from:trans_from,
                 trans_waypoint:trans_waypoint,
@@ -249,8 +249,27 @@ router.post('/', async function(req,response,next){
       await client.connect()
         
       //フォームに入力された値を定義
+      let dEmpno = '001'; //ログインID=社員IDに変更要
+      let dYear = req.body.year;
+      let dMonth = req.body.month;
+      let dDay = req.body.day;
       let branch_no2 = req.body.branch_no;
-
+      let dWay = req.body.trans_type;
+      let dStart = req.body.trans_from;
+      let dGoal = req.body.trans_to;
+      let dWaypoint = req.body.trans_waypoint;
+      let dPrice = req.body.amount;
+      let dTimes = req.body.count;
+      let dJobno = req.body.job_no;
+      let dJobmanager = 111; //仮で111
+      let dClaimflag = req.body.claim_flag;
+      let dChargeflag = req.body.charge_flag;
+      let dRefno = req.body.ref_no;
+      let dStasus = '00'; //未申請ステータス
+      let dMemo = req.body.remarks;
+      let dNew = '001'; //ログインID=社員IDに変更要
+      let dNewdate = req.body.year+req.body.month+req.body.day;
+  
       //インサートコマンドを定義
       const sql = "DELETE from TeDetail WHERE sheet_month='"+tmonth+"'AND branch_no='"+branch_no2+"'";
       console.log(sql)

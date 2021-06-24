@@ -63,7 +63,7 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '詳細変更 - 交通費',
+    title: '交通費詳細変更',
     year:year,
     month:month,
     day:day,
@@ -136,7 +136,7 @@ router.post('/', async function(req,response,next){
       }
     client.end()
     let opt={
-      title: '詳細変更 - 交通費',
+      title: '交通費詳細編集ページ',
       branch_no2:branch_no2,
       trans_from:trans_from,
       trans_waypoint:trans_waypoint,
@@ -170,7 +170,7 @@ router.post('/', async function(req,response,next){
         let amount = req.body.amount;
 
             let opt={
-                title: '詳細変更 - 交通費',
+                title: '交通費',
                 branch_no2:branch_no2,
                 trans_from:trans_from,
                 trans_waypoint:trans_waypoint,
@@ -249,6 +249,7 @@ router.post('/', async function(req,response,next){
       await client.connect()
         
       //フォームに入力された値を定義
+      
       let branch_no2 = req.body.branch_no;
 
       //インサートコマンドを定義
