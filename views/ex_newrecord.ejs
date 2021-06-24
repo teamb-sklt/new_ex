@@ -36,24 +36,18 @@
             <div class='form-row'>
                 <div class="form-group col-3">
                     <label for='code_name'>勘定科目</label> <br>
-                    <select id='code_name' name='code_name' class='form-control'　required>
-                        <option>▼選択してください</option>
-                        <!-- <option>消耗品費</option>
-                        <option>新聞図書費</option>
-                        <option>会議費</option>
-                        <option>交際費</option>
-                        <option>その他</option> -->
-                        <option>0</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                    <select id='code_name' name='code_name' class='form-control'　required　value="<%- code_name %>">
+                        <option value="0">消耗品費</option>
+                        <option value="1">新聞図書費</option>
+                        <option value="2">会議費</option>
+                        <option value="3">交際費</option>
+                        <option value="4">その他</option>
                     </select>
                 </div>
                 <div class="form-group col-3">
                     <label for='payee'>支払先</label>
                     <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
-                    <input type="text" class='form-control' name='payee' id='payee'  required placeholder="必須">
+                    <input type="text" class='form-control' name='payee' id='payee'  required placeholder="必須" value="<%- payee %>">
                 </div>
             </div>
         </div>
@@ -62,11 +56,11 @@
                 <div class="form-group col-3">
                 <label for='summary'>摘要</label>
                 <span class="c-tooltip form-inline" data-tooltip="書籍購入制度利用の場合は『書籍代』と入力ください。">❔</span>
-                <input type="text" class='form-control form-inline' name='summary' id='summary'  required placeholder="必須">
+                <input type="text" class='form-control form-inline' name='summary' id='summary'  required placeholder="必須" value="<%- summary %>">
             </div>
             <div class="form-group col-3">   
             <span><label for='amount'>金額　</label></span>
-            <input type="text" id='amount' name='amount' class="form-control" <%- amount%>>
+            <input type="text" id='amount' name='amount' class="form-control" value="<%- amount%>">
         </div>
     </div> 
 </div> 
@@ -74,21 +68,22 @@
         <div class='form-group form-inline'>
             <label for='job_no'>ジョブコード</label> 
                 <div class="form-group col-3">
-                <input type="text" class='form-control' id='job_no' name='job_no'>
+                <input type="text" class='form-control' id='job_no' name='job_no' value="<%= job_no %> ">
                 </div>
         </div>
         <div class='form-group form-inline'>
             <label for='job_name'>ジョブ名</label> 
                 <div class="form-group col-3">
-                <input type="text" class='form-control' id='job_name' name='job_name'>
+                <input type="text" class='form-control' id='job_name' name='job_name' value="<%= job_name %>">
                 </div>
         </div>
         <input type="submit" id="btn-return" value="ジョブ検索" class="btn btn-primary" onclick="frameClick();">
         </div>
+        <input type="hidden"  id="job_manager" name="job_manager"  value="<%= job_manager %>">
         <div class='form-group form-inline'>
             <div class='form-group form-inline'>
                 <label for="job_manager_name">ＪＭ　　</label>
-                    <select name='job_manager_name' id='job_manager_name' class='form-control'>
+                    <select name='job_manager_name' id='job_manager_name' class='form-control' value="<%= job_manager_name %>">
                         <option value=0>---------------</option>
                         <option value=1>Aさん</option>
                         <option value=2>Bさん</option>

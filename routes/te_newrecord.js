@@ -72,6 +72,10 @@ router.get('/', async function(req, res, next) {
     trans_waypoint:'',
     trans_to:'',
     amount:'',
+    job_no:'',
+    job_name:'',
+    job_manager:'',
+    job_manager_name:'',
     // // status:status,
     // branch_no:branch_no,
     // month:month,
@@ -81,7 +85,7 @@ router.get('/', async function(req, res, next) {
     // amount:amount,
     // count:count,
     // subtotal:subtotal,
-    // job_no:job_no,
+    // job_no:'',
      }
      res.render('te_newrecord', opt);
     });
@@ -90,7 +94,63 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req,response,next){
     //result.ejsの選択ボタンボタンが押されたら実行
-    if(req.body.search){
+
+    if(req.body.te_jobsearch){
+      let job_id = req.body.job_id
+      let job_name = req.body.job_name
+      let job_manager = req.body.job_manager
+      let job_manager_name = req.body.job_manager_name
+      console.log(job_id)
+      console.log(job_name)
+      console.log(job_manager)
+      console.log(job_manager_name)
+
+      let opt={
+        title: '交通費',
+        tmonth:tmonth,
+        lmonth:lmonth,
+        branch_no2:branch_no2,
+        trans_from:'',
+        trans_waypoint:'',
+        trans_to:'',
+        amount:'',
+        job_no:'',
+        job_name:'',
+        job_manager:'',
+        job_manager_name:'',
+    
+       }
+       res.render('te_newrecord', opt);
+  }
+  else if(req.body.te_jobsearch_to){
+    let trans_from = req.body.trans_from;
+    let trans_waypoint = req.body.trans_waypoint;
+    let trans_to = req.body.trans_to;
+    let year = req.body.year;
+    let month = req.body.month;
+    let day = req.body.day;
+    let branch_no2 = req.body.branch_no;
+    let job_id = req.body.job.no
+    let job_name = rer.body.job_name
+    let job_manager = req.body.job_manager
+    let job_manager_name = req.body.job_manager_name
+    let opt={
+      job_no:job_id,
+      job_name:job_name,
+      job_manager:job_manager,
+      job_manager_name:job_manager_name,
+      trans_from:trans_from,
+      trans_to:trans_to,
+      trans_waypoint:trans_waypoint,
+      branch_no2:branch_no2,
+      year:year,
+      month:month,
+      day:day,
+    }
+    response.render('te_jobsearch', opt);
+
+  }
+    else if(req.body.search){
         //経路選択画面からPOSTで引っ張ってくる
         let trans_from = req.body.trans_from;
         let trans_waypoint = req.body.trans_waypoint;
@@ -105,6 +165,13 @@ router.post('/', async function(req,response,next){
                 trans_waypoint:trans_waypoint,
                 trans_to:trans_to,
                 amount:amount,
+                title: '交通費',
+                tmonth:tmonth,
+                lmonth:lmonth,
+                job_no:'',
+                job_name:'',
+                job_manager:'',
+                job_manager_name:'',
             }
             response.render('te_newrecord', opt);
     }

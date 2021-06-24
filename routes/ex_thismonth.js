@@ -57,13 +57,7 @@ router.get('/', async function(req, res, next) {
     port: 5432
   })
   await client.connect()
-  // console.log(client)
-  // client.query('SELECT * from example', function(err, result){
-  //   if (err){
-  //     console.log(err) //show error infomation
-  //   }
-  //   console.log(result)
-  // })
+
   client.query("SELECT * from ExDetail WHERE sheet_month="+"'"+tmonth+"'"+"ORDER BY branch_no ASC" ,function(err,result){
     // console.log(result)
     for(var i in result.rows){
@@ -102,37 +96,5 @@ let opt={
 }
   res.render('ex_thismonth', opt);
 })
-
-//+1を押すとき
-router.post('/',async function(req,res,next){
-  let branch_no = req.body.branch_no;
-  let month = req.body.month; //本来なら、Monthやdayではなく、報告年月と社員番号が必要。
-  let day = req.body.day;
-  console.log(branch_no+month+day);
-
-  const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
-  }) : new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'itpjph3',
-    password: dbpassword,
-    port: 5432
-  })
-  await client.connect()
-
-  client.query("UPDATE ExDetail SET count=count+1, remarks=concat(remarks,"+"'," +tomonth+"/"+date+"') where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
-    if (err) {
-      console.log(err); //エラー時にコンソールに表示
-    } else {
-    // console.log(result)
-    }
-    client.end()
-    res.redirect('/ex_thismonth')
-  });
-});
 
 module.exports = router;

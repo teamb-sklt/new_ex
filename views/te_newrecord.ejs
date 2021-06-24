@@ -16,19 +16,19 @@
             <div class='form-row'>
                 <div class="form-group col-2">
                     <label for='year'>年<br> ※yyyy</label> 
-                    <input type="text" class='form-control' name='year' id='year' required>
+                    <input type="text" class='form-control' name='year' id='year' >
                 </div>
                 <div class="form-group col-2">
                     <label for='month'>月<br> ※mm</label> 
-                    <input type="text" class='form-control' name='month' id='month' required>
+                    <input type="text" class='form-control' name='month' id='month' >
                 </div>
                 <div class="form-group col-2">
                     <label for='day'>日<br>  ※dd</label>
-                    <input type="text" class='form-control' name='day' id='day' required>
+                    <input type="text" class='form-control' name='day' id='day' >
                 </div>
                 <div class="form-group col-2">
                     <label for='time'>時刻<br> ※hhmm</label> 
-                    <input type="text" class='form-control' name='time'  id='time' required>
+                    <input type="text" class='form-control' name='time'  id='time' >
                     <!--<input type="datetime-local" class='form-control' name='date'  id='date' value="" required>-->  
                 </div>
                 <div class="form-group col-4">
@@ -87,21 +87,22 @@
     <div class='form-group form-inline'>
         <label for='job_no'>ジョブコード</label> 
             <div class="col-6">
-            <input type="text" class='form-control' id='job_no' name='job_no'>
+            <input type="text" class='form-control' id='job_no' name='job_no'  value="<%= job_no %> ">
             </div>
     </div>
     <div class='form-group form-inline'>
         <label for='job_name'>ジョブ名</label> 
             <div class="col-6">
-            <input type="text" class='form-control' id='job_name' name='job_name'>
+            <input type="text" class='form-control' id='job_name' name='job_name' value="<%= job_name %>">
             </div>
     </div>
-    <a href="/jobsearch"><input type="submit" id="btn-jobsearch" value="ジョブ検索" class="btn btn-primary" name="jobsearch"></a>
+    <input type="hidden"  id="job_manager" name="job_manager"  value="<%= job_manager %>">
+    <input type="submit" id="btn-jobsearch" value="ジョブ検索" class="btn btn-primary" name="te_jobsearch_to" formaction="te_newrecord">
     </div>
     <div class='form-group form-inline'>
     <div class='form-group form-inline'>
         <label for="job_manager_name">ＪＭ　　　　　</label>
-        <select name='job_manager_name' id='job_manager_name' class='form-control'>
+        <select name='job_manager_name' id='job_manager_name' class='form-control' value="<%= job_manager_name %>">
             <option value=0>---------------</option>
             <option value=1>Aさん</option>
             <option value=2>Bさん</option>
@@ -203,21 +204,6 @@
         //     console.log(charge_flag);
         // }
         // }
-
-        // //「交通手段」: 電車=1、バス=2、タクシー=3、その他=0に変換
-        // function onChangeWay() {
-        //     var element = document.getElementById("trans_type");
-        //     if (element == '電車') {
-        //         trans_type.value = 1;
-        //     } else if (element == 'バス') {
-        //         trans_type.value = 2;
-        //     } else if (element == 'タクシー') {
-        //         trans_type.value = 3;
-        //     } else if (element == 'その他') {
-        //         trans_type.value = 0;
-        //     }
-        // }
-
     </script>
   </body>
 </html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=yes">
+    <title><%= title %></title>
+    <link rel='stylesheet' 
+    href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+        #routeWaypoint {
+            width: 735px;
+        }
+        #search {
+            width: 500px;
+            margin-left: 100px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        #price {
+            width: 640px;
+            margin: 5px;
+        }
+        #way {
+            width: 294px;
+            margin: 5px;
+        }
+        #moveDate {
+            width: 633px;
+            margin: 5px;
+        }
+        #jobcode {
+            width: 194px;
+            margin: 5px;
+        }
+        #jobname {
+            width: 194px;
+            margin: 5px;
+        }
+        #jm {
+            width: 666px;
+            margin: 5px;
+        }
+        #memo {
+            width: 668px;
+            margin: 5px;
+        }
+        #times {
+            width: 316px;
+            margin: 5px;
+        }
+        #regularly {
+            transform: scale(1.4);
+        }
+
+        /* マウスオンする要素とツールチップを横並びにする */
+        .c-tooltip {
+            display: inline-block;
+            position: relative;
+        }
+
+        /* ツールチップ共通の設定 */
+        .c-tooltip::before,
+        .c-tooltip::after {
+            -webkit-transition: all 0.2s;
+            opacity: 0;
+            position: absolute;
+            transition: all 0.2s;
+            visibility: hidden;
+            z-index: 11;
+        }
+
+        /* ツールチップ吹き出しのひげ */
+        .c-tooltip::before {
+            -webkit-transform: translateY(-50%);
+            border-color: transparent #5f6368 transparent transparent;
+            border-style: solid;
+            border-width: 3px 7px 3px 0;
+            content: "";
+            height: 0;
+            left: calc(100% + 6px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+        }
+
+        /* ツールチップ吹き出しの本体 */
+        .c-tooltip::after {
+            -webkit-transform: translateY(-50%);
+            background: #5f6368;
+            border-radius: 3px;
+            color: #fff;
+            content: attr(data-tooltip); /* ここでdata-tooltipの内容を呼び出しているよ */
+            display: block;
+            font-size: 25px;
+            font-weight: 600;
+            left: calc(100% + 13px);
+            padding: 5px 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+        }
+
+        /* マウスオンしたときのカーソルの設定 */
+        .c-tooltip:hover {
+            cursor: pointer;
+        }
+        .c-tooltip:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+        .c-tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+  </head>
+  <body class= 'container p-3'>
+    <h1 class = "display-4"><%= title %></h1>
+    <form method="POST" action="/ex_detail">
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-2.5">
+                <label for='year'>年 ※yyyy</label>
+                <input type="text" class='form-control' name='year' id='year' value="<%- rows[0].year %>" required>
+                </div>
+                <div class="form-group col-2.5">
+                <label for='month'>月 ※mm</label> 
+                <input type="text" class='form-control' name='month' id='month' value="<%- rows[0].month %>" required>
+                </div>
+                <div class="form-group col-2.5">
+                <label for='day'>日 ※dd</label>
+                <input type="text" class='form-control' name='day' id='day' value="<%- rows[0].day %>" required>
+                </div>
+            </div>
+        </div>
+        <div class='form-group'>
+            <div class='form-row'>
+                <div class="form-group col-2.5">
+                    <label for='code_name'>勘定科目</label> <br>
+                    <select id='code_name' name='code_name' class='form-control' value="<%- rows[0].code_name%>"　required>
+                        <option>▼選択してください</option>
+                        <option>消耗品費</option>
+                        <option>新聞図書費</option>
+                        <option>会議費</option>
+                        <option>交際費</option>
+                        <option>その他</option>
+                    </select>
+                </div>
+                <div class="form-group col-2.5">
+                    <label for='payee'>支払先</label>
+                    <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
+                    <input type="text" class='form-control' name='payee' id='payee' value="<%- rows[0].payee %>" required placeholder="必須">
+                </div>
+                <div class="form-group col-2.5">
+                    <label for='summary'>摘要</label>
+                    <span class="c-tooltip form-inline" data-tooltip="書籍購入制度利用の場合は『書籍代』と入力ください。">❔</span>
+                    <input type="text" class='form-control form-inline' name='summary' id='summary' value='<%- rows[0].summary %>' required placeholder="必須">
+                </div>
+            </div>
+        </div>
+        <div class='form-group form-inline'>
+            <span><label for='amount'>金額　</label></span>
+            <div class="col col-md-7 col-sm-7">
+            <input type="text" id='amount' name='amount' class="form-control" value='<%- rows[0].amount %>'>
+            </div>
+            <span class="col col-md-4 col-sm-4">円</span>
+        </div>
+        <div class='form-group form-inline'>
+        <div class='form-group form-inline'>
+            <label for='job_no'>ジョブコード</label> 
+                <div class="col-6">
+                <input type="text" class='form-control' id='job_no' name='job_no' value='<%- rows[0].job_no %>' >
+                </div>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='jobname'>ジョブ名</label> 
+                <div class="col-6">
+                <input type="text" class='form-control' id='jobname' name='jobname' >
+                </div>
+        </div>
+        <input type="submit" id="btn-return" value="ジョブ検索" class="btn btn-primary" onclick="frameClick();">
+        </div>
+        <div class='form-group form-inline'>
+            <label for="jm">ＪＭ　　</label>
+            <form action="#">
+                <select name='jm' id='jm' class='form-control'>
+                    <option value=0>---------------</option>
+                    <option value=1>Aさん</option>
+                    <option value=2>Bさん</option>
+                </select>
+            </form>
+        </div>
+        <div class='form-group form-inline'>
+            <label for='remarks'>備考</label>
+            <span class="c-tooltip form-inline" data-tooltip="サンプル文">❔</span>
+            <div class="col col-md-8 col-sm-7">
+            <input type="text" class='form-control' id='remarks' name='remarks' value='<%- rows[0].remarks %>' >
+            </div>
+        </div>
+        <div>
+            <input type="submit" id="btn-return" value="戻る" class="btn btn-primary" onclick="jobClick();">
+            <input type="submit" id="btn-save" value="保存" class="btn btn-primary" name='save'>
+            <input type="submit" id="btn-delete" value="削除" class="btn btn-primary" name='delete'>
+        </div>
+    </form>
+    <script type="text/javascript">
+
+        'use strict'
+
+        //戻るボタンでex_thismonthに遷移
+        function frameClick() {
+            document.location.href = 'http://localhost:3000/ex_thismonth';
+        };
+
+        //日付・時刻の初期値の設定
+        var date = new Date();
+        date.setDate(date.getDate());
+        var year = date.getFullYear();
+        var month = ("0"+(date.getMonth()+1)).slice(-2);
+        var day = ("0"+date.getDate()).slice(-2);
+        var hours = ("0"+date.getHours()).slice(-2);
+        var minutes = ("0"+date.getMinutes()).slice(-2);
+        console.log(date);
+        document.getElementById("time").value=hours+minutes;
+        document.getElementById("year").value=year;
+        document.getElementById("month").value=month;
+        document.getElementById("day").value=day;
+
+        function jobClick() {
+            document.location.href = 'http://localhost:3000/ex_thismonth';
+        };
+        
+        val.onchange = function() {
+            var val = document.getElementById('jm');
+            if (val !== 0) {
+            alert('本来とは別のJMが選択されています。再確認の上、変更願います。');
+            }
+        }
+    </script>
+  </body>
+</html>
