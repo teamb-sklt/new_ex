@@ -113,7 +113,7 @@ router.post('/', async function(req, res, next) {
             day=result[0].rows[0].day;
             code_name=result[0].rows.code_name;
             payee=result[0].rows.payee;
-            amount=result[0].rows[0].amount;
+            amount=result[0].rows[0].month;
             summary=result[0].rows[0].summary;
             job_no=result[0].rows[0].job_no;
             job_manager=result[0].rows[0].job_manager;

@@ -81,7 +81,8 @@ router.get('/', async function(req, res, next) {
     // amount:amount,
     // count:count,
     // subtotal:subtotal,
-    // job_no:'',
+    job_no:'',
+    job_name:'',
      }
      res.render('te_newrecord', opt);
     });

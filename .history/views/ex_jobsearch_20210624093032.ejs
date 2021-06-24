@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ジョブ検索</title>
+    <link rel='stylesheet' href=''/stylesheets/style_B.css'' />
+    <link rel='stylesheet'  href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+  </head>
+  <body class= 'container p-3'>
+    <h1>ジョブ検索</h1>
+    <form method="POST"> 
+      <div class='form-group'>
+        <label for='jobcode'>ジョブコード</label> 
+        <input type="text" class='form-control' id='jobsearchcode' name='jobsearchcode'>
+      </div>
+    <div class="form-group">
+      <label for='jobname'>ジョブ名</label> 
+      <input type="text" class='form-control' id='jobsearchname' name='jobsearchname'>
+        </div>
+        <div>
+          <input type="submit" value="検索" class="btn btn-primary" name='jobsearch' formaction="/ex_jobsearch" >
+      </div>
+      </form>
+      <table class="table">
+        <thead class="thead-light">
+        <tr>
+          <th>JOBコード</th>
+          <th>JOB名</th>
+          <th>JMコード</th>
+          <th>JM名</th>
+        </tr>
+        </thead>
+        <tbody>
+          <% for(let i in job_id){ %>
+            <div class="content">
+            <tr id="records">   
+              <td><%= job_id[i] %> </td>
+              <td><%= job_name[i] %> </td>
+              <td><%= job_manager[i] %> </td>
+              <td><%= job_manager_name[i] %> </td>
+              </div>
+              <form method="POST" action="/ex_newrecord">
+                <input type="hidden" name="job_id" value="<%= job_id[i]  %> ">
+                <input type="hidden" name="job_name" value="<%= job_name[i] %> ">
+                <input type="hidden" name="job_manager" value="<%= job_manager[i]  %> ">
+                <input type="hidden" name="job_manager_name" value="<%= job_manager_name[i]  %> ">
+                <input type="hidden" name='branch_no'  id='branch_no' value="">
+                <input type="hidden" id='amount' name='amount' value="">
+                <input type="hidden" id='trans_waypoint' name='trans_waypoint' value="">
+                <td><input type="submit" class="btn btn-secondary" name="jobsearch" id="jobsearch" value="選択"></td>
+              </form>
+            </tr>
+            <% } %>
+        </tbody>
+        </table>
+  </body>
+</html>
