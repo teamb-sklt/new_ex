@@ -8,6 +8,7 @@ var ccc;
 
 var { Client, Client } = require('pg');  //データベースを使うための宣言
 const dbpassword = process.env.PASSWORD //DBを使うのに必要
+const user=process.env.USER;
 const apiKey = process.env.APIKEY //APIkeyを使うのに必要
 
 /* GET home page. */
@@ -30,7 +31,7 @@ router.post('/', async function(req,response,next){
         rejectUnauthorized: false
     }
   }) : new Client({
-    user: 'postgres',
+    user: user,
     host: 'localhost',
     database: 'itpjph3',
     password: dbpassword,

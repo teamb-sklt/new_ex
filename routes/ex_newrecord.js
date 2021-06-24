@@ -45,7 +45,7 @@ router.get('/', async function(req, res, next) {
           rejectUnauthorized: false
       }
     }) : new Client({
-      user: 'postgres',
+      user: user,
       host: 'localhost',
       database: 'itpjph3',
       password: dbpassword,
@@ -159,7 +159,7 @@ router.post('/', async function(req,response,next){
           rejectUnauthorized: false
       }
     }) : new Client({
-      user: 'postgres',
+      user: user,
       host: 'localhost',
       database: 'itpjph3',
       password: dbpassword,
