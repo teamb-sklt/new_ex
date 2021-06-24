@@ -249,6 +249,7 @@ router.post('/', async function(req,response,next){
       await client.connect()
         
       //フォームに入力された値を定義
+      
       let branch_no2 = req.body.branch_no;
 
       //インサートコマンドを定義
