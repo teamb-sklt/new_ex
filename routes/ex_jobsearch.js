@@ -24,6 +24,7 @@ router.get('/', function(req, res, next) {
 router.post('/', async function(req,response,next){
 
 
+
   const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
     connectionString: process.env.DATABASE_URL,
     ssl: {
@@ -40,8 +41,19 @@ router.post('/', async function(req,response,next){
 
   const jobsearchcode = req.body.jobsearchcode;
   const jobsearchname = req.body.jobsearchname;
+  let code_name = req.body.code_name;
+  let summary = req.body.summary;
+  let payee = req.body.payee;
+  let year = req.body.year;
+  let month = req.body.month;
+  let day = req.body.day;
+  let branch_no2 = req.body.branch_no;
+  console.log(year)
+  console.log(branch_no2)
+  console.log(jobsearchname)
+  console.log(jobsearchcode)
 
-  function syutoku() {
+
     if(jobsearchcode ===''){
       client.query("SELECT * FROM Job WHERE job_name LIKE '%"+　jobsearchname　+"%'",function(err,result){
         if (err) {
@@ -60,17 +72,26 @@ router.post('/', async function(req,response,next){
             }
             console.log(job_id)
             let opt={
+              jobsearchcode:jobsearchcode,
+              jobsearchname:jobsearchname,
               job_id:job_id,
               job_name:job_name,
               job_manager:job_manager,
               job_manager_name:job_manager_name,
+              year:year,
+              month:month,
+              day:day,
+              branch_no2:branch_no2,
+              payee:payee,
+              summary:summary,
+              code_name:code_name,
             }
             response.render('ex_jobsearch', opt);
         }
         client.end()
       })   
     }else{
-      client.query("SELECT * FROM Job WHERE job_id LIKE "+"'"+jobsearchcode+"'",function(err,result){
+      client.query("SELECT * FROM Job WHERE job_id LIKE "+"'%"+jobsearchcode+"%'",function(err,result){
         if (err) {
           console.log(err); //エラー時にコンソールに表示
         } else {
@@ -87,18 +108,25 @@ router.post('/', async function(req,response,next){
             }
             console.log(job_id)
             let opt={
+              jobsearchcode:jobsearchcode,
+              jobsearchname:jobsearchname,
               job_id:job_id,
               job_name:job_name,
               job_manager:job_manager,
               job_manager_name:job_manager_name,
+              year:year,
+              month:month,
+              day:day,
+              branch_no2:branch_no2,
+              payee:payee,
+              summary:summary,
+              code_name:code_name,
             }
             response.render('ex_jobsearch', opt);
         }
         client.end()
       })
     }
-}
-syutoku()
 
   
 })

@@ -96,14 +96,26 @@ router.post('/', async function(req,response,next){
     //result.ejsの選択ボタンボタンが押されたら実行
 
     if(req.body.te_jobsearch){
+      // let job_id = req.body.job_id
+      // let job_name = req.body.job_name
+      // let job_manager = req.body.job_manager
+      // let job_manager_name = req.body.job_manager_name
+      // console.log(job_id)
+      // console.log(job_name)
+      // console.log(job_manager)
+      // console.log(job_manager_name)
+      let trans_from = req.body.trans_from;
+      let trans_waypoint = req.body.trans_waypoint;
+      let trans_to = req.body.trans_to;
+      let year = req.body.year;
+      let month = req.body.month;
+      let day = req.body.day;
+      let branch_no2 = req.body.branch_no;
       let job_id = req.body.job_id
       let job_name = req.body.job_name
       let job_manager = req.body.job_manager
       let job_manager_name = req.body.job_manager_name
-      console.log(job_id)
-      console.log(job_name)
-      console.log(job_manager)
-      console.log(job_manager_name)
+      let amount = req.body.amount
 
       let opt={
         title: '交通費',
@@ -111,11 +123,14 @@ router.post('/', async function(req,response,next){
         job_name:job_name,
         job_manager:job_manager,
         job_manager_name:job_manager_name,
-        trans_from:'',
-        trans_to:'',
-        trans_waypoint:'',
-        branch_no2:'',
-        amount:'',
+        trans_from:trans_from,
+        trans_to:trans_to,
+        trans_waypoint:trans_waypoint,
+        branch_no2:branch_no2,
+        year:year,
+        month:month,
+        day:day,
+        amount:amount,
 
         // branch_no2:branch_no2,
         // trans_from:trans_from,
@@ -125,7 +140,7 @@ router.post('/', async function(req,response,next){
     }
     response.render('te_newrecord', opt);
   }
-  else if(req.body.te_jobsearch_to){
+  else if(req.body.te_jobsearch_to){ //フォーム内を読み取り、ジョブ検索画面へ飛ばす
     let trans_from = req.body.trans_from;
     let trans_waypoint = req.body.trans_waypoint;
     let trans_to = req.body.trans_to;
@@ -133,15 +148,15 @@ router.post('/', async function(req,response,next){
     let month = req.body.month;
     let day = req.body.day;
     let branch_no2 = req.body.branch_no;
-    let job_id = req.body.job.no
-    let job_name = rer.body.job_name
-    let job_manager = req.body.job_manager
-    let job_manager_name = req.body.job_manager_name
+    let jobsearchcode = req.body.job_no
+    let jobsearchname = req.body.job_name
+    // let job_manager = req.body.job_manager
+    // let job_manager_name = req.body.job_manager_name
     let opt={
-      job_no:job_id,
-      job_name:job_name,
-      job_manager:job_manager,
-      job_manager_name:job_manager_name,
+      jobsearchcode:jobsearchcode,
+      jobsearchname:jobsearchname,
+      job_manager:'',
+      job_manager_name:'',
       trans_from:trans_from,
       trans_to:trans_to,
       trans_waypoint:trans_waypoint,
@@ -149,6 +164,7 @@ router.post('/', async function(req,response,next){
       year:year,
       month:month,
       day:day,
+      job_id:'',
     }
     response.render('te_jobsearch', opt);
 
