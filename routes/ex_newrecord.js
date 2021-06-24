@@ -64,7 +64,7 @@ router.get('/', async function(req, res, next) {
       client.end()
     });
   let opt={
-    title: '経費',
+    title: '新規登録 - 経費',
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,
@@ -93,7 +93,7 @@ router.post('/', async function(req,response,next){
       let job_manager_name = req.body.job_manager_name
 
       let opt={
-        title: '経費',
+        title: '新規登録 - 経費',
         job_no:job_id,
         job_name:job_name,
         job_manager:job_manager,

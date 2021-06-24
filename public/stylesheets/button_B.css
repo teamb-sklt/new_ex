@@ -58,6 +58,22 @@ button.next:hover {
   background: #002b49;
 }
 
+.adding {
+  color: #434447;
+  margin: 0 0 0 7px; /* 上 右 下 左 */
+  background: none;
+  font-size: 19px;
+  font-weight: bold;
+  border: none;
+}
+.adding:hover {
+  color: #0050B3;
+  background: none;
+  text-decoration:underline;
+  text-decoration-color:#0050B3;
+  border: none;
+}
+
 .more { /* 詳細、コピーボタン */
   margin: 5px 0 0 5px; /* 上 右 下 左 */
   color: #002b49;
@@ -83,6 +99,18 @@ button.next:hover {
   font-weight: bold;
   border-radius: 7px; /* 角の丸み */
 }
+.search { /* 詳細、コピーボタン */
+  margin: auto 0 auto 15px; /* 上 右 下 左 */
+  color: #78aa00;
+  background: #ffffff;
+  border-color: #78aa00;
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+}
+.search:hover,
 .onemore:hover {
   color: #ffffff;
   background: #78aa00;
@@ -102,7 +130,34 @@ button.next:hover {
   left: 50%;
   top: 15px;
 }
+.save { /* 申請ボタン */
+  color: #cb2c30;
+  background: #ffffff;
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 7px; /* 角の丸み */
+  border-color: #cb2c30;
+  position: absolute;
+  right: 5px;
+  top: 15px;
+}
+.save:hover,
 .OK:hover {
   color: #ffffff;
   background: #cb2c30;
+}
+
+.back { /* すべてチェック */
+  margin: 15px 0 0 5px; /* 上 右 下 左 */
+  background: #ffffff;
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 7px; /* 角の丸み */
+}
+.back:hover {
+  color: #ffffff;
+  background: #002b49;
 }
