@@ -45,7 +45,7 @@ router.get('/', async function(req, res, next) {
           rejectUnauthorized: false
       }
     }) : new Client({
-      user: 'postgres',
+      user: user,
       host: 'localhost',
       database: 'itpjph3',
       password: dbpassword,
@@ -85,7 +85,7 @@ router.get('/', async function(req, res, next) {
     // amount:amount,
     // count:count,
     // subtotal:subtotal,
-    // job_no:job_no,
+    // job_no:'',
      }
      res.render('te_newrecord', opt);
     });
@@ -139,6 +139,7 @@ router.post('/', async function(req,response,next){
         // amount:amount,
     }
     response.render('te_newrecord', opt);
+
   }
   else if(req.body.te_jobsearch_to){ //フォーム内を読み取り、ジョブ検索画面へ飛ばす
     let trans_from = req.body.trans_from;
@@ -190,7 +191,6 @@ router.post('/', async function(req,response,next){
                 job_name:'',
                 job_manager:'',
                 job_manager_name:'',
-
             }
             response.render('te_newrecord', opt);
     }
@@ -204,7 +204,7 @@ router.post('/', async function(req,response,next){
           rejectUnauthorized: false
       }
     }) : new Client({
-      user: 'postgres',
+      user: user,
       host: 'localhost',
       database: 'itpjph3',
       password: dbpassword,
@@ -243,7 +243,7 @@ router.post('/', async function(req,response,next){
         console.log(res)
         client.end()
     })
-    .catch(e => console.error(e.stack));
+        client.end()
     response.redirect("/te_thismonth");
   }
 });
