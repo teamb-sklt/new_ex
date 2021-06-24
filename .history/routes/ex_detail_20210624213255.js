@@ -126,6 +126,7 @@ router.post('/', async function(req, res, next) {
       title: '詳細変更 - 経費',
       branch_no2:branch_no2,
       code_name:code_name,
+      payee:payee,
       amount:amount,
       year:year,
       month:month,
