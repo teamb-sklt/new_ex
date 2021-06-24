@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
     job_manager:'',
     job_manager_name:'',
   }
-  res.render('ex_jobsearch', opt);
+  res.render('te_jobsearch', opt);
 });
 
 router.post('/', async function(req,response,next){
@@ -30,7 +30,7 @@ router.post('/', async function(req,response,next){
         rejectUnauthorized: false
     }
   }) : new Client({
-    user: user,
+    user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
     password: dbpassword,
@@ -40,9 +40,15 @@ router.post('/', async function(req,response,next){
 
   const jobsearchcode = req.body.jobsearchcode;
   const jobsearchname = req.body.jobsearchname;
-
-  function syutoku() {
-    if(jobsearchcode ===''){
+  let trans_from = req.body.trans_from;
+  let trans_waypoint = req.body.trans_waypoint;
+  let trans_to = req.body.trans_to;
+  let year = req.body.year;
+  let month = req.body.month;
+  let day = req.body.day;
+  let branch_no2 = req.body.branch_no;
+  
+  if(jobsearchcode ===''){
       client.query("SELECT * FROM Job WHERE job_name LIKE '%"+　jobsearchname　+"%'",function(err,result){
         if (err) {
           console.log(err); //エラー時にコンソールに表示
@@ -64,8 +70,15 @@ router.post('/', async function(req,response,next){
               job_name:job_name,
               job_manager:job_manager,
               job_manager_name:job_manager_name,
+              trans_from:trans_from,
+              trans_to:trans_to,
+              trans_waypoint:trans_waypoint,
+              year:year,
+              month:month,
+              day:day,
+              branch_no2:branch_no2
             }
-            response.render('ex_jobsearch', opt);
+            response.render('te_jobsearch', opt);
         }
         client.end()
       })   
@@ -91,14 +104,21 @@ router.post('/', async function(req,response,next){
               job_name:job_name,
               job_manager:job_manager,
               job_manager_name:job_manager_name,
+              trans_from:trans_from,
+              trans_to:trans_to,
+              trans_waypoint:trans_waypoint,
+              year:year,
+              month:month,
+              day:day,
+              branch_no2:branch_no2
             }
-            response.render('ex_jobsearch', opt);
+            response.render('te_jobsearch', opt);
         }
         client.end()
       })
-    }
+    
 }
-syutoku()
+
 
   
 })

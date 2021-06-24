@@ -18,14 +18,14 @@ var tmonth;
 var lmonth;
 var lastday;
 
-console.log(date)
+// console.log(date)
 
 if(date>20){
-  tmonth=moment().add(1,'month').format("MM");
-  lmonth=tomonth;
-}else{
   tmonth=tomonth;
   lmonth=moment().add(-1,'month',).format("MM");
+}else{
+  tmonth=moment().add(-1,'month',).format("MM");
+  lmonth=moment().add(-2,'month',).format("MM");
   lastday = 20 - date;
 }
 console.log(tmonth)
@@ -39,7 +39,6 @@ var amount = [];
 var count = [];
 var subtotal = [];
 var job_no = [];
-var emp_no = "001"
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -49,7 +48,7 @@ router.get('/', async function(req, res, next) {
         rejectUnauthorized: false
     }
   }) : new Client({
-    user: user,
+    user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
     password: dbpassword,
@@ -63,7 +62,7 @@ router.get('/', async function(req, res, next) {
   //   }
   //   console.log(result)
   // })
-  client.query("SELECT * from TeDetail WHERE sheet_month="+"'"+tmonth+"'" +"ORDER BY branch_no ASC",function(err,result){
+  client.query("SELECT * from TeDetail WHERE sheet_month="+"'"+tmonth+"'"+"ORDER BY branch_no ASC" ,function(err,result){
     // console.log(result)
     for(var i in result.rows){
       status[i]=result.rows[i].status;
@@ -81,28 +80,27 @@ router.get('/', async function(req, res, next) {
     }
     client.end()
   });
-  let opt={
-    title: '交通費',
-    emp_no:emp_no,
-    tmonth:tmonth,
-    lmonth:lmonth,
-    lastday:lastday,
-    date:date,
-    status:status,
-    branch_no:branch_no,
-    month:month,
-    day:day,
-    trans_from:trans_from,
-    trans_to:trans_to,
-    amount:amount,
-    count:count,
+let opt={
+  title: '交通費',
+  tmonth:tmonth,
+  lmonth:lmonth,
+  lastday:lastday,
+  date:date,
+  status:status,
+  branch_no:branch_no,
+  month:month,
+  day:day,
+  trans_from:trans_from,
+  trans_to:trans_to,
+  amount:amount,
+  count:count,
   subtotal:subtotal,
   job_no:job_no,
 }
-  res.render('te_thismonth', opt);
+  res.render('te_lastmonth', opt);
 })
 
-//+1を押すとき
+//コピーを押すとき
 router.post('/',async function(req,res,next){
   let branch_no = req.body.branch_no;
   let month = req.body.month; //本来なら、Monthやdayではなく、報告年月と社員番号が必要。
@@ -115,7 +113,7 @@ router.post('/',async function(req,res,next){
         rejectUnauthorized: false
     }
   }) : new Client({
-    user: user,
+    user: 'postgres',
     host: 'localhost',
     database: 'itpjph3',
     password: dbpassword,
@@ -123,15 +121,22 @@ router.post('/',async function(req,res,next){
   })
   await client.connect()
 
-  client.query("UPDATE TeDetail SET count=count+1, remarks=concat(remarks,"+"'," +tomonth+"/"+date+"') where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
+  client.query("SELECT * FROM TeDetail where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
     if (err) {
       console.log(err); //エラー時にコンソールに表示
     } else {
-    // console.log(result)
+    console.log(result)
+  let rows = result.rows
+  let opt={
+    title: '交通費詳細',
+    rows:rows,
+    
     }
-    client.end()
-    res.redirect('/te_thismonth')
-  });
+    res.render('te_detail', opt);
+}
+  // }
+  client.end()
+});
 });
 
 module.exports = router;
