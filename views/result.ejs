@@ -1,47 +1,88 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <form method="POST">
-      <label for='trans_from'>出発地</label> 
-      <input type="text" class='form-control' name='trans_from' id='trans_from' required placeholder="必須" value=<%= trans_from %>>
-      <label for='trans_to'>目的地</label> 
-      <input type="text" class='form-control' name='trans_to' id='trans_to'  required placeholder="必須" value=<%= trans_to %>>
-      <label for='trans_waypoint'>経由地</label>
-      <input type="text" class='form-control' name='trans_waypoint' id='trans_waypoint'  placeholder="省略可" value=<%= result2[1] %>>
-      <input type="text" class='form-control' name='branch_no' id='branch_no'  placeholder="省略可" value=<%= branch_no2 %>>
-    </form>
-    <table class="table">
-      <thead class="thead-light">
-      <tr>
-        <th>経路</th>
-        <th>単価</th>
-        <th>選択</th>
-      </tr>
-      </thead>
-      <tbody>
-        <% for(let i in result){ %>
-          <div class="content"
-          <tr id="records">   
-            <td id=Route class=Route><%= result[i] %> </td>
-            <td id=amount><%- result1[i] %></td>
-            </div>
-            <form method="POST" action="/te_newrecord"> 
-                <input type="hidden" name='trans_from' id='trans_from' required placeholder="必須" value=<%= trans_from %>>
-                <input type="hidden" name='trans_to' id='trans_to'  required placeholder="必須" value=<%= trans_to %>>
-                <input type="hidden" name='branch_no'  id='branch_no' value="<%- branch_no2 %>">
-              <input type="hidden" name='Route' value="<%= result[i] %>">
-              <input type="hidden" id='amount' name='amount' value="<%= result1[i] %>">
-              <input type="hidden" id='trans_waypoint' name='trans_waypoint' value="<%= result2[i] %>">
-              <td><input type="submit" class="btn btn-secondary" name="search" id="search" value="選択"></td>
-            </form>
-          </tr>
-          <% } %>
-      </tbody>
-      </table>
+<html lang="ja">
+<meta charset="UTF-8">
+
+
+<head>  
+  <title>交通費検索</title>
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css' />
+  <link rel='stylesheet' href='/stylesheets/style_B.css' />
+  <link rel='stylesheet' href='/stylesheets/new_style_B.css' />
+  <link rel='stylesheet' href='/stylesheets/button_B.css' />
+</head>
+
+<body>
+<header>
+  <div class="header_area">
+    <div class="header_block">
+      <div class="header_box">
+        <div class="box">
+          <h1>交通費検索</h1>
+          <img src="images/logomesse.png" alt="" class="img">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="contents_wrap">
+    <div class="contents_area">
+      <div class="content_block">
+        <form method="POST">
+          <table>
+            <tr>
+              <th width="33%">出発地</th>
+              <th width="33%">経由地</th>
+              <th width="33%">目的地</th>
+            </tr>
+            <tr>
+              <td>
+                <input type="text" class='text2'  name='trans_from' id='trans_from' required value=<%= trans_from %>>
+              </td>
+              <td>
+                <input type="text" class='text2' name='trans_waypoint' id='trans_waypoint'  placeholder="任意" value=<%= result2[1] %>>
+              </td>
+              <td>
+                <input type="text" class='text2' name='trans_to' id='trans_to'  required value=<%= trans_to %>>
+                <input type="hidden" class='' name='branch_no' id='branch_no'  placeholder="省略可" value=<%= branch_no2 %>>
+              </td>
+            </tr>
+          </table>
+
+          <table>
+            <thead>
+              <tr>
+                <th width="80%">経路</th>
+                <th width="10%">単価</th>
+                <th width="10%">選択</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let i in result){ %>
+                <div class="content">
+                <tr id="records">   
+                  <td id=Route class=Route><%= result[i] %> </td>
+                  <td id=amount><%- result1[i] %></td>
+                  </div>
+                  <form method="POST" action="/te_newrecord"> 
+                      <input type="hidden" name='trans_from' id='trans_from' required placeholder="必須" value=<%= trans_from %>>
+                      <input type="hidden" name='trans_to' id='trans_to'  required placeholder="必須" value=<%= trans_to %>>
+                      <input type="hidden" name='branch_no'  id='branch_no' value="<%- branch_no2 %>">
+                    <input type="hidden" name='Route' value="<%= result[i] %>">
+                    <input type="hidden" id='amount' name='amount' value="<%= result1[i] %>">
+                    <input type="hidden" id='trans_waypoint' name='trans_waypoint' value="<%= result2[i] %>">
+                    <td><input type="submit" class="teselect" name="search" id="search" value="選択"></td>
+                  </form>
+                </tr>
+                <% } %>
+            </tbody>
+          </table>
+
+          <div class="box">
+            <input type="submit" class="back" id="btn-return" value="戻る" onclick="history.back()" formaction="/te_newrecord">
+          </div>
+          
         </form>
-    </form>
-  </body>
-</html>
+
+<%- include('partials/footer1')%>
