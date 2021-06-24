@@ -26,7 +26,7 @@ router.post('/', async function(req,response,next){
 
 
   const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.HEROKU_POSTGRESQL_BRONZE_URL,
     ssl: {
         rejectUnauthorized: false
     }
