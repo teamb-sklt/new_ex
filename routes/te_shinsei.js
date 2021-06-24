@@ -5,9 +5,7 @@ const moment = require("moment");
 require('dotenv').config();
 var nodemailer = require("nodemailer");
 
-var receiverEmailAddress=[]; //ここは自分のメールアドレスにしてください。じゃないと僕に大量にメールが届くので・・・
-var senderEmailAddress = 'test.itpj@gmail.com' //テスト用のアカウント（変更しないでください）
-var senderEmailPassword = 'ogrsnpgudnugutav'　//テスト用のアカウントのアプリPW（変更しないでください）
+
 
 var { Client, Client } = require('pg');  //データベースを使うための宣言
 const dbpassword = process.env.PASSWORD //DBを使うのに必要
@@ -53,94 +51,120 @@ router.post('/', async function(req, res, next) {
     })
     await client.connect()
 
-  // let emp_no = req.body.emp_no
-  // const query = "UPDATE TeDetail SET status='11' WHERE emp_no='001' AND status='00' AND sheet_month="+ "'" + tmonth +"'" ;
-  // client.query(query ,function(err,result){
-  //   console.log(query)
-  //   console.log(result.command)
-    
-  // //client.end()
-  // res.redirect("/te_thismonth");
-  // })
-      
-  function job_manager(){
-      return client
-        .query("SELECT job_manager from TeDetail WHERE sheet_month='"+tmonth+"'"+ "AND status='00'")
-        // .then(res => console.log(res.rows))
-        .then(res =>{ 
-          for(i in res.rows){
-            job_manager_no.push(res.rows[i].job_manager)}
-          })
-        .then(res =>{return job_manager_no})
-        .then (res1 => console.log(job_manager_no))
-        .catch(e => console.error(e.stack))
-  }
+    function mailadress(emailadress){
+      var receiverEmailAddress; //ここは自分のメールアドレスにしてください。じゃないと僕に大量にメールが届くので・・・
+      var senderEmailAddress = 'test.itpj@gmail.com' //テスト用のアカウント（変更しないでください）
+      var senderEmailPassword = 'ogrsnpgudnugutav'　//テスト用のアカウントのアプリPW（変更しないでください）
+      //SMTPサーバの基本情報設定
+      var transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // SSL
+      auth: {
+      user: senderEmailAddress,
+      pass: senderEmailPassword
+      }
+      });
   
-  function kueribun(){
-    var sql1 = job_manager_no.join("' OR emp_no='",'')
-    console.log(sql1)
-    return;
-  }
+      //メール情報の作成
+      var mailOptions1 = {
+      from: senderEmailAddress,
+      // to: receiverEmailAddress,
+      to: emailadress,
+      subject: 'JM申請のお知らせ',　//件名
+      text: 'ジョブメンバーよりJM申請が行われました'　//本文
+      };
+  
+      　//メール情報の作成
+      transporter.sendMail(mailOptions1, function (error, info) {
+      if (error) {
+      console.log('失敗');
+      console.log(mailOptions1);
+      } else {
+      console.log('成功');
+      console.log(mailOptions1);
+      }
+      });
+    }
 
-  function emp_mail(){
-    console.log(sql1)
-      return client
-        .query("SELECT emp_mail from Employee WHERE emp_no='"+sql1+"'")
-        .then(res => console.log(res))
-        // .then(res =>{receiverEmailAddress.push(res.rows[0].emp_mail);})
-        // .then(res =>{return receiverEmailAddress = res.rows[0].emp_mail;})
-        // .then(res =>console.log(receiverEmailAddress))
-        .catch(e => console.error(e.stack))
-  }
-  // console.log(receiverEmailAddress)
+  // let emp_no = req.body.emp_no
+  //const query = "select emp_mail from employee inner join tedetail on employee.emp_no = tedetail.job_manager where tedetail.sheet_month='"+tmonth+"' and tedetail.status='00' ; UPDATE TeDetail SET status='11' WHERE status='00' AND sheet_month="+ "'" + tmonth +"'" ;
+  //const query = "UPDATE TeDetail SET status='11' WHERE status='00' AND sheet_month="+ "'" + tmonth +"' ; select emp_mail from employee inner join tedetail on employee.emp_no = tedetail.job_manager where tedetail.sheet_month='"+tmonth+"' and tedetail.status='00'" 
 
-  // function shinsei(){
-  //   client
-  //     .query("UPDATE TeDetail SET status='11' WHERE emp_no='001' AND status='00' AND sheet_month="+ "'" + tmonth +"'" )
-  //     .then(res => res)
-  //     .then(res.redirect("/te_thismonth"))
-  //     .catch(e => console.error(e.stack))
-  //     // client.end()
+  function mailokuru(){
+  client.query("select emp_mail from employee inner join tedetail on employee.emp_no = tedetail.job_manager where tedetail.sheet_month='"+tmonth+"' and tedetail.status='00'" ,function(err,result){
+    if(err){
+      console.log(err)
+    }
+    // console.log(query)
+    // console.log(result[0].command)
+    console.log(result.rows)
+    // emailadress = result.rows
+    // console.log(emailadress)
+    // console.log(result.rows)
+    
+    for(n of result.rows){
+      let emailadress = n.emp_mail
+      mailadress(emailadress)
+      console.log(emailadress)
+
+    }
+  })
+}
+ function update(){
+  client.query("UPDATE TeDetail SET status='11' WHERE status='00' AND sheet_month="+ "'" + tmonth +"'",function(err,result){
+    if(err){
+      console.log(err)
+    }
+    // console.log(query)
+    console.log(result.command)
+    // emailadress = result.rows
+    // console.log(emailadress)
+    // console.log(result.rows)
+  client.end()
+  res.redirect("/te_thismonth");
+  })
+ }
+
+      
+  // function job_manager(){
+  //     return client
+  //       .query("SELECT job_manager from TeDetail WHERE sheet_month='"+tmonth+"'"+ "AND status='00'")
+  //       // .then(res => console.log(res.rows))
+  //       .then(res =>{ 
+  //         for(i in res.rows){
+  //           job_manager_no.push(res.rows[i].job_manager)}
+  //         })
+  //       .then(res =>{return job_manager_no})
+  //       .then (res1 => console.log(job_manager_no))
+  //       .catch(e => console.error(e.stack))
+  // }
+  
+  // function kueribun(){
+  //   var sql1 = job_manager_no.join("' OR emp_no='",'')
+  //   console.log(sql1)
+  //   return;
   // }
 
-  // function sendMail(){
-  //   //SMTPサーバの基本情報設定
-  //   var transporter = nodemailer.createTransport({
-  //   host: 'smtp.gmail.com',
-  //   port: 465,
-  //   secure: true, // SSL
-  //   auth: {
-  //   user: senderEmailAddress,
-  //   pass: senderEmailPassword
-  //   }
-  //   });
-
-  //   //メール情報の作成
-  //   var mailOptions1 = {
-  //   from: senderEmailAddress,
-  //   to: receiverEmailAddress,
-  //   subject: 'JM申請のお知らせ',　//件名
-  //   text: 'ジョブメンバーよりJM申請が行われました'　//本文
-  //   };
-
-  //   　//メール情報の作成
-  //   transporter.sendMail(mailOptions1, function (error, info) {
-  //   if (error) {
-  //   console.log('失敗');
-  //   console.log(mailOptions1);
-  //   } else {
-  //   console.log('成功');
-  //   console.log(mailOptions1);
-  //   }
-  //   });
+  // function emp_mail(){
+  //   console.log(sql1)
+  //     return client
+  //       .query("SELECT emp_mail from Employee WHERE emp_no='"+sql1+"'")
+  //       .then(res => console.log(res))
+  //       // .then(res =>{receiverEmailAddress.push(res.rows[0].emp_mail);})
+  //       // .then(res =>{return receiverEmailAddress = res.rows[0].emp_mail;})
+  //       // .then(res =>console.log(receiverEmailAddress))
+  //       .catch(e => console.error(e.stack))
   // }
+  // // console.log(receiverEmailAddress)
+
+
+
 
     async function inoue(){
-      await job_manager();
-      await kueribun();
+      await mailokuru();
 
-
-      emp_mail();
+      update();
       // shinsei();
       // sendMail();
     }
