@@ -151,6 +151,7 @@ router.post('/', async function(req,response,next){
     let branch_no2 = req.body.branch_no;
     let jobsearchcode = req.body.job_no
     let jobsearchname = req.body.job_name
+    let amount = req.body.amount
     // let job_manager = req.body.job_manager
     // let job_manager_name = req.body.job_manager_name
     let opt={
@@ -166,6 +167,7 @@ router.post('/', async function(req,response,next){
       month:month,
       day:day,
       job_id:'',
+      amount:amount
     }
     response.render('te_jobsearch', opt);
 
@@ -185,9 +187,6 @@ router.post('/', async function(req,response,next){
                 trans_waypoint:trans_waypoint,
                 trans_to:trans_to,
                 amount:amount,
-                title: '交通費',
-                tmonth:tmonth,
-                lmonth:lmonth,
                 job_no:'',
                 job_name:'',
                 job_manager:'',

@@ -48,6 +48,7 @@ router.post('/', async function(req,response,next){
   let month = req.body.month;
   let day = req.body.day;
   let branch_no2 = req.body.branch_no;
+  let amount = req.body.amount;
   console.log(trans_from)
   console.log(year)
   console.log(branch_no2)
@@ -85,7 +86,7 @@ router.post('/', async function(req,response,next){
               month:month,
               day:day,
               branch_no2:branch_no2,
-              amount:'',
+              amount:amount,
             }
             response.render('te_jobsearch', opt);
         }
@@ -123,7 +124,7 @@ router.post('/', async function(req,response,next){
               month:month,
               day:day,
               branch_no2:branch_no2,
-              amount:'',
+              amount:amount,
             }
             response.render('te_jobsearch', opt);
         }

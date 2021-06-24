@@ -76,6 +76,7 @@ router.get('/', async function(req, res, next) {
     payee:'',
     summary:'',
     job_manager:'',
+    remarks:'',
     
   
   }
@@ -114,6 +115,7 @@ router.post('/', async function(req,response,next){
         month:month,
         day:day,
         amount:amount,
+        remarks:'',
 
         // branch_no2:branch_no2,
         // trans_from:trans_from,
@@ -148,6 +150,7 @@ router.post('/', async function(req,response,next){
       month:month,
       day:day,
       job_id:'',
+      remarks:'',
     }
     response.render('ex_jobsearch', opt);
 
@@ -197,6 +200,138 @@ router.post('/', async function(req,response,next){
     })
     .catch(e => console.error(e.stack));
     response.redirect("/ex_thismonth");
+  }else if(req.body.book){
+    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+          rejectUnauthorized: false
+      }
+    }) : new Client({
+      user: 'postgres',
+      host: 'localhost',
+      database: 'itpjph3',
+      password: dbpassword,
+      port: 5432
+    })
+    await client.connect()
+
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    //   console.log(result)
+    //   console.log(result.rows[0].count)
+      branch_no=result.rows[0].count
+      branch_no1=Number(branch_no);
+      branch_no2=branch_no1+1
+      console.log(branch_no2)
+
+      client.end()
+    });
+  let opt={
+    title: '経費',
+    tmonth:tmonth,
+    lmonth:lmonth,
+    branch_no2:branch_no2,
+    amount:'',
+    job_no:'SKLRAD0103',
+    job_name:'SKLT書籍購入',
+    job_manager_name:'新田さん',
+    code_name:1,
+    payee:'Amazon株式会社',
+    summary:'書籍代',
+    job_manager:'111',
+    remarks:'',
+    
+  
+  }
+     response.render('ex_newrecord', opt);
+
+  }else if(req.body.mtg){
+    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+          rejectUnauthorized: false
+      }
+    }) : new Client({
+      user: 'postgres',
+      host: 'localhost',
+      database: 'itpjph3',
+      password: dbpassword,
+      port: 5432
+    })
+    await client.connect()
+
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    //   console.log(result)
+    //   console.log(result.rows[0].count)
+      branch_no=result.rows[0].count
+      branch_no1=Number(branch_no);
+      branch_no2=branch_no1+1
+      console.log(branch_no2)
+
+      client.end()
+    });
+  let opt={
+    title: '経費',
+    tmonth:tmonth,
+    lmonth:lmonth,
+    branch_no2:branch_no2,
+    amount:'',
+    job_no:'',
+    job_name:'',
+    job_manager_name:'',
+    code_name:2,
+    payee:'',
+    summary:'',
+    job_manager:'',
+    remarks:'会社名:　名前:　役職:　人数:',
+    
+  
+  }
+     response.render('ex_newrecord', opt);
+    
+  }else if(req.body.kousai){
+    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+          rejectUnauthorized: false
+      }
+    }) : new Client({
+      user: 'postgres',
+      host: 'localhost',
+      database: 'itpjph3',
+      password: dbpassword,
+      port: 5432
+    })
+    await client.connect()
+
+    client.query("SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    //   console.log(result)
+    //   console.log(result.rows[0].count)
+      branch_no=result.rows[0].count
+      branch_no1=Number(branch_no);
+      branch_no2=branch_no1+1
+      console.log(branch_no2)
+
+      client.end()
+    });
+  let opt={
+    title: '経費',
+    tmonth:tmonth,
+    lmonth:lmonth,
+    branch_no2:branch_no2,
+    amount:'',
+    job_no:'',
+    job_name:'',
+    job_manager_name:'',
+    code_name:'',
+    payee:'',
+    summary:'',
+    job_manager:'',
+    remarks:'会社名:　名前:　役職:　人数:',
+    
+  
+  }
+     response.render('ex_newrecord', opt);
+    
   }
 });
 
