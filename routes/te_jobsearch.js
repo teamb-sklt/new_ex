@@ -40,6 +40,14 @@ router.post('/', async function(req,response,next){
 
   const jobsearchcode = req.body.jobsearchcode;
   const jobsearchname = req.body.jobsearchname;
+  let trans_from = req.body.trans_from;
+  let trans_waypoint = req.body.trans_waypoint;
+  let trans_to = req.body.trans_to;
+  let year = req.body.year;
+  let month = req.body.month;
+  let day = req.body.day;
+  let branch_no2 = req.body.branch_no;
+
   
     if(jobsearchcode ===''){
       client.query("SELECT * FROM Job WHERE job_name LIKE '%"+　jobsearchname　+"%'",function(err,result){
@@ -63,6 +71,13 @@ router.post('/', async function(req,response,next){
               job_name:job_name,
               job_manager:job_manager,
               job_manager_name:job_manager_name,
+              trans_from:trans_from,
+              trans_to:trans_to,
+              trans_waypoint:trans_waypoint,
+              year:year,
+              month:month,
+              day:day,
+              branch_no2:branch_no2
             }
             response.render('te_jobsearch', opt);
         }
@@ -90,6 +105,13 @@ router.post('/', async function(req,response,next){
               job_name:job_name,
               job_manager:job_manager,
               job_manager_name:job_manager_name,
+              trans_from:trans_from,
+              trans_to:trans_to,
+              trans_waypoint:trans_waypoint,
+              year:year,
+              month:month,
+              day:day,
+              branch_no2:branch_no2
             }
             response.render('te_jobsearch', opt);
         }
