@@ -102,9 +102,9 @@ router.post('/', async function(req, res, next) {
           if(err){
             console.log('error')
           }else{
-            // console.log(result[0].rows)
-            // console.log(result[1].rows)
-            branch_no2=result[0].rows[0].branch_no;
+            console.log(result[0].rows)
+            console.log(result[1].rows)
+            branch_no2=result[0].rows[0].branch_no
             year=result[0].rows[0].year;
             month=result[0].rows[0].month;
             day=result[0].rows[0].day;

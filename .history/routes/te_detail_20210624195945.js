@@ -38,53 +38,53 @@ console.log(tmonth)
 var branch_no1;
 var branch_no2;
 var branch_no;
-// router.get('/', async function(req, res, next) {
-//     const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
-//       connectionString: process.env.DATABASE_URL,
-//       ssl: {
-//           rejectUnauthorized: false
-//       }
-//     }) : new Client({
-//       user: user,
-//       host: 'localhost',
-//       database: 'itpjph3',
-//       password: dbpassword,
-//       port: 5432
-//     })
-//     await client.connect()
+router.get('/', async function(req, res, next) {
+    const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+          rejectUnauthorized: false
+      }
+    }) : new Client({
+      user: user,
+      host: 'localhost',
+      database: 'itpjph3',
+      password: dbpassword,
+      port: 5432
+    })
+    await client.connect()
 
-//     client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
-//     //   console.log(result)
-//     //   console.log(result.rows[0].count)
-//       branch_no=result.rows[0].count
-//       branch_no1=Number(branch_no);
-//       console.log(branch_no1)
+    client.query("SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'" ,function(err,result){
+    //   console.log(result)
+    //   console.log(result.rows[0].count)
+      branch_no=result.rows[0].count
+      branch_no1=Number(branch_no);
+      console.log(branch_no1)
 
-//       client.end()
-//     });
-//   let opt={
-//     title: '詳細変更 - 交通費',
-//     year:year,
-//     month:month,
-//     day:day,
-//     branch_no:branch_no1,
-//     trans_from:trans_from,
-//     trans_waypoint:trans_waypoint,
-//     trans_to:trans_to,
-//     amount:'',
-//     // // status:status,
-//     // branch_no:branch_no,
-//     // month:month,
-//     // day:day,
-//     // trans_from:trans_from,
-//     // trans_to:trans_to,
-//     // amount:amount,
-//     // count:count,
-//     // subtotal:subtotal,
-//     // job_no:job_no,
-//      }
-//      res.render('te_detail', opt);
-//     });
+      client.end()
+    });
+  let opt={
+    title: '交通費詳細変更',
+    year:year,
+    month:month,
+    day:day,
+    branch_no:branch_no1,
+    trans_from:trans_from,
+    trans_waypoint:trans_waypoint,
+    trans_to:trans_to,
+    amount:'',
+    // // status:status,
+    // branch_no:branch_no,
+    // month:month,
+    // day:day,
+    // trans_from:trans_from,
+    // trans_to:trans_to,
+    // amount:amount,
+    // count:count,
+    // subtotal:subtotal,
+    // job_no:job_no,
+     }
+     res.render('te_detail', opt);
+    });
 
 
 
@@ -114,7 +114,7 @@ router.post('/', async function(req,response,next){
       }else{
       // console.log(result[0])
       // console.log(result[1])
-      branch_no2=result[0].rows[0].branch_no;
+      branch_no2=result[0].rows[0].branch_no
       trans_from=result[0].rows[0].trans_from;
       trans_to=result[0].rows[0].trans_to;
       trans_waypoint=result[0].rows[0].trans_waypoint;
