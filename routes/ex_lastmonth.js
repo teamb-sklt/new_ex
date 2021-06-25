@@ -18,15 +18,18 @@ var date = moment().format("DD")
 var tmonth;
 var lmonth;
 var lastday;
+var nmonth;
 
 // console.log(date)
 
 if(date>20){
   tmonth=tomonth;
   lmonth=moment().add(-1,'month',).format("MM");
+  nmonth=moment().add(1,'month',).format("MM");
 }else{
   tmonth=moment().add(-1,'month',).format("MM");
   lmonth=moment().add(-2,'month',).format("MM");
+  nmonth=moment().add().format("MM");
   lastday = 20 - date;
 }
 console.log(tmonth)
@@ -123,7 +126,7 @@ router.post('/',async function(req,res,next){
   })
   await client.connect()
 
-  client.query("SELECT * FROM ExDetail where branch_no="+"'"+branch_no+"'"+"AND sheet_month="+"'"+tmonth+"';SELECT count(*) from ExDetail WHERE sheet_month="+"'"+tmonth+"'",function(err,result){ //ここでのtmonthは先月の今月。
+  client.query("SELECT * FROM ExDetail where branch_no="+"'"+branch_no+"'"+"AND sheet_month="+"'"+tmonth+"';SELECT count(*) from ExDetail WHERE sheet_month="+"'"+nmonth+"'",function(err,result){ //ここでのtmonthは先月の今月。
     if (err) {
       console.log(err); //エラー時にコンソールに表示
     } else {
