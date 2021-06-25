@@ -1,6 +1,5 @@
 <%- include('partials/header1')%>
 
-
 <form method="POST"> 
   <table>
 
@@ -10,42 +9,43 @@
     </tr>
 
     <tr>
-      <th class="th1" width="25%">年月日 (*)<br></th>
+      <th class="th1" width="25%">日時 (*)<br></th>
       <td class="td1">
         <input type="text" class='text1' name='year' id='year' > 年　
         <input type="text" class='text1' name='month' id='month' > 月　
-        <input type="text" class='text1' name='day' id='day' > 日
+        <input type="text" class='text1' name='day' id='day' > 日　
+        <input type="text" class='text1' name='time'  id='time' >
       </td>
     </tr>
     <tr>
-      <th class="th1"  width="25%">勘定科目 ／ 摘要 (*)</th>
+      <th class="th1"  width="25%">交通手段 ／ 経路 (*)</th>
       <td class="td1">
-        <select id='code_name' name='code_name' class='text2'　required　value="<%- code_name %>">
-          <option value="0">消耗品費</option>
-          <option value="1">新聞図書費</option>
-          <option value="2">会議費</option>
-          <option value="3">交際費</option>
+        <select id='trans_type' name='trans_type' class='text1'>
+          <option value="1">電車</option>
+          <option value="2">バス</option>
+          <option value="3">タクシー</option>
           <option value="4">その他</option>
         </select> ／
-        <input type="text" class='text2' name='summary' id='summary' value="<%- summary %>">
-        <span class="" data-tooltip="書籍購入制度利用の場合は『書籍代』と入力ください。">❔</span>
+        <input type="text" class='text2' name='trans_from' id='trans_from' value="<%- trans_from %>" required placeholder="出発地"> ～
+        <input type="text" class='text2' name='trans_waypoint' id='trans_waypoint' value="<%- trans_waypoint %>" placeholder="経由地 (任意)"> ～
+        <input type="text" class='text2' name='trans_to' id='trans_to' value="<%- trans_to %>" required placeholder="目的地">
       </td>
     </tr>
     <tr>
-      <th class="th1"  width="25%">支払先 ／ 金額 (*)</th>
+      <th class="th1"  width="25%">回数 ／ 単価 (*)</th>
       <td class="td1">
-        <input type="text" class='text2' name='payee' id='payee' value="<%- payee %>">
-        <span class="" data-tooltip="サンプル文">❔</span> ／
-        <input type="text" id='amount' name='amount' class="text2" value="<%- amount%>"> 円
+        <input type="number" class='text1' value='1' min='1' id='count' name='count'> 回 ／
+        <input type="text" class='text1' id='amount' name='amount' value="<%- amount %>"> 円
+        <input type="submit" class="search" id='search' value="交通費検索" name='search' formaction="/result">
       </td>
     </tr>
     <tr>
       <th class="th1"  width="25%">ジョブコード ／ ジョブ名 (*)</th>
       <td class="td1">
-        <input type="text" class='text2' id='job_no' name='job_no'  value="<%= job_no %> "> ／
-        <input type="text" class='text2' id='job_name' name='job_name' value="<%= job_name %>">
-        <input type="hidden"  id="job_manager" name="job_manager"  value="<%= job_manager %>">
-        <input type="submit" class="search" id="btn-jobsearch" value="ジョブ検索"name="ex_jobsearch_to" formaction="ex_newrecord">
+        <input type="text" class='text2' id='job_no' name='job_no'> ／
+        <input type="text" class='text2' id='job_name' name='job_name'>
+        <input type="hidden"  id="job_manager" name="job_manager">
+        <input type="submit" class="search" id="btn-jobsearch" value="ジョブ検索"name="te_jobsearch_to" formaction="te_newrecord">
       </td>
     </tr>
     <tr>
@@ -81,24 +81,23 @@
     <tr>
       <th class="th2"  width="25%">備考</th>
       <td class="td1">
-        <input type="text" class='text3' id='remarks' name='remarks' value="<%= remarks %>">
+        <input type="text" class='text3' id='remarks' name='remarks'>
       </td>
     </tr>
   </table>
 
   <div class="box">
-    <input type="submit" class="back" id="btn-return" value="戻る" onclick="frameClick();" formaction="/ex_newrecord">
-    <input type="submit" class="save" id="save" value="保存"name='save' formaction="/ex_newrecord">
+    <input type="submit" class="back" id="btn-return" value="戻る" onclick="frameClick();" formaction="/te_newrecord">
+    <input type="submit" class="save" id="save" value="保存"name='save' formaction="/te_newrecord">
   </div>
 
 </form>
 
 <script type="text/javascript">
   'use strict'
-
-  //戻るボタンでex_thismonthに遷移
+  //戻るボタンでte_thismonth.jsに遷移
   function frameClick() {
-    document.location.href = 'http://localhost:3000/ex_thismonth';
+    document.location.href = 'http://localhost:3000/te_thismonth';
   };
 
   //日付・時刻の初期値の設定
@@ -113,7 +112,7 @@
   document.getElementById("year").value=year;
   document.getElementById("month").value=month;
   document.getElementById("day").value=day;
-
+  document.getElementById("time").value=hours+minutes;
 
   //     if(regularly.prop('checked')){
   // 	hiddenInput.attr('disabled', 'disabled');
@@ -123,10 +122,7 @@
   // 	hiddenInput.val('false');
   // }
 
-  function jobClick() {
-    document.location.href = 'http://localhost:3000/ex_thismonth';
-  };
-
+  // ジョブ検索で表示されたJMから変更される→注意喚起ポップアップ
   var val = document.getElementById('job_manager_name');
   val.onchange = function() {
     if (val !== 0) {

@@ -151,9 +151,9 @@ router.post('/', async function(req,response,next){
     let month = req.body.month;
     let day = req.body.day;
     let branch_no2 = req.body.branch_no;
-    let jobsearchcode = req.body.job_no;
-    let jobsearchname = req.body.job_name;
-    let amount = req.body.amount;
+    let jobsearchcode = req.body.job_no
+    let jobsearchname = req.body.job_name
+    let amount = req.body.amount
     // let job_manager = req.body.job_manager
     // let job_manager_name = req.body.job_manager_name
     let opt={

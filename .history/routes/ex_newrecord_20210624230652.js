@@ -191,8 +191,8 @@ router.post('/', async function(req,response,next){
 
     //インサートコマンドを定義
     const sql = "INSERT INTO ExDetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, code_name, payee, summary, amount, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)";
-    //const sql = "INSERT INTO ExDetail (emp_no, sheet_year, sheet_month, branch_no, year, month, day, code_name, payee, summary, amount, job_no, job_manager, claim_flag, charge_flag, ref_no, status, remarks, new, new_date, renew, renew_date ; INSERT INTO ExComments (emp_no, sheet_year, sheet_month, branch_no, app_class, job_manager, app_flag, comment, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22 ; $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)";
     const values = [dEmpno,year,tmonth,branch_no2,dYear,dMonth,dDay,dCodename,dPayee,dSummary,dPrice,dJobno,dJobmanager,dClaimflag,dChargeflag,dRefno,dStasus,dMemo,dNew,dNewdate,dNew,dNewdate];
+    "INSERT INTO ExComments (emp_no, sheet_year, sheet_month, branch_no, app_class, job_manager, app_flag, comment, new, new_date, renew, renew_date) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)";
     console.log(values)
     client.query(sql, values)
     .then(res => {
@@ -227,7 +227,7 @@ router.post('/', async function(req,response,next){
       client.end()
     });
   let opt={
-    title: '書籍登録',
+    title: '経費',
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,
@@ -239,7 +239,7 @@ router.post('/', async function(req,response,next){
     payee:'Amazon株式会社',
     summary:'書籍代',
     job_manager:'111',
-    remarks:'BOOK ID: ',
+    remarks:'',
     
   
   }
@@ -271,7 +271,7 @@ router.post('/', async function(req,response,next){
       client.end()
     });
   let opt={
-    title: '会議費登録',
+    title: '経費',
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,
@@ -315,7 +315,7 @@ router.post('/', async function(req,response,next){
       client.end()
     });
   let opt={
-    title: '交際費登録',
+    title: '経費',
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,

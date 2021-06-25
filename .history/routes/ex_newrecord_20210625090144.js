@@ -227,7 +227,7 @@ router.post('/', async function(req,response,next){
       client.end()
     });
   let opt={
-    title: '書籍登録',
+    title: '経費',
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,
@@ -239,7 +239,7 @@ router.post('/', async function(req,response,next){
     payee:'Amazon株式会社',
     summary:'書籍代',
     job_manager:'111',
-    remarks:'BOOK ID: ',
+    remarks:'',
     
   
   }
@@ -271,7 +271,7 @@ router.post('/', async function(req,response,next){
       client.end()
     });
   let opt={
-    title: '会議費登録',
+    title: '経費',
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,
@@ -315,7 +315,7 @@ router.post('/', async function(req,response,next){
       client.end()
     });
   let opt={
-    title: '交際費登録',
+    title: '書籍登録',
     tmonth:tmonth,
     lmonth:lmonth,
     branch_no2:branch_no2,
