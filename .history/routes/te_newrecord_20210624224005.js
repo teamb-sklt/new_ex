@@ -181,6 +181,10 @@ router.post('/', async function(req,response,next){
         let trans_to = req.body.trans_to;
         let branch_no2 = req.body.branch_no;
         let amount = req.body.amount;
+        let job_no = req.body.job_no;
+        let job_name = req.body.job_name;
+        let job_manager = req.body.job_manager;
+        let job_manager_name = req.body.job_manager_name;
 
             let opt={
                 title: '新規登録 - 交通費',

@@ -196,9 +196,8 @@ router.post('/', async function(req, res, next) {
       console.log(err)
     }
     console.log(result)
-    client.end()
   });
-
+  client.end()
   response.redirect('ex_thismonth');
 }
       //削除ボタンが押されたときに実行
@@ -229,10 +228,8 @@ router.post('/', async function(req, res, next) {
           console.log(err)
         }
         console.log(result)
-        client.end()
       });
-
-      response.render('ex_thismonth');
+      response.redirect('ex_thismonth');
     }
 });
 

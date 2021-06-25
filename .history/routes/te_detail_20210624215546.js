@@ -226,7 +226,6 @@ router.post('/', async function(req,response,next){
       }
       console.log(result)
     });
-    client.end()
     response.redirect('te_thismonth');
   }
 

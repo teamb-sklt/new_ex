@@ -229,10 +229,9 @@ router.post('/', async function(req, res, next) {
           console.log(err)
         }
         console.log(result)
-        client.end()
       });
-
-      response.render('ex_thismonth');
+      client.end()
+      response.redirect('ex_thismonth');
     }
 });
 

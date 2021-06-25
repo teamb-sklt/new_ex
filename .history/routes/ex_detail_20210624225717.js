@@ -232,7 +232,7 @@ router.post('/', async function(req, res, next) {
         client.end()
       });
 
-      response.render('ex_thismonth');
+      response.redirect('ex_thismonth');
     }
 });
 
