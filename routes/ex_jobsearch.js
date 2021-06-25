@@ -55,7 +55,7 @@ router.post('/', async function(req,response,next){
   console.log(jobsearchcode)
 
 
-    if(jobsearchcode ===''){
+    if(jobsearchcode ===' '){
       client.query("SELECT * FROM Job WHERE job_name LIKE '%"+　jobsearchname　+"%'",function(err,result){
         if (err) {
           console.log(err); //エラー時にコンソールに表示

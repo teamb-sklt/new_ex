@@ -28,7 +28,7 @@
   <div class="contents_wrap">
     <div class="contents_area">
         <div class="content_block">
-          <form method="POST"> 
+          <form method="POST"  > 
             <input type="hidden" name='trans_from' id='trans_from' value="<%= trans_from  %>">
             <input type="hidden" name='trans_to' id='trans_to'  value="<%= trans_to  %>">
             <input type="hidden" name='trans_waypoint' id='trans_waypoint'  value="<%= trans_waypoint  %>">
@@ -52,10 +52,11 @@
                 </th>
                 <td class="td1">
                   <input type="text" class='text2' id='jobsearchname' name='jobsearchname' value="<%=jobsearchname%>">
-                  <input type="submit" value="検索" class="jobsearch" name='jobsearch' formaction="/te_jobsearch" >
+                  <input type="submit" value="検索" class="jobsearch" formaction="/te_jobsearch">
                 </td>
               </tr>
             </table>
+          </form>
             <table>
               <tr>
                 <th width="25%">JOBコード</th>
@@ -64,6 +65,7 @@
                 <th width="25%">JM名</th>
               </tr>
               <% for(let i in job_id){ %>
+                
                 <tr id="records">   
                   <td><%= job_id[i] %> </td>
                   <td><%= job_name[i] %> </td>
@@ -83,15 +85,16 @@
                     <input type="hidden" class='form-control' name='day' id='day' value="<%- day %>">
                     <input type="hidden" class='form-control' name='amount' id='amount' value="<%- amount %>">
                     <td>
-                      <input type="submit" class="jobsearch" name="jobsearch" id="jobsearch" value="選択">
+                    <input type="submit" class="jobsearch" name="te_jobsearch" id="jobsearch" value="選択">
                     </td>
-                  </form>
+                    </form>
                 </tr>
                 <% } %>
             </table>
-
+            <form method="POST">
             <div class="box">
               <input type="submit" class="back" id="btn-return" value="戻る" onclick="history.back()" formaction="/te_newrecord">
             </div>
+          </form>
 
 <%- include('partials/footer1')%>

@@ -131,7 +131,6 @@ router.post('/', async function(req, res, next) {
       month:month,
       day:day,
       summary:summary,
-      job_no:job_no,
       job_name:'',
       job_manager_name:'',
       payee:payee,

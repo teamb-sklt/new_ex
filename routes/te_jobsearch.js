@@ -56,7 +56,7 @@ router.post('/', async function(req,response,next){
   console.log(jobsearchcode)
   
   if(jobsearchcode ===''){
-      client.query("SELECT * FROM Job WHERE job_name LIKE '%"+　jobsearchname　+"%'",function(err,result){
+      client.query("SELECT * FROM Job WHERE job_name LIKE '%"+jobsearchname+"%'",function(err,result){
         if (err) {
           console.log(err); //エラー時にコンソールに表示
         } else {
@@ -88,9 +88,10 @@ router.post('/', async function(req,response,next){
               branch_no2:branch_no2,
               amount:amount,
             }
+            client.end()
             response.render('te_jobsearch', opt);
-        }
-        client.end()
+          }
+        
       })   
     }else{
       client.query("SELECT * FROM Job WHERE job_id LIKE "+"'%"+jobsearchcode+"%'",function(err,result){
@@ -126,9 +127,11 @@ router.post('/', async function(req,response,next){
               branch_no2:branch_no2,
               amount:amount,
             }
+            client.end()
             response.render('te_jobsearch', opt);
+            
         }
-        client.end()
+        
       })
     
 }
