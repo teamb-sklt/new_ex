@@ -42,7 +42,7 @@
                   ジョブコード
                 </th>
                 <td class="td1">
-                  <input type="text" class='text2' id='jobsearchcode' name='jobsearchcode' value="<%=jobsearchcode%>">
+                  <input type="text" class='text2' id='jobsearchcode' name='jobsearchcode' value="<%= jobsearchcode %>">
                 </td>
               </tr>
               <tr>
@@ -50,11 +50,12 @@
                   ジョブ名
                 </th>
                 <td class="td1">
-                  <input type="text" class='text2' id='jobsearchname' name='jobsearchname' value="<%=jobsearchname%>">
+                  <input type="text" class='text2' id='jobsearchname' name='jobsearchname' value="<%= jobsearchname %>">
                   <input type="submit" value="検索" class="jobsearch" name='jobsearch' formaction="/ex_jobsearch" >
                 </td>
               </tr>
             </table>
+            </form>
             <table>
               <tr>
                 <th width="25%">JOBコード</th>
@@ -69,10 +70,10 @@
                   <td><%= job_manager[i] %> </td>
                   <td><%= job_manager_name[i] %> </td>
                   <form method="POST" action="/ex_newrecord">
-                    <input type="hidden" name="job_id" value="<%= job_id[i]  %> ">
-                    <input type="hidden" name="job_name" value="<%= job_name[i] %> ">
-                    <input type="hidden" name="job_manager" value="<%= job_manager[i]  %> ">
-                    <input type="hidden" name="job_manager_name" value="<%= job_manager_name[i]  %> ">
+                    <input type="hidden" name="job_id" value="<%= job_id[i]  %>">
+                    <input type="hidden" name="job_name" value="<%= job_name[i] %>">
+                    <input type="hidden" name="job_manager" value="<%= job_manager[i] %>">
+                    <input type="hidden" name="job_manager_name" value="<%= job_manager_name[i]  %>">
                     <input type="hidden" name='code_name' id='code_name' value="<%= code_name  %>">
                     <input type="hidden" name='summary' id='summary'  value="<%= summary  %>">
                     <input type="hidden" name='payee' id='payee'  value="<%= payee  %>">
@@ -81,15 +82,16 @@
                     <input type="hidden" class='form-control' name='month' id='month' value="<%- month %>">
                     <input type="hidden" class='form-control' name='day' id='day' value="<%- day %>">
                     <td>
-                      <input type="submit" class="jobsearch" name="jobsearch" id="jobsearch" value="選択">
+                      <input type="submit" class="jobsearch" name="ex_jobsearch" id="ex_jobsearch" value="選択">
                     </td>
                   </form>
                 </tr>
                 <% } %>
             </table>
-
+            <form>
             <div class="box">
               <input type="submit" class="back" id="btn-return" value="戻る" onclick="history.back()" formaction="/ex_newrecord">
             </div>
+           </form>
 
 <%- include('partials/footer1')%>

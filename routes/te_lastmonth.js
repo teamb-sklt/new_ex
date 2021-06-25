@@ -30,6 +30,7 @@ if(date>20){
   lastday = 20 - date;
 }
 console.log(tmonth)
+console.log(lmonth)
 var status = [];
 var branch_no = [];
 var month = [];
@@ -104,9 +105,11 @@ let opt={
 //コピーを押すとき
 router.post('/',async function(req,res,next){
   let branch_no = req.body.branch_no;
-  let month = req.body.month; //本来なら、Monthやdayではなく、報告年月と社員番号が必要。
-  let day = req.body.day;
-  console.log(branch_no+month+day);
+  // let month = req.body.month; //本来なら、Monthやdayではなく、報告年月と社員番号が必要。
+  // let day = req.body.day;
+  // console.log(branch_no+month+day);
+  // console.log(lmonth)
+  // console.log(tmonth)
 
   const client = (process.env.ENVIRONMENT == "LIVE") ? new Client({
     connectionString: process.env.DATABASE_URL,
@@ -122,18 +125,50 @@ router.post('/',async function(req,res,next){
   })
   await client.connect()
 
-  client.query("SELECT * FROM TeDetail where branch_no="+"'"+branch_no+"'"+"AND month="+"'"+month+"'"+"AND day="+"'"+day+"'",function(err,result){
+  client.query("SELECT * FROM TeDetail where branch_no="+"'"+branch_no+"'"+"AND sheet_month="+"'"+tmonth+"';SELECT count(*) from TeDetail WHERE sheet_month="+"'"+tmonth+"'",function(err,result){ //ここでのtmonthは先月の今月。
     if (err) {
       console.log(err); //エラー時にコンソールに表示
     } else {
-    console.log(result)
-  let rows = result.rows
+      branch_no=result[1].rows[0].count
+      branch_no1=Number(branch_no);
+      branch_no2=branch_no1+1
+      console.log(branch_no2)
+    console.log(result[0])
+    console.log(result[1])
+    trans_from=result[0].rows[0].trans_from;
+    trans_to=result[0].rows[0].trans_to;
+    trans_waypoint=result[0].rows[0].trans_waypoint;
+    trans_type=result[0].rows[0].trans_type;
+    amount=result[0].rows[0].amount;
+    count=result[0].rows[0].count;
+    job_no=result[0].rows[0].job_no;
+    job_manager=result[0].rows[0].job_manager;
+    claim_flag=result[0].rows[0].claim_flag;
+    charge_flag=result[0].rows[0].charge_flag;
+    ref_no=result[0].rows[0].ref_no;
+    remarks=result[0].rows[0].remarks;
   let opt={
-    title: '交通費詳細',
-    rows:rows,
-    
+    title: 'データコピー',
+    branch_no2:branch_no2,
+    year:'',
+    month:'',
+    day:'',
+    trans_from:trans_from,
+    trans_waypoint:trans_waypoint,
+    trans_to:trans_to,
+    trans_type:trans_type,
+    amount:amount,
+    count:count,
+    job_no:job_no,
+    job_name:'',
+    job_manager_name:'',
+    job_manager:job_manager,
+    claim_flag:claim_flag,
+    charge_flag:charge_flag,
+    ref_no:ref_no,
+    remarks:remarks,
     }
-    res.render('te_detail', opt);
+    res.render('te_newrecord', opt);
 }
   // }
   client.end()

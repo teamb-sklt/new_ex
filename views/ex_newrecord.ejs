@@ -20,6 +20,7 @@
     <tr>
       <th class="th1"  width="25%">勘定科目 ／ 摘要 (*)</th>
       <td class="td1">
+        <% if(code_name==''){ %> 
         <select id='code_name' name='code_name' class='text2'　required　value="<%- code_name %>">
           <option value="0">消耗品費</option>
           <option value="1">新聞図書費</option>
@@ -27,6 +28,47 @@
           <option value="3">交際費</option>
           <option value="4">その他</option>
         </select> ／
+        <% }else if(code_name=='0'){ %>
+        <select id='code_name' name='code_name' class='text2'　required　value="<%- code_name %>">
+          <option value="0" selected>消耗品費</option>
+          <option value="1">新聞図書費</option>
+          <option value="2">会議費</option>
+          <option value="3">交際費</option>
+          <option value="4">その他</option>
+        </select> ／
+        <% }else if(code_name=='1'){ %>
+        <select id='code_name' name='code_name' class='text2'　required　value="<%- code_name %>">
+          <option value="0">消耗品費</option>
+          <option value="1" selected>新聞図書費</option>
+          <option value="2">会議費</option>
+          <option value="3">交際費</option>
+          <option value="4">その他</option>
+        </select> ／
+        <% }else if(code_name=='2'){ %>
+        <select id='code_name' name='code_name' class='text2'　required　value="<%- code_name %>">
+          <option value="0">消耗品費</option>
+          <option value="1">新聞図書費</option>
+          <option value="2" selected>会議費</option>
+          <option value="3">交際費</option>
+          <option value="4">その他</option>
+        </select> ／
+        <% }else if(code_name=='3'){ %>
+        <select id='code_name' name='code_name' class='text2'　required　value="<%- code_name %>">
+          <option value="0">消耗品費</option>
+          <option value="1">新聞図書費</option>
+          <option value="2">会議費</option>
+          <option value="3" selected>交際費</option>
+          <option value="4">その他</option>
+        </select> ／
+        <% }else if(code_name=='4'){ %>
+        <select id='code_name' name='code_name' class='text2'　required　value="<%- code_name %>">
+          <option value="0">消耗品費</option>
+          <option value="1">新聞図書費</option>
+          <option value="2">会議費</option>
+          <option value="3">交際費</option>
+          <option value="4" selected>その他</option>
+        </select> ／
+        <% } %> 
         <input type="text" class='text2' name='summary' id='summary' value="<%- summary %>">
         <span class="c-tooltip" data-tooltip="書籍購入制度利用の場合「書籍代」とご入力ください。">❔</span>
       </td>
@@ -42,10 +84,10 @@
     <tr>
       <th class="th1"  width="25%">ジョブコード ／ ジョブ名 (*)</th>
       <td class="td1">
-        <input type="text" class='text2' id='job_no' name='job_no'  value="<%= job_no %> "> ／
+        <input type="text" class='text2' id='job_no' name='job_no'  value="<%= job_no %>"> ／
         <input type="text" class='text2' id='job_name' name='job_name' value="<%= job_name %>">
         <input type="hidden"  id="job_manager" name="job_manager"  value="<%= job_manager %>">
-        <input type="submit" class="search" id="btn-jobsearch" value="ジョブ検索"name="ex_jobsearch_to" formaction="ex_newrecord">
+        <input type="submit" class="search" id="btn-jobsearch" value="ジョブ検索" name="ex_jobsearch_to" formaction="ex_newrecord">
       </td>
     </tr>
     <tr>

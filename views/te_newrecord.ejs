@@ -42,7 +42,7 @@
     <tr>
       <th class="th1"  width="25%">ジョブコード ／ ジョブ名 (*)</th>
       <td class="td1">
-        <input type="text" class='text2' id='job_no' name='job_no' value="<%= job_no %> "> ／
+        <input type="text" class='text2' id='job_no' name='job_no' value="<%= job_no %>"> ／
         <input type="text" class='text2' id='job_name' name='job_name' value="<%= job_name %>">
         <input type="hidden"  id="job_manager" name="job_manager"  value="<%= job_manager %>">
         <input type="submit" class="search" id="btn-jobsearch" value="ジョブ検索"name="te_jobsearch_to" formaction="te_newrecord">
@@ -81,7 +81,7 @@
     <tr>
       <th class="th2"  width="25%">備考</th>
       <td class="td1">
-        <input type="text" class='text3' id='remarks' name='remarks'>
+        <input type="text" class='text3' id='remarks' name='remarks' value="<%= remarks %>">
       </td>
     </tr>
   </table>

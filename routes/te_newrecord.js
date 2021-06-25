@@ -76,6 +76,7 @@ router.get('/', async function(req, res, next) {
     job_name:'',
     job_manager:'',
     job_manager_name:'',
+    remarks:'',
     // // status:status,
     // branch_no:branch_no,
     // month:month,
@@ -133,6 +134,7 @@ router.post('/', async function(req,response,next){
         month:month,
         day:day,
         amount:amount,
+        remarks:'',
 
         // branch_no2:branch_no2,
         // trans_from:trans_from,
@@ -169,7 +171,8 @@ router.post('/', async function(req,response,next){
       month:month,
       day:day,
       job_id:'',
-      amount:amount
+      amount:amount,
+      remarks:'',
     }
     response.render('te_jobsearch', opt);
 
@@ -195,6 +198,7 @@ router.post('/', async function(req,response,next){
                 job_name:'',
                 job_manager:'',
                 job_manager_name:'',
+                remarks:'',
             }
             response.render('te_newrecord', opt);
     }

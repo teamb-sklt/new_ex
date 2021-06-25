@@ -87,7 +87,7 @@ router.get('/', async function(req, res, next) {
 router.post('/', async function(req,response,next){
     //保存ボタンが押されたら実行
 
-    if(req.body.jobsearch){
+    if(req.body.ex_jobsearch){
       let job_id = req.body.job_id
       let job_name = req.body.job_name
       let job_manager = req.body.job_manager
@@ -327,7 +327,7 @@ router.post('/', async function(req,response,next){
     job_no:'',
     job_name:'',
     job_manager_name:'',
-    code_name:'',
+    code_name:3,
     payee:'',
     summary:'',
     job_manager:'',
