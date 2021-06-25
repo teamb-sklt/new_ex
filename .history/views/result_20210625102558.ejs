@@ -29,7 +29,7 @@
   <div class="contents_wrap">
     <div class="contents_area">
       <div class="content_block">
-        <!-- <form method="POST"> -->
+        <form method="POST">
           <table>
             <tr>
               <th width="33%">出発地</th>
@@ -49,7 +49,6 @@
               </td>
             </tr>
           </table>
-        <!-- </form> -->
 
           <table>
             <thead>
@@ -65,6 +64,7 @@
                 <tr id="records">   
                   <td id=Route class=Route><%= result[i] %> </td>
                   <td id=amount><%- result1[i] %></td>
+                  </div>
                   <form method="POST" action="/te_newrecord"> 
                       <input type="hidden" name='trans_from' id='trans_from' required placeholder="必須" value=<%= trans_from %>>
                       <input type="hidden" name='trans_to' id='trans_to'  required placeholder="必須" value=<%= trans_to %>>
@@ -75,17 +75,14 @@
                     <td><input type="submit" class="teselect" name="search" id="search" value="選択"></td>
                   </form>
                 </tr>
-              </div>
-
                 <% } %>
             </tbody>
           </table>
-          <form method="POST" action="/te_newrecord"> 
+
           <div class="box">
             <input type="submit" class="back" id="btn-return" value="戻る" onclick="history.back()" formaction="/te_newrecord">
           </div>
-          </form>
           
-        
+        </form>
 
 <%- include('partials/footer1')%>
