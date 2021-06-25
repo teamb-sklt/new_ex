@@ -231,7 +231,7 @@ router.post('/', async function(req, res, next) {
         client.end()
       });
 
-      res.redirect('ex_thismonth');
+      res.render('ex_thismonth');
     }
 });
 
