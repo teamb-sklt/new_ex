@@ -1,0 +1,146 @@
+<%- include('partials/header1')%>
+
+<form method="POST"> 
+  <table>
+
+    <tr>
+      <th class="th1" width="25%">Branch_No</th><!-- 非表示予定 -->
+      <td class="td1"><input type="text" class='text1' name='branch_no'  id='branch_no' value="<%- branch_no2 %>" ></td>
+    </tr>
+
+    <tr>
+      <th class="th1" width="25%">日時 (*)<br></th>
+      <td class="td1">
+        <input type="text" class='text1' name='year' id='year' value="<%- year %>" required> 年　
+        <input type="text" class='text1' name='month' id='month' value="<%- month %>" required> 月　
+        <input type="text" class='text1' name='day' id='day' value="<%- day %>" required> 日
+      </td>
+    </tr>
+    <tr>
+      <th class="th1"  width="25%">勘定科目 ／ 摘要 (*)</th>
+      <td class="td1">
+        <select id='code_name' name='code_name' class='text2'　required　value="<%- code_name %>">
+          <option value="0">消耗品費</option>
+          <option value="1">新聞図書費</option>
+          <option value="2">会議費</option>
+          <option value="3">交際費</option>
+          <option value="4">その他</option>
+        </select> ／
+        <input type="text" class='text2' name='summary' id='summary' value="<%- summary %>" required>
+        <span class="" data-tooltip="書籍購入制度利用の場合は『書籍代』と入力ください。">❔</span>
+      </td>
+    </tr>
+    <tr>
+      <th class="th1"  width="25%">支払先 ／ 金額 (*)</th>
+      <td class="td1">
+        <input type="text" class='text2' name='payee' id='payee' value="<%- payee %>">
+        <span class="" data-tooltip="サンプル文">❔</span> ／
+        <input type="text" id='amount' name='amount' class="text2" value="<%- amount %>"> 円
+      </td>
+    </tr>
+    <tr>
+      <th class="th1"  width="25%">ジョブコード ／ ジョブ名 (*)</th>
+      <td class="td1">
+        <input type="text" class='text2' id='job_no' name='job_no'  value="<%= job_no %> " required> ／
+        <input type="text" class='text2' id='job_name' name='job_name' value="<%= job_name %>" required>
+        <input type="hidden"  id="job_manager" name="job_manager"  value="<%= job_manager %>" required>
+        <input type="submit" class="search" id="btn-jobsearch" value="ジョブ検索"name="te_jobsearch_to" formaction="te_newrecord">
+      </td>
+    </tr>
+    <tr>
+      <th class="th2"  width="25%">JM</th>
+      <td class="td1">
+        <select name='job_manager_name' class="text2" id='job_manager_name' value="<%= job_manager_name %>" required>
+          <option value=0>----------</option>
+          <option value=1>Aさん</option>
+          <option value=2>Bさん</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th class="th2"  width="25%">顧客に請求</th>
+      <td class="td1">
+        <input name='claim_flag' type="hidden" value=0>
+        <input type="checkbox" class='check' id='claim_flag' name='claim_flag' value=1>
+      </td>
+    </tr>
+    <tr>
+      <th class="th2"  width="25%">ジョブチャージ</th>
+      <td class="td1">
+        <input name='charge_flag' type='hidden' value=0>
+        <input type='checkbox' class='check' id='charge_flag' name='charge_flag' value=1>
+      </td>
+    </tr>
+    <tr>
+      <th class="th2"  width="25%">領収書番号</th>
+      <td class="td1">
+        <input type="text" class='text1' id='ref_no' name='ref_no'>
+      </td>
+    </tr>
+    <tr>
+      <th class="th2"  width="25%">備考</th>
+      <td class="td1">
+        <input type="text" class='text3' id='remarks' name='remarks' value='<%- remarks %>' >
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <th class="th1"  width="25%">承認クラス</th>
+      <td class="td1"><%= app_class %></td>
+    </tr>
+    <tr>
+      <th class="th1"  width="25%">承認フラグ</th>
+      <td class="td1"><%= app_flag %></td>
+    </tr>
+    <tr>
+      <th class="th1"  width="25%">コメント</th>
+      <td class="td1"><%= comment %></td>
+    </tr>
+  </table>
+  
+  <div class="box">
+    <input type="submit" class="back" id="btn-return" value="戻る" onclick="frameClick();" formaction="/ex_detail">
+    <input type="submit" id="delete" value="削除" class="delete" name='delete' formaction="/ex_detail">
+    <input type="submit" class="save" id="save" value="保存"name='save' formaction="/ex_detail">
+  </div>
+</form>
+
+  <input type="hidden" name="id" value="<%- branch_no2 %>">
+
+  <script type="text/javascript">
+
+      'use strict'
+
+      //戻るボタンでex_thismonthに遷移
+      function frameClick() {
+          document.location.href = 'http://localhost:3000/ex_thismonth';
+      };
+
+      //日付・時刻の初期値の設定
+      var date = new Date();
+      date.setDate(date.getDate());
+      var year = date.getFullYear();
+      var month = ("0"+(date.getMonth()+1)).slice(-2);
+      var day = ("0"+date.getDate()).slice(-2);
+      var hours = ("0"+date.getHours()).slice(-2);
+      var minutes = ("0"+date.getMinutes()).slice(-2);
+      console.log(date);
+      document.getElementById("time").value=hours+minutes;
+      document.getElementById("year").value=year;
+      document.getElementById("month").value=month;
+      document.getElementById("day").value=day;
+
+      function jobClick() {
+          document.location.href = 'http://localhost:3000/ex_thismonth';
+      };
+      
+      val.onchange = function() {
+          var val = document.getElementById('jm');
+          if (val !== 0) {
+          alert('本来とは別のJMが選択されています。再確認の上、変更願います。');
+          }
+      }
+  </script>
+
+<%- include('partials/footer1')%>

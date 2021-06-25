@@ -108,7 +108,7 @@ router.post('/', async function(req, res, next) {
             month=result[0].rows[0].month;
             day=result[0].rows[0].day;
             code_name=result[0].rows.code_name;
-            payee=result[0].rows[0].payee;
+            payee=result[0].rows.payee;
             amount=result[0].rows[0].amount;
             summary=result[0].rows[0].summary;
             job_no=result[0].rows[0].job_no;
@@ -121,6 +121,7 @@ router.post('/', async function(req, res, next) {
             app_flag=result[1].rows[0].app_flag;
             comment=result[1].rows[0].comment;
           }
+          console.log(payee);
           client.end()
     let opt={
       title: '詳細変更 - 経費',
